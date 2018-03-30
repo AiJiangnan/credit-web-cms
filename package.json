@@ -1,0 +1,16 @@
+{
+  "name": "credit-web-cms",
+  "version": "1.0.0",
+  "description": "够范后台系统",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "AiJiangnan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "log4js": "^2.5.3"
+  }
+}

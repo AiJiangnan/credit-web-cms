@@ -1,0 +1,10 @@
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+node_modules
+log
+package-lock.json
+*.log
