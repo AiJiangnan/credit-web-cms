@@ -24,9 +24,9 @@ app.use('/img', express.static(path.join(__dirname, 'public/img')));
 //登录拦截器
 app.use((req, res, next) => {
     let url = req.originalUrl;
-    if (!((url === "/login" && req.method === "POST") || url === "/" || req.session.user)) {
-        return res.redirect("/");
-    }
+    // if (!((url === "/login" && req.method === "POST") || url === "/" || req.session.user)) {
+    //     return res.redirect("/");
+    // }
     next();
 });
 // 在拦截器后添加静态资源

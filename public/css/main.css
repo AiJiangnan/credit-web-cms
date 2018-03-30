@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+.nav-title {
+    height: 45px;
+    border: #e4e4e4 1px solid;
+    line-height: 45px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+

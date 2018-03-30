@@ -18,7 +18,10 @@ app.post('/login', (req, res) => {
         url: config.API_BASE_URL + '/user/login',
         form: req.body
     }, (err, resp, body) => {
-        if (err) res.send(500);
+        if (err) {
+            res.send(500);
+            return;
+        }
         let respJson = JSON.parse(body);
         if (respJson.code === 1) {
             req.session.user = respJson.data;
@@ -76,7 +79,10 @@ app.post('/show', (req, res) => {
  */
 app.get('/exit', (req, res) => {
     request.get({url: config.API_BASE_URL + '/user/loginout'}, (err, resp) => {
-        if (err) res.send(500);
+        if (err) {
+            res.send(500);
+            return;
+        }
         if (!resp.statusCode === 200) res.send(resp.statusCode);
     });
     req.session.destroy();
@@ -94,14 +100,20 @@ app.route('/*')
     })
     .get((req, res) => {
         request.get({url: config.API_BASE_URL + req.originalUrl}, (err, resp, body) => {
-            if (err) res.send(500);
+            if (err) {
+                res.send(500);
+                return;
+            }
             res.send(resp.statusCode, JSON.parse(body));
         });
     })
     .post((req, res) => {
         logger.info(__filename, "请求参数：", JSON.stringify(req.body));
         request.post({url: config.API_BASE_URL + req.path, form: req.body}, (err, resp, body) => {
-            if (err) res.send(500);
+            if (err) {
+                res.send(500);
+                return;
+            }
             logger.info(__filename, "响应参数：", JSON.parse(body));
             res.send(resp.statusCode, JSON.parse(body));
         });
