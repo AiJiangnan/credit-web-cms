@@ -8,52 +8,27 @@
 </head>
 <body>
 <table id="role" lay-filter="role"></table>
-<script src="../../js/layui/layui.js"></script>
 <script type="text/html" id="barDemo">
     <div class="layui-btn-group">
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增" id="add">
             <i class="layui-icon">&#xe654;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="修改">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="修改" id="edit">
             <i class="layui-icon">&#xe642;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" id="delete">
             <i class="layui-icon">&#xe640;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新" id="refresh">
             <i class="layui-icon">&#x1002;</i>
         </button>
     </div>
 </script>
-<script>
-    layui.use(['table', 'jquery'], () => {
-        var roleTable = layui.table.render({
-            elem: '#role',
-            height: 'full-20',
-            page: true,
-            url: '/role.json',
-            cols: [[
-                {type: 'checkbox'},
-                {type: 'numbers', title: '序号'},
-                {field: 'code', title: '编号', width: 80},
-                {field: 'name', title: '角色名称', width: 120},
-                {
-                    title: '操作', width: 120, align: 'center', templet: d => {
-                        return '<button class="layui-btn layui-btn-sm">分配菜单</button>';
-                    }
-                }
-            ]],
-            toolbar: '#barDemo'
-        });
-
-        const $ = layui.jquery;
-
-        $("#reload").click(() => {
-            roleTable.reload();
-        });
-
-    });
+<script type="text/html" id="tool">
+    <button class="layui-btn layui-btn-sm" lay-event="allot">分配菜单</button>
 </script>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/system/role.js"></script>
 </body>
 </html>
 

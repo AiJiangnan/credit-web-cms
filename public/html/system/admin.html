@@ -8,47 +8,26 @@
 </head>
 <body>
 <table id="admin" lay-filter="admin"></table>
-<script type="text/html" id="barDemo">
+<script type="text/html" id="toolbar">
     <div class="layui-btn-group">
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增" id="add">
             <i class="layui-icon">&#xe654;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="修改">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="修改" id="edit">
             <i class="layui-icon">&#xe642;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" id="delete">
             <i class="layui-icon">&#xe640;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新" id="refresh">
             <i class="layui-icon">&#x1002;</i>
         </button>
     </div>
 </script>
-<script src="../../js/layui/layui.js"></script>
-<script>
-    layui.use('table', () => {
-        layui.table.render({
-            elem: '#admin',
-            height: 'full-20',
-            page: true,
-            url: '/admin.json',
-            cols: [[
-                {type: 'checkbox'},
-                {type: 'numbers', title: '序号'},
-                {field: 'username', title: '用户名', width: 80},
-                {field: 'realname', title: '姓名', width: 80},
-                {field: 'phone', title: '手机号码', width: 120},
-                {field: 'address', title: '地址', width: 80},
-                {field: 'isAdmin', title: '是否为管理员', width: 130, align: 'center', sort: true, templet: d => d.isAdmin ? '否' : '是'},
-                {
-                    title: '操作', width: 120, align: 'center', templet: d => {
-                        return '<button class="layui-btn layui-btn-sm">分配角色</button>';
-                    }
-                }
-            ]],
-            toolbar: '#barDemo'
-        });
-    });
+<script type="text/html" id="tool">
+    <button class="layui-btn layui-btn-sm" lay-event="allot">分配角色</button>
 </script>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/system/admin.js"></script>
 </body>
 </html>
