@@ -49,32 +49,33 @@
             </ul>
         </div>
     </div>
-    <div class="layui-body" id="container">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">主体内容加载中,请稍等...</div>
-    </div>
+    <div class="layui-body" id="container"></div>
 
     <div class="layui-footer" style="font-size: 12px;text-align:center;">
-        <!-- 底部固定区域 -->
-        2018 &copy; 版权所有：信用宝金融信息服务（北京）有限公司
+        2018 版权所有：信用宝金融信息服务（北京）有限公司
     </div>
 </div>
 
 <script src="../js/layui/layui.js"></script>
 <script>
-    let message;
     layui.config({
-        base: '../js/app/'
-    }).use(['app', 'message'], function () {
-        const app = layui.app,
-            $ = layui.jquery,
-            layer = layui.layer;
-        //将message设置为全局以便子页面调用
-        message = layui.message;
-        //主入口
-        app.set({
+        base: '../js/layui/app/'
+    }).use('app', function () {
+        layui.app.set({
             type: 'iframe'
         }).init();
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: false,
+            area: '300px;',
+            shade: 0.8,
+            id: 'LAY_layuipro',
+            btn: ['取消'],
+            btnAlign: 'c',
+            moveType: 1,
+            content: '<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">够范科技管理系统<br><br>欢迎使用够范科技新系统！<br>有什么问题及时反馈，够范科技开发人员将全力维护、升级。<br><br>我们此后的征途是星辰大海 ^_^</div>'
+        });
     });
 </script>
 </body>

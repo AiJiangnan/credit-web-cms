@@ -36,30 +36,7 @@ app.post('/login', (req, res) => {
 /**
  * 修改个人资料
  */
-app.post('/toEdit', (req, res) => {
-    let [user, loginUser] = [req.body, req.session.user];
-    if (user.password !== '' && user.password !== loginUser.password) {
-        res.send("100");
-    } else {
-        request.post({url: config.API_BASE_URL + '/user/edit', form: user}, (err, resp, body) => {
-            if (!err && resp.statusCode === 200) {
-                let respJson = JSON.parse(body);
-                if (respJson.code === config.HTTP_SUCCESS) {
-                    if (user.password !== '' || loginUser.username !== user.username) {
-                        res.send(resp.statusCode, "200");
-                    } else {
-                        [loginUser.realname, loginUser.phone, loginUser.address] = [user.realname, user.phone, user.address];
-                        res.send(resp.statusCode, respJson.data);
-                    }
-                } else {
-                    res.send(resp.statusCode, config.HTTP_ERROR);
-                }
-            } else {
-                res.send(resp.statusCode, config.HTTP_ERROR);
-            }
-        });
-    }
-});
+
 
 /**
  * 获取当前登陆管理员信息
