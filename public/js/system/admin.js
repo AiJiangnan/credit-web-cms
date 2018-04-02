@@ -1,10 +1,10 @@
-layui.use('table', () => {
-    const [$, table] = [layui.jquery, layui.table];
+layui.use(['table'], () => {
+    const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
-    table.render({
+    t.render({
         id: 'admin',
         elem: '#admin',
-        height: 'full-20',
+        height: 'full-70',
         page: true,
         url: '/admin.json',
         cols: [[
@@ -16,23 +16,20 @@ layui.use('table', () => {
             {field: 'address', title: '地址', width: 80},
             {field: 'isAdmin', title: '是否为管理员', width: 130, align: 'center', sort: true, templet: d => d.isAdmin ? '否' : '是'},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
-        ]],
-        toolbar: '#toolbar'
+        ]]
     });
 
-    table.on('tool(admin)', obj => {
+    t.on('tool(admin)', obj => {
         let data = obj.data;
         if (obj.event === 'allot') {
             console.log(data);
         }
     });
 
-    $('#add').click(() => {
-        alert('add');
-    });
+    $('#add').click(() => layer.msg('add'));
 
     $('#edit').click(() => {
-        const rows = table.checkStatus('admin');
+        const rows = t.checkStatus('admin');
         if (!rows.isAll) {
             layer.msg('请选择您要修改的行！');
             return;
@@ -40,12 +37,29 @@ layui.use('table', () => {
         layer.alert(JSON.stringify(rows));
     });
 
-    $('#delete').click(() => {
-        alert('delete');
-    });
+    $('#delete').click(() => layer.msg('delete'));
 
-    $('#refresh').click(() => {
-        table.reload('admin');
+    $('#refresh').click(() => t.reload('admin'));
+
+    // $('#search').click(() => {
+    //     layer.open({
+    //         type: 1,
+    //         id: 's',
+    //         title: '查询栏',
+    //         offset: ['60px', '160px'],
+    //         content: $('#menu'),
+    //         btn: ['查询', '重置'],
+    //         btnAlign: 'c',
+    //         shade: 0,
+    //         yes: function () {
+    //             layer.closeAll();
+    //         }
+    //     });
+    // });
+
+    f.on('submit(submit)', d => {
+        t.reload('admin', {where: d.field});
+        return false;
     });
 
 });
