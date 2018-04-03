@@ -14,48 +14,40 @@ const logger = log4js.getLogger('user');
  * 登陆验证
  */
 app.post('/login', (req, res) => {
+    logger.info(__filename, "登录参数：", req.body, req.method);
     request.post({
-        url: config.API_BASE_URL + '/user/login',
+        url: config.API_BASE_URL + '/login',
         form: req.body
     }, (err, resp, body) => {
         if (err) {
             res.send(500);
             return;
         }
-        let respJson = JSON.parse(body);
-        if (respJson.code === 1) {
+        const respJson = JSON.parse(body);
+        logger.info(__filename, "登录响应：", body);
+        if (respJson.code === 0) {
             req.session.user = respJson.data;
             res.send(resp.statusCode, respJson.code);
         } else {
             req.session.destroy();
-            res.send(resp.statusCode, "用户名或密码错误！");
+            res.send(resp.statusCode, respJson.msg);
         }
     });
 });
 
 /**
- * 修改个人资料
- */
-
-
-/**
  * 获取当前登陆管理员信息
  */
-app.post('/show', (req, res) => {
-    let user = req.session.user;
-    let info = {};
-    for (let i in user) {
-        info[i] = user[i];
-    }
-    info.password = '';
-    res.send(200, info);
+app.get('/show', (req, res) => {
+    const user = req.session.user;
+    res.send(200, user.realname);
 });
 
 /**
  * 退出
  */
 app.get('/exit', (req, res) => {
-    request.get({url: config.API_BASE_URL + '/user/loginout'}, (err, resp) => {
+    request.post({url: config.API_BASE_URL + '/logout'}, (err, resp, body) => {
         if (err) {
             res.send(500);
             return;
