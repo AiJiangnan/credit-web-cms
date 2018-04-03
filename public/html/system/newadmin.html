@@ -71,10 +71,10 @@
     layui.use('form', () => {
         const [$, f, p, w] = [layui.jquery, layui.form, parent.layer, window.name];
         f.on('submit(submit)', d => {
-            $.post('', data => {
+            /*$.post('', data => {
                 //TODO: submit
-                p.close(p.getFrameIndex(w));
-            })
+            });*/
+            p.close(p.getFrameIndex(w));
             return false;
         });
     });

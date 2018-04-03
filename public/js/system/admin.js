@@ -35,7 +35,8 @@ layui.use(['table'], () => {
             title: '新建管理员',
             type: 2,
             content: ['/system/newadmin.html', 'no'],
-            area: ['300px', '380px']
+            area: ['300px', '380px'],
+            end: () => t.reload('admin')
         });
     });
 
