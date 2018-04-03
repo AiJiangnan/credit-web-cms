@@ -73,6 +73,7 @@ app.route('/*')
                 res.send(500);
                 return;
             }
+            logger.info(__filename, "响应参数：", body);
             res.send(resp.statusCode, JSON.parse(body));
         });
     })
@@ -83,7 +84,7 @@ app.route('/*')
                 res.send(500);
                 return;
             }
-            logger.info(__filename, "响应参数：", JSON.parse(body));
+            logger.info(__filename, "响应参数：", body);
             res.send(resp.statusCode, JSON.parse(body));
         });
     });

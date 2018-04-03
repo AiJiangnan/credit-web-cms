@@ -6,15 +6,15 @@ layui.use(['table'], () => {
         elem: '#admin',
         height: 'full-70',
         page: true,
-        url: '/admin.json',
+        url: '/user',
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'username', title: '用户名', width: 80},
-            {field: 'realname', title: '姓名', width: 80},
-            {field: 'phone', title: '手机号码', width: 120},
-            {field: 'address', title: '地址', width: 80},
-            {field: 'isAdmin', title: '是否为管理员', width: 130, align: 'center', sort: true, templet: d => d.isAdmin ? '否' : '是'},
+            {field: 'username', title: '用户名', align: 'center', width: 80},
+            {field: 'realname', title: '姓名', align: 'center', width: 120},
+            {field: 'gender', title: '性别', align: 'center', width: 80, templet: d => d.gender ? '<i class="layui-icon">&#xe662;</i>' : '<i class="layui-icon">&#xe661;</i>'},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
+            {field: 'state', title: '状态', align: 'center', width: 80, align: 'center', sort: true, templet: d => d.state ? '启用' : '<span style="color:red">禁用</span>'},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -26,11 +26,22 @@ layui.use(['table'], () => {
         }
     });
 
-    $('#add').click(() => layer.msg('add'));
+    t.on('sort(admin)', obj => {
+        t.reload('admin', {where: {sort: obj.field, sortOrder: obj.type}});
+    });
+
+    $('#add').click(() => {
+        parent.layer.open({
+            title: '新建管理员',
+            type: 2,
+            content: ['/system/newadmin.html', 'no'],
+            area: ['300px', '380px']
+        });
+    });
 
     $('#edit').click(() => {
-        const rows = t.checkStatus('admin');
-        if (!rows.isAll) {
+        let rows = t.checkStatus('admin');
+        if (rows.data.length === 0) {
             layer.msg('请选择您要修改的行！');
             return;
         }

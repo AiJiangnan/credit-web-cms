@@ -24,28 +24,23 @@
     <div class="layui-side layui-bg-black kit-side">
         <div class="layui-side-scroll">
             <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
-                <li class="layui-nav-item ">
-                    <a class="" href="javascript:void(0);">
-                        <i class="fa fa-cubes"></i> &nbsp;&nbsp;<span>系统管理</span>
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a data-url="/system/admin.html" data-icon="&#xe715;" data-title="用户管理" kit-target data-id="1">
-                            <i class="fa fa-user-o"></i> &nbsp;&nbsp;<span>用户管理</span>
-                        </a></dd>
-                    </dl>
-                    <dl class="layui-nav-child">
-                        <dd><a data-url="/system/role.html" data-icon="&#xe715;" data-title="角色管理" kit-target data-id="2">
-                            <i class="fa fa-user-circle-o"></i> &nbsp;&nbsp;<span>角色管理</span>
-                        </a></dd>
-                    </dl>
-                    <dl class="layui-nav-child">
-                        <dd><a data-url="/system/menu.html" data-icon="&#xe715;" data-title="菜单管理" kit-target data-id="3">
-                            <i class="fa fa-list"></i> &nbsp;&nbsp;<span>菜单管理</span>
-                        </a></dd>
-                    </dl>
-                </li>
+            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar id="menuView">
+                <script type="text/html" id="menusTpl">
+                    <li class="layui-nav-item">
+                        {{# layui.each(d.data,(i,pmenu)=>{ }}
+                        <a class="" href="javascript:void(0);">
+                            <i class="fa fa-{{ pmenu.icon }}"></i> &nbsp;&nbsp;<span>{{ pmenu.name }}</span>
+                        </a>
+                        {{# layui.each(pmenu.menus,(i,menu)=>{ }}
+                        <dl class="layui-nav-child">
+                            <dd><a data-url="{{ menu.url }}" data-icon="&#xe715;" data-title="{{ menu.name }}" kit-target data-id="{{ menu.id }}">
+                                <i class="fa fa-{{ menu.icon }}"></i> &nbsp;&nbsp;<span>{{ menu.name }}</span>
+                            </a></dd>
+                        </dl>
+                        {{# }); }}
+                        {{# }); }}
+                    </li>
+                </script>
             </ul>
         </div>
     </div>
