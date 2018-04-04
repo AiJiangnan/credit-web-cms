@@ -25,12 +25,6 @@
         <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增" id="add">
             <i class="layui-icon">&#xe654;</i>
         </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="修改" id="edit">
-            <i class="layui-icon">&#xe642;</i>
-        </button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" id="delete">
-            <i class="layui-icon">&#xe640;</i>
-        </button>
         <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新" id="refresh">
             <i class="layui-icon">&#x1002;</i>
         </button>
@@ -58,9 +52,13 @@
 </div>
 <table id="admin" lay-filter="admin"></table>
 <script type="text/html" id="tool">
-    <button class="layui-btn layui-btn-sm" lay-event="allot">分配角色</button>
+    <button class="layui-btn layui-btn-sm layui-bg-cyan" lay-event="allot">授权</button>
+    <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
+    <button class="layui-btn layui-btn-sm" lay-event="onoff">启|停</button>
+    <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="del">删除</button>
 </script>
 <script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script src="../../js/system/admin.js"></script>
 </body>
 </html>

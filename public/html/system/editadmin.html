@@ -48,15 +48,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">是否可用：</label></td>
-            <td><input type="checkbox" name="state" value="1" lay-skin="switch" checked lay-text="ON|OFF"></td>
-        </tr>
-        <tr>
-            <td><label class="layui-form-label">密码：</label></td>
-            <td><input type="password" name="password" required lay-verify="required|pass" placeholder="请输入密码" class="layui-input"></td>
-        </tr>
-        <tr>
-            <td><label class="layui-form-label">确认密码：</label></td>
-            <td><input type="password" required lay-verify="required|repass" placeholder="请再次输入密码" class="layui-input"></td>
+            <td><input type="checkbox" lay-filter="state" name="statebox" lay-skin="switch" lay-text="ON|OFF"></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
@@ -65,6 +57,8 @@
             </td>
         </tr>
     </table>
+    <input type="hidden" name="id">
+    <input type="hidden" name="state">
 </form>
 <script src="../../js/layui/layui.js"></script>
 <script>
@@ -82,16 +76,7 @@
             });
             return false;
         });
-
-        f.verify({
-            pass: [/(.+){6,12}$/, '密码必须6到12位'],
-            repass: v => {
-                const p = $("input[name='password']").val();
-                if (v !== p) {
-                    return '两次输入的密码不一致!';
-                }
-            }
-        });
+        f.on('switch(state)', d => $("input[name='state']").val(d.elem.checked));
     });
 </script>
 </body>
