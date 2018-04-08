@@ -7,7 +7,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
         $.post('/resource', d.field, data => {
             if (data.code === 0) {
                 reload();
-                $('#setting').hide('slow');
+                $('#setting').hide('fast');
                 p.layer.msg(data.data, {icon: 1});
                 return;
             }
@@ -21,7 +21,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
         $.get('/resource', d => laytplrender(parentIdTpl, 'parentIdView', d.data));
         $('#delete').addClass('layui-btn-disabled');
         $('#delete').removeAttr('data-id');
-        $('#setting').show('slow');
+        $('#setting').show('fast');
     });
 
     $('#delete').click(() => {
@@ -31,7 +31,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
                 $.post('/resource/' + id, data => {
                     if (data.code === 0) {
                         reload();
-                        $('#setting').hide('slow');
+                        $('#setting').hide('fast');
                         layer.msg(data.data, {icon: 1});
                         return;
                     }
@@ -47,7 +47,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
     });
 
     $('#cancel').click(() => {
-        $('#setting').hide('slow');
+        $('#setting').hide('fast');
     });
 
     const load = data => {
@@ -56,7 +56,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
             elem: '#menu',
             nodes: data,
             click: n => {
-                $('#setting').show('slow');
+                $('#setting').show('fast');
                 laytplrender(parentIdTpl, 'parentIdView', data);
                 for (let k in n) {
                     $('[name="' + k + '"]').val(n[k]);
