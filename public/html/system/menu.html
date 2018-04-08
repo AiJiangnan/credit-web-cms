@@ -5,8 +5,90 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        #menu, #setting {
+            width: 400px;
+            height: 400px;
+            float: left;
+            border: 1px gray solid;
+            padding: 10px;
+        }
+
+        #menu {
+            overflow: auto;
+        }
+
+        #setting {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
-
+<blockquote class="layui-elem-quote"><b>注意：</b>点击菜单进行修改，点击新增按钮进行新建菜单。创建父级菜单时，不要选择填写父菜单，创建子菜单则选择对应的父级菜单。</blockquote>
+<div class="layui-btn-group" style="display:block;margin-bottom:10px;">
+    <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增" id="add">
+        <i class="layui-icon">&#xe654;</i>
+    </button>
+    <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新" id="refresh">
+        <i class="layui-icon">&#x1002;</i>
+    </button>
+</div>
+<ul id="menu"></ul>
+<div id="setting" hidden>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required lay-verify="required" placeholder="请输入菜单名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单链接：</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" required lay-verify="required" placeholder="请输入菜单链接" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单图标：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="icon" required lay-verify="required" placeholder="请输入菜单图标" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux"><a href="http://fontawesome.dashgame.com/" target="_blank">图标参考</a></div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单排序：</label>
+            <div class="layui-input-block">
+                <input type="number" name="listOrder" required lay-verify="required" placeholder="请输入菜单排序" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" id="parentIdView"></div>
+        <script type="text/html" id="parentIdTpl">
+            <label class="layui-form-label">父菜单：</label>
+            <div class="layui-input-block">
+                <select name="parentId">
+                    <option value="">请选择一个父菜单</option>
+                    {{# layui.each(d,(i,menu)=>{ }}
+                    <option value="{{ menu.id }}">{{ menu.name }}</option>
+                    {{# }); }}
+                </select>
+            </div>
+        </script>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+                <button id="delete" type="button" class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled">删除</button>
+                <button id="cancel" type="button" class="layui-btn layui-btn-sm">取消</button>
+            </div>
+        </div>
+        <input type="text" name="id" hidden>
+    </form>
+</div>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/system/menu.js"></script>
 </body>
 </html>

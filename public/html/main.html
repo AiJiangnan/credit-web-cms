@@ -31,7 +31,7 @@
                         <a class="" href="javascript:void(0);">
                             <i class="fa fa-{{ pmenu.icon }}"></i> &nbsp;&nbsp;<span>{{ pmenu.name }}</span>
                         </a>
-                        {{# layui.each(pmenu.menus,(i,menu)=>{ }}
+                        {{# layui.each(pmenu.children,(i,menu)=>{ }}
                         <dl class="layui-nav-child">
                             <dd><a data-url="{{ menu.url }}" data-icon="&#xe715;" data-title="{{ menu.name }}" kit-target data-id="{{ menu.id }}">
                                 <i class="fa fa-{{ menu.icon }}"></i> &nbsp;&nbsp;<span>{{ menu.name }}</span>

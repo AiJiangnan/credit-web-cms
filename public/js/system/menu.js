@@ -1,0 +1,74 @@
+layui.use(['tree', 'form', 'laytpl'], () => {
+    const [$, f, p] = [layui.jquery, layui.form, parent];
+
+    $.get('/resource', d => load(d.data));
+
+    f.on('submit(submit)', d => {
+        $.post('/resource', d.field, data => {
+            if (data.code === 0) {
+                reload();
+                $('#setting').hide('slow');
+                p.layer.msg(data.data, {icon: 1});
+                return;
+            }
+            p.layer.msg(data.data, {icon: 2});
+        });
+        return false;
+    });
+
+    $('#add').click(() => {
+        $('form')[0].reset();
+        $.get('/resource', d => laytplrender(parentIdTpl, 'parentIdView', d.data));
+        $('#delete').addClass('layui-btn-disabled');
+        $('#delete').removeAttr('data-id');
+        $('#setting').show('slow');
+    });
+
+    $('#delete').click(() => {
+        let id = $('#delete').attr('data-id');
+        if (id) {
+            layer.confirm('你确定要<span style="color:red;">删除</span>该菜单吗？', {icon: 5}, i => {
+                $.post('/resource/' + id, data => {
+                    if (data.code === 0) {
+                        reload();
+                        $('#setting').hide('slow');
+                        layer.msg(data.data, {icon: 1});
+                        return;
+                    }
+                    layer.msg('菜单删除失败！', {icon: 2});
+                });
+                layer.close(i);
+            });
+        }
+    });
+
+    $('#refresh').click(() => {
+        reload();
+    });
+
+    $('#cancel').click(() => {
+        $('#setting').hide('slow');
+    });
+
+    const load = data => {
+        $('#menu').html('');
+        layui.tree({
+            elem: '#menu',
+            nodes: data,
+            click: n => {
+                $('#setting').show('slow');
+                laytplrender(parentIdTpl, 'parentIdView', data);
+                for (let k in n) {
+                    $('[name="' + k + '"]').val(n[k]);
+                }
+                $(':input[type="number"]').val(n.listOrder);
+                $('#delete').removeClass('layui-btn-disabled');
+                $('#delete').attr('data-id', n.id);
+                f.render();
+            }
+        });
+    }
+
+    const reload = () => $.get('/resource', d => load(d.data));
+
+});
