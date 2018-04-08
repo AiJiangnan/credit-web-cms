@@ -57,6 +57,20 @@
     <button class="layui-btn layui-btn-sm" lay-event="onoff">启|停</button>
     <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="del">删除</button>
 </script>
+<script type="text/html" id="gender">
+    {{#  if(d.gender == 1){ }}
+    <i class="layui-icon">&#xe662;</i>
+    {{#  } else { }}
+    <i class="layui-icon">&#xe661;</i>
+    {{#  } }}
+</script>
+<script type="text/html" id="state">
+    {{#  if(d.state){ }}
+    启用
+    {{#  } else { }}
+    <span style="color:red">禁用</span>
+    {{#  } }}
+</script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script src="../../js/system/admin.js"></script>

@@ -11,17 +11,17 @@ layui.use(['table'], () => {
             {type: 'numbers', title: '序号'},
             {field: 'username', title: '用户名', align: 'center', width: 100},
             {field: 'realname', title: '姓名', align: 'center', width: 120},
-            {field: 'gender', title: '性别', align: 'center', width: 80, templet: d => d.gender ? '<i class="layui-icon">&#xe662;</i>' : '<i class="layui-icon">&#xe661;</i>'},
+            {field: 'gender', title: '性别', align: 'center', width: 80, templet: '#gender'},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
-            {field: 'state', title: '状态', align: 'center', width: 80, align: 'center', sort: true, templet: d => d.state ? '启用' : '<span style="color:red">禁用</span>'},
+            {field: 'state', title: '状态', align: 'center', width: 80, align: 'center', sort: true, templet: '#state'},
             {title: '操作', width: 300, align: 'center', toolbar: '#tool'}
         ]]
     });
 
     t.on('tool(admin)', o => {
-        let [e, d, r] = [o.event, o.data, o.tr];
+        let [e, d] = [o.event, o.data];
         if (e === 'allot') {
-            console.log(d);
+            // console.log(r);
         }
         if (e === 'edit') {
             layer.open({
@@ -31,28 +31,34 @@ layui.use(['table'], () => {
                 area: ['300px', '300px'],
                 success: (l, i) => {
                     let f = layer.getChildFrame('form', i);
-                    f.find("input[name='id']").val(d.id);
-                    f.find("input[name='username']").val(d.username);
-                    f.find("input[name='realname']").val(d.realname);
-                    f.find("input[name='phone']").val(d.phone);
-                    f.find("input[name='gender'][value='" + d.gender + "']").prop('checked', true);
+                    for (let k in d) {
+                        if (k === 'gender') continue;
+                        f.find("input[name='" + k + "']").val(d[k]);
+                    }
+                    f.find("input[name='gender'][value=" + d.gender + "]").prop('checked', true);
                     f.find("input[name='statebox']").attr('checked', d.state);
-                    f.find("input[name='state']").val(d.state);
+                },
+                end: () => {
+                    if (sessionStorage.getItem('user')) {
+                        let u = JSON.parse(sessionStorage.getItem('user'));
+                        u.state = (u.state === 'true');
+                        o.update(u);
+                        sessionStorage.removeItem('user');
+                    }
                 }
             });
         }
         if (e === 'onoff') {
             let s = d.state;
-            layer.confirm('你确定要<span style="color:red;">' + (s ? '停用' : '启用') + '</span>该管理员！', {icon: 0}, i => {
+            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
+            layer.confirm(`你确定要${m}该管理员！`, {icon: 0}, i => {
                 $.post('/user', {id: d.id, state: !s}, data => {
                     if (data.code === 0) {
-                        layer.msg('管理员<span style="color:red;">' + (s ? '停用' : '启用') + '</span>成功！', {icon: 1});
-                        o.update({state: s ? '' : 'true'});
-                        r.children("[data-field='state']").attr('data-content', !s);
-                        updateRow(r, 'state', s ? '<span style="color:red">禁用</span>' : '启用');
+                        layer.msg(`管理员${m}成功！`, {icon: 1});
+                        o.update({state: !s});
                         return;
                     }
-                    layer.msg('管理员<span style="color:red;">' + (s ? '停用' : '启用') + '</span>失败！', {icon: 2});
+                    layer.msg(`管理员${m}失败！`, {icon: 2});
                 });
                 layer.close(i);
             });
@@ -62,8 +68,7 @@ layui.use(['table'], () => {
                 $.post('/user/' + d.id, data => {
                     if (data.code === 0) {
                         layer.msg('管理员<span style="color:red;">删除</span>成功！', {icon: 1});
-                        r.remove();
-                        // t.reload('admin');
+                        o.del();
                         return;
                     }
                     layer.msg('管理员<span style="color:red;">删除</span>失败！', {icon: 2});

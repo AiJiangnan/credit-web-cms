@@ -67,7 +67,7 @@
         f.on('submit(submit)', d => {
             $.post('/user', d.field, data => {
                 if (data.code === 0) {
-                    p.layui.table.reload('admin');
+                    sessionStorage.setItem('user', JSON.stringify(d.field));
                     p.layer.close(p.layer.getFrameIndex(w));
                     p.layer.msg(data.data, {icon: 1});
                     return;
