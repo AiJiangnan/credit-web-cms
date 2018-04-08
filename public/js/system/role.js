@@ -6,43 +6,90 @@ layui.use('table', () => {
         elem: '#role',
         height: 'full-70',
         page: true,
-        url: '/role.json',
+        url: '/role',
         cols: [[
-            {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'code', title: '编号', width: 80},
-            {field: 'name', title: '角色名称', width: 120},
-            {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
+            {field: 'name', title: '角色名称', align: 'center', width: 120},
+            {field: 'description', title: '角色描述', align: 'center', width: 200},
+            {field: 'enabled', title: '状态', align: 'center', width: 80, sort: true, templet: '#enabled'},
+            {title: '操作', width: 300, align: 'center', toolbar: '#tool'}
         ]]
     });
 
-    t.on('tool(role)', obj => {
-        let data = obj.data;
-        if (obj.event === 'allot') {
-            console.log(data);
+    t.on('tool(role)', o => {
+        let [e, d] = [o.event, o.data];
+        if (e === 'allot') {
+            // console.log(r);
+        }
+        if (e === 'edit') {
+            layer.open({
+                title: '修改角色',
+                type: 2,
+                content: ['/system/editrole.html', 'no'],
+                area: ['300px', '220px'],
+                success: (l, i) => {
+                    let f = layer.getChildFrame('form', i);
+                    for (let k in d) {
+                        f.find("input[name='" + k + "']").val(d[k]);
+                    }
+                    f.find("input[name='enabledbox']").attr('checked', d.enabled);
+                },
+                end: () => {
+                    if (sessionStorage.getItem('role')) {
+                        let u = JSON.parse(sessionStorage.getItem('role'));
+                        u.enabled = (u.enabled === 'true');
+                        o.update(u);
+                        sessionStorage.removeItem('role');
+                    }
+                }
+            });
+        }
+        if (e === 'onoff') {
+            let s = d.enabled;
+            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
+            layer.confirm(`你确定要${m}该角色！`, {icon: 0}, i => {
+                $.post('/role', {id: d.id, enabled: !s}, data => {
+                    if (data.code === 0) {
+                        layer.msg(`角色${m}成功！`, {icon: 1});
+                        o.update({enabled: !s});
+                        return;
+                    }
+                    layer.msg(`角色${m}失败！`, {icon: 2});
+                });
+                layer.close(i);
+            });
+        }
+        if (e === 'del') {
+            layer.confirm('你确定要<span style="color:red;">删除</span>该角色吗？', {icon: 5}, i => {
+                $.post('/role/' + d.id, data => {
+                    if (data.code === 0) {
+                        layer.msg(data.data, {icon: 1});
+                        o.del();
+                        return;
+                    }
+                    layer.msg('角色删除失败！', {icon: 2});
+                });
+                layer.close(i);
+            });
         }
     });
 
-    $('#add').click(() => layer.msg('add'));
-
-    $('#edit').click(() => {
-        const rows = t.checkStatus('role');
-        if (!rows.isAll) {
-            layer.msg('请选择您要修改的行！');
-            return;
-        }
-        layer.alert(JSON.stringify(rows));
+    $('#add').click(() => {
+        layer.open({
+            title: '新建角色',
+            type: 2,
+            content: ['/system/newrole.html', 'no'],
+            area: ['300px', '220px']
+        });
     });
 
-    $('#delete').click(() => layer.msg('delete'));
-
-    $('#refresh').click(() => {
-        t.reload('role');
-    });
+    $('#refresh').click(() => t.reload('role'));
 
     f.on('submit(submit)', d => {
         t.reload('role', {where: d.field});
         return false;
     });
+
+    t.on('sort(role)', o => t.reload('role', {where: {sort: o.field, sortOrder: o.type}}));
 
 });

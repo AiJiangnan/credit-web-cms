@@ -1,4 +1,4 @@
-layui.use(['table'], () => {
+layui.use('table', () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
     t.render({
@@ -67,11 +67,11 @@ layui.use(['table'], () => {
             layer.confirm('你确定要<span style="color:red;">删除</span>该管理员吗？', {icon: 5}, i => {
                 $.post('/user/' + d.id, data => {
                     if (data.code === 0) {
-                        layer.msg('管理员<span style="color:red;">删除</span>成功！', {icon: 1});
+                        layer.msg(data.data, {icon: 1});
                         o.del();
                         return;
                     }
-                    layer.msg('管理员<span style="color:red;">删除</span>失败！', {icon: 2});
+                    layer.msg('管理员删除失败！', {icon: 2});
                 });
                 layer.close(i);
             });
@@ -95,7 +95,5 @@ layui.use(['table'], () => {
         return false;
     });
 
-    t.on('sort(admin)', obj => {
-        t.reload('admin', {where: {sort: obj.field, sortOrder: obj.type}});
-    });
+    t.on('sort(admin)', o => t.reload('admin', {where: {sort: o.field, sortOrder: o.type}}));
 });
