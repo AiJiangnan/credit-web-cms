@@ -25,7 +25,7 @@ layui.use('table', () => {
                 title: '分配角色',
                 type: 2,
                 content: '/system/adminrole.html',
-                area: ['220px', '300px'],
+                area: ['300px', '400px'],
                 btn: ['确认', '取消'],
                 success: (l, i) => {
                     // 把userId放到子页面的form上

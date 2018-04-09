@@ -26,20 +26,20 @@
             <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
             <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar id="menuView">
                 <script type="text/html" id="menusTpl">
+                    {{# layui.each(d.data,(i,pmenu)=>{ }}
                     <li class="layui-nav-item">
-                        {{# layui.each(d.data,(i,pmenu)=>{ }}
                         <a class="" href="javascript:void(0);">
                             <i class="fa fa-{{ pmenu.icon }}"></i> &nbsp;&nbsp;<span>{{ pmenu.name }}</span>
                         </a>
                         {{# layui.each(pmenu.children,(i,menu)=>{ }}
                         <dl class="layui-nav-child">
-                            <dd><a data-url="{{ menu.url }}" data-icon="&#xe715;" data-title="{{ menu.name }}" kit-target data-id="{{ menu.id }}">
+                            <dd><a data-url="{{ menu.url }}" data-icon="&#xe715;" data-title="{{ menu.name }}" kit-target data-id="{{ i }}">
                                 <i class="fa fa-{{ menu.icon }}"></i> &nbsp;&nbsp;<span>{{ menu.name }}</span>
                             </a></dd>
                         </dl>
                         {{# }); }}
-                        {{# }); }}
                     </li>
+                    {{# }); }}
                 </script>
             </ul>
         </div>

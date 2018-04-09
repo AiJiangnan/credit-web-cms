@@ -21,19 +21,22 @@
 <script>
     layui.use('form', () => {
         const [$, f] = [layui.jquery, layui.form];
+
         new Promise(resolve => {
             $.get('/resource', d => {
                 if (d.code === 0) {
                     let result = '';
                     d.data.map((e, i) => {
                         result += `<div class="layui-form-item">
-                                       <input type="checkbox" name="roleIds" title="${e.name}" value="${e.id}" lay-skin="primary">
+                                       <input type="checkbox" name="roleIds" title="${e.name}" lay-filter="parent" data-id="class-${i}" value="${e.id}" lay-skin="primary">
                                    </div>`;
+                        result += `<div class="class-${i}" hidden>`;
                         e.children.map((c, j) => {
                             result += `<div class="layui-form-item children">
-                                           <input type="checkbox" name="roleIds" title="${c.name}" value="${c.id}" lay-skin="primary">
+                                           <input type="checkbox" name="roleIds" title="${c.name}" value="${c.id}" data-id="class-${i}" lay-skin="primary">
                                        </div>`;
                         });
+                        result += `</div>`;
                     });
                     $('.layui-form').html(result);
                 }
@@ -47,10 +50,20 @@
                 }
                 f.render();
             });
+
+            f.on('checkbox(parent)', d => {
+                const clazz = $(d.elem).attr('data-id');
+                if (d.elem.checked) {
+                    $('.' + clazz).show('fast');
+                    $('input[data-id=' + clazz + ']').prop('checked', true);
+                } else {
+                    $('.' + clazz).hide('fast');
+                    $('input[data-id=' + clazz + ']').removeAttr('checked');
+                }
+                f.render();
+            });
         });
-
     });
-
 </script>
 </body>
 </html>
