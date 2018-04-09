@@ -9,6 +9,10 @@
         .layui-form-item .layui-form-checkbox[lay-skin=primary] {
             margin: 0;
         }
+
+        .children {
+            margin-left: 30px;
+        }
     </style>
 </head>
 <body style="padding:10px;">
@@ -17,15 +21,19 @@
 <script>
     layui.use('form', () => {
         const [$, f] = [layui.jquery, layui.form];
-
         new Promise(resolve => {
-            $.get('/role', d => {
+            $.get('/resource', d => {
                 if (d.code === 0) {
                     let result = '';
                     d.data.map((e, i) => {
                         result += `<div class="layui-form-item">
                                        <input type="checkbox" name="roleIds" title="${e.name}" value="${e.id}" lay-skin="primary">
                                    </div>`;
+                        e.children.map((c, j) => {
+                            result += `<div class="layui-form-item children">
+                                           <input type="checkbox" name="roleIds" title="${c.name}" value="${c.id}" lay-skin="primary">
+                                       </div>`;
+                        });
                     });
                     $('.layui-form').html(result);
                 }
@@ -33,13 +41,14 @@
             });
         }).then(v => {
             const userid = $('form').attr('data-id');
-            $.get('/role/' + userid, d => {
+            $.get('/resource/' + userid, d => {
                 if (d.code === 0) {
                     d.data.map(id => $('input[value=' + id + ']').attr('checked', true));
                 }
                 f.render();
             });
         });
+
     });
 
 </script>

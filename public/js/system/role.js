@@ -19,7 +19,35 @@ layui.use('table', () => {
     t.on('tool(role)', o => {
         let [e, d] = [o.event, o.data];
         if (e === 'allot') {
-            // console.log(r);
+            layer.open({
+                title: '分配菜单',
+                type: 2,
+                content: '/system/rolemenu.html',
+                area: ['300px', '400px'],
+                btn: ['确认', '取消'],
+                success: (l, i) => {
+                    let f = layer.getChildFrame('form', i);
+                    f.attr('data-id', d.id);
+                },
+                yes: (i, l) => {
+                    let f = layer.getChildFrame('form', i);
+                    let menuIds = [];
+                    f.find(':checked').map((i, e) => menuIds.push($(e).val()));
+                    if (menuIds.length < 1) {
+                        layer.msg('分配菜单不能为空！', {icon: 5});
+                        return;
+                    }
+                    $.post('/role/menu', {roleId: d.id, menuIds: JSON.stringify(menuIds)}, data => {
+                        if (data.code === 0) {
+                            layer.msg(data.data, {icon: 1});
+                            layer.close(i);
+                        }
+                    });
+                },
+                btn2: (i, l) => {
+                    layer.close(i);
+                }
+            });
         }
         if (e === 'edit') {
             layer.open({
