@@ -21,7 +21,36 @@ layui.use('table', () => {
     t.on('tool(admin)', o => {
         let [e, d] = [o.event, o.data];
         if (e === 'allot') {
-            // console.log(r);
+            layer.open({
+                title: '分配角色',
+                type: 2,
+                content: '/system/adminrole.html',
+                area: ['220px', '300px'],
+                btn: ['确认', '取消'],
+                success: (l, i) => {
+                    // 把userId放到子页面的form上
+                    let f = layer.getChildFrame('form', i);
+                    f.attr('data-id', d.id);
+                },
+                yes: (i, l) => {
+                    let f = layer.getChildFrame('form', i);
+                    let roleIds = [];
+                    f.find(':checked').map((i, e) => roleIds.push($(e).val()));
+                    if (roleIds.length < 1) {
+                        layer.msg('分配角色不能为空！', {icon: 5});
+                        return;
+                    }
+                    $.post('/user/role', {userId: d.id, roleIds: JSON.stringify(roleIds)}, data => {
+                        if (data.code === 0) {
+                            layer.msg(data.data, {icon: 1});
+                            layer.close(i);
+                        }
+                    });
+                },
+                btn2: (i, l) => {
+                    layer.close(i);
+                }
+            });
         }
         if (e === 'edit') {
             layer.open({
