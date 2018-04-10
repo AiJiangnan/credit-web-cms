@@ -15,9 +15,9 @@ layui.use(['table', 'laydate'], () => {
             {field: 'channel', title: '进件渠道', align: 'center', width: 100},
             {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
             {field: 'name', title: '姓名', align: 'center', width: 80, templet: '#gender'},
-            {field: 'incomeTime', title: '申请时间', align: 'center', width: 120},
-            {field: 'approveTime', title: '审批时间', align: 'center', width: 100, align: 'center', sort: true, templet: '#state'},
-            {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, align: 'center', sort: true, templet: '#state'},
+            {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true},
+            {field: 'approveTime', title: '审批时间', align: 'center', width: 100, align: 'center', sort: true},
+            {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, align: 'center'},
             {field: 'status', title: '审核状态', align: 'center', width: 100, align: 'center', templet: '#state'},
             {title: '操作', width: 200, align: 'center', toolbar: '#tool'}
         ]]
@@ -92,7 +92,6 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        console.log(d.field);
         t.reload('composite', {where: d.field});
         return false;
     });
