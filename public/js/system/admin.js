@@ -28,7 +28,6 @@ layui.use('table', () => {
                 area: ['300px', '400px'],
                 btn: ['确认', '取消'],
                 success: (l, i) => {
-                    // 把userId放到子页面的form上
                     let f = layer.getChildFrame('form', i);
                     f.attr('data-id', d.id);
                 },
