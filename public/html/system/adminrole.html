@@ -19,7 +19,7 @@
         const [$, f] = [layui.jquery, layui.form];
 
         new Promise(resolve => {
-            $.get('/role', d => {
+            $.get('/role?enabled=1', d => {
                 if (d.code === 0) {
                     let result = '';
                     d.data.map((e, i) => {
