@@ -48,13 +48,15 @@
             <td><label class="layui-form-label">催收人员：</label></td>
             <td><input type="number" name="collectUser" placeholder="请输入催收人员" class="layui-input"></td>
             <td><label class="layui-form-label">催收状态：</label></td>
-            <td>
-                <select name="lastCollectState" lay-verify="">
+            <td id="stateView"></td>
+            <script type="text/html" id="stateTpl">
+                <select name="lastCollectState">
                     <option value="">请选择催收状态</option>
-                    <option value="1">是</option>
-                    <option value="0">否</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.id }}">{{ s.status }}</option>
+                    {{# }); }}
                 </select>
-            </td>
+            </script>
             <td><label class="layui-form-label">还款状态：</label></td>
             <td>
                 <select name="payState" lay-verify="">
@@ -119,6 +121,15 @@
 <script type="text/html" id="tool">
     <button class="layui-btn layui-btn-sm userinfo" lay-event="userinfo">个人信息</button>
     <button class="layui-btn layui-btn-sm userinfo" lay-event="repayinfo">还款信息</button>
+</script>
+<script type="text/html" id="collectWay">
+    {{# if (d.collectWay === 0) { }}
+    <span style="color:red;">未分配</span>
+    {{# } else if (d.collectWay === 1) { }}
+    电话催收
+    {{# } else if (d.collectWay === 3) { }}
+    外包催收
+    {{# } }}
 </script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
