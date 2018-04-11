@@ -42,6 +42,17 @@ const lessaddress = address => {
     return exec ? exec[0] : '<span style="color:red;">无有效地址</span>';
 };
 
+/**
+ * 日期格式化
+ * @param str
+ * @returns {string}
+ */
+const dateFormat = str => {
+    const date = new Date();
+    date.setTime(str);
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+};
+
 layui.use('jquery', () => {
     const $ = layui.jquery;
     $('.morebtn').click(() => {
