@@ -1,7 +1,7 @@
 const constants = {
     // 表单输入日期范围格式
     DATE_RANGE: 'yyyyMMdd'
-}
+};
 
 /**
  * 模板引擎
@@ -41,3 +41,20 @@ const lessaddress = address => {
     const exec = (/.*?(省|自治区)/.exec(address) ? /.*?(市|自治州)/ : /.*?区/).exec(address);
     return exec ? exec[0] : '<span style="color:red;">无有效地址</span>';
 };
+
+layui.use('jquery', () => {
+    const $ = layui.jquery;
+    $('.morebtn').click(() => {
+        $('.morebtn');
+        if ($('.morebtn').hasClass('in')) {
+            $('#more').hide('slow');
+            $('#more').children().children(':text').map((i, e) => $(e).val(''));
+            $('.morebtn').removeClass('in');
+            $('.morebtn').children().html('&#xe61a;');
+        } else {
+            $('#more').show('slow');
+            $('.morebtn').addClass('in');
+            $('.morebtn').children().html('&#xe619;');
+        }
+    });
+});

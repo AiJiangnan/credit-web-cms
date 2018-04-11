@@ -14,7 +14,7 @@ layui.use(['table', 'laydate'], () => {
             {type: 'numbers', title: '序号'},
             {field: 'channel', title: '进件渠道', align: 'center', width: 100},
             {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
-            {field: 'name', title: '姓名', align: 'center', width: 80, templet: '#gender'},
+            {field: 'name', title: '姓名', align: 'center', width: 80},
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true},
             {field: 'approveTime', title: '审批时间', align: 'center', width: 100, align: 'center', sort: true},
             {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, align: 'center'},
@@ -97,19 +97,5 @@ layui.use(['table', 'laydate'], () => {
     });
 
     t.on('sort(composite)', o => t.reload('composite', {where: {sort: o.field, sortOrder: o.type}}));
-
-    $('.morebtn').click(() => {
-        $('.morebtn');
-        if ($('.morebtn').hasClass('in')) {
-            $('#more').hide('slow');
-            $('#more').children().children(':text').map((i, e) => $(e).val(''));
-            $('.morebtn').removeClass('in');
-            $('.morebtn').children().html('&#xe61a;');
-        } else {
-            $('#more').show('slow');
-            $('.morebtn').addClass('in');
-            $('.morebtn').children().html('&#xe619;');
-        }
-    });
 
 });

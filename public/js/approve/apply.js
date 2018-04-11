@@ -1,32 +1,35 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
+    layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
+
     t.render({
-        id: 'distribute',
-        elem: '#distribute',
-        height: 'full-110',
+        id: 'apply',
+        elem: '#apply',
+        height: 'full-170',
         page: true,
-        url: '/approve/distribute',
+        url: '/approve/apply',
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
             {field: 'channel', title: '进件渠道', align: 'center', width: 100},
+            {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true},
+            {field: 'registerTime', title: '入网时间', align: 'center', width: 120},
             {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
-            {field: 'name', title: '姓名', align: 'center', width: 80},
-            {field: 'incomeTime', title: '进件日期', align: 'center', width: 120, sort: true},
-            {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, align: 'center', templet: '#loanCount'},
-            {field: 'status', title: '审核状态', align: 'center', width: 100, align: 'center', templet: '#state'},
-            {field: 'registerTime', title: '入网时间', align: 'center', width: 100, align: 'center'},
+            {field: 'rejectLoanCount', title: '拒贷数', align: 'center', width: 100, align: 'center', templet: '#loanCount'},
+            {field: 'loanCount', title: '申请次数', align: 'center', width: 100, sort: true, align: 'center', templet: '#state'},
+            {field: 'loanCount', title: '放款次数', align: 'center', width: 100, sort: true, align: 'center'},
+            {field: 'refuseNote', title: '机器拒绝原因', align: 'center', width: 120, align: 'center'},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]
     });
 
-    t.on('tool(distribute)', o => {
+    t.on('tool(apply)', o => {
         let [e, d] = [o.event, o.data];
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr>
-                        <td style="width:5em;"><b>姓　　名：</b></td>
+                        <td style="width:6em;"><b>姓　　名：</b></td>
                         <td>${d.name}</td>
                     </tr>
                     <tr>
@@ -38,8 +41,8 @@ layui.use(['table', 'laydate'], () => {
                         <td>${d.phone}</td>
                     </tr>
                     <tr>
-                        <td><b>身份证号：</b></td>
-                        <td>${d.idcard}</td>
+                        <td><b>号码归属地：</b></td>
+                        <td>${d.phoneLoc}</td>
                     </tr>
                     <tr>
                         <td><b>定位位置：</b></td>
@@ -50,13 +53,13 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('distribute', {where: d.field});
+        t.reload('apply', {where: d.field});
         return false;
     });
 
-    t.on('sort(distribute)', o => t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}}));
+    t.on('sort(apply)', o => t.reload('apply', {where: {sort: o.field, sortOrder: o.type}}));
 
-    t.on('checkbox(distribute)', o => {
+    t.on('checkbox(apply)', o => {
         if (o.checked) {
             $('#allot').parent().show('fast');
         } else {
@@ -65,6 +68,6 @@ layui.use(['table', 'laydate'], () => {
     });
 
     $('#allot').click(() => {
-        const d = t.checkStatus('distribute');
+        const d = t.checkStatus('apply');
     });
 });
