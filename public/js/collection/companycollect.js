@@ -23,10 +23,6 @@ layui.use(['table', 'laydate'], () => {
             {field: 'phone', title: '手机号码', align: 'center', width: 100},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 130},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
-            /*{field: 'updateTime', title: '委案时间', align: 'center', width: 130, align: 'center', templet: d => dateFormat(d.updateTime)},
-            {field: 'lateDays', title: '委案逾期天数', align: 'center', width: 120, align: 'center'},
-            {field: 'contractAmount', title: '委案金额', align: 'center', width: 130, align: 'center'},
-            {field: 'contractAmount', title: '委托催收金额', align: 'center', width: 130, align: 'center', templet: d => d.contractAmount + d.totalInterestPenalty},*/
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
