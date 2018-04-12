@@ -66,5 +66,33 @@ layui.use(['table', 'laydate'], () => {
 
     $('#allot').click(() => {
         const d = t.checkStatus('distribute');
+        let applyIds = [];
+        d.data.map((e, i) => applyIds.push(e.id));
+        layer.open({
+            title: '分配审核人员',
+            type: 2,
+            content: '/approve/admin.html',
+            area: ['300px', '400px'],
+            btn: ['确认', '取消'],
+            yes: (i, l) => {
+                let f = layer.getChildFrame('form', i);
+                const userId = f.find(':checked').val();
+                if (!userId) {
+                    layer.msg('没有选择信审专员！', {icon: 5});
+                    return;
+                }
+                $.post('/approve/distribution', {auditUid: userId, applyIds: JSON.stringify(applyIds)}, data => {
+                    if (data.code === 0) {
+                        layer.msg(data.data, {icon: 1});
+                        layer.close(i);
+                    }
+                    layer.msg(data.msg, {icon: 5});
+                    layer.close(i);
+                });
+            },
+            btn2: (i, l) => {
+                layer.close(i);
+            }
+        });
     });
 });

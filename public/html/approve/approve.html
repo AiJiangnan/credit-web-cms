@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>批贷</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-form-label {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+</head>
+<body style="padding-right:20px;">
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">批贷：</label>
+        <div class="layui-input-block">
+            <input type="checkbox" lay-skin="switch" lay-text="是|否">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+            <input type="text" placeholder="请输入备注" class="layui-input">
+        </div>
+    </div>
+</form>
+<script src="../../js/layui/layui.js"></script>
+<script>
+    layui.use('form');
+</script>
+</body>
+</html>

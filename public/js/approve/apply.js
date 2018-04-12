@@ -69,5 +69,30 @@ layui.use(['table', 'laydate'], () => {
 
     $('#allot').click(() => {
         const d = t.checkStatus('apply');
+        let applyIds = [];
+        d.data.map((e, i) => applyIds.push(e.id));
+        layer.open({
+            title: '批贷',
+            type: 2,
+            content: ['/approve/approve.html', 'no'],
+            area: ['300px', '200px'],
+            btn: ['确认', '取消'],
+            yes: (i, l) => {
+                let f = layer.getChildFrame('form', i);
+                const flag = !!f.find(':checked').val();
+                const remark = f.find(':text').val();
+                $.post('/approve/audit', {flag: flag, remark: remark, applyIds: JSON.stringify(applyIds)}, data => {
+                    if (data.code === 0) {
+                        layer.msg(data.data, {icon: 1});
+                        layer.close(i);
+                    }
+                    layer.msg(data.msg, {icon: 5});
+                    layer.close(i);
+                });
+            },
+            btn2: (i, l) => {
+                layer.close(i);
+            }
+        });
     });
 });
