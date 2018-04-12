@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择信审专员</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-form-item {
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form"></form>
+<script src="../../js/layui/layui.js"></script>
+<script>
+    layui.use('form', () => {
+        const [$, f] = [layui.jquery, layui.form];
+        $.get('/collect/user', d => {
+            if (d.code === 0) {
+                let result = '';
+                d.data.map((e, i) => {
+                    result += `<div class="layui-form-item">
+                                   <input type="radio" name="applyIds" title="${e.realname}" value="${e.id}" lay-skin="primary">
+                               </div>`;
+                });
+                $('.layui-form').html(result);
+                f.render();
+            }
+        });
+    });
+</script>
+</body>
+</html>

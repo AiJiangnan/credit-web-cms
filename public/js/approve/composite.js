@@ -37,7 +37,7 @@ layui.use(['table', 'laydate'], () => {
                     </tr>
                     <tr>
                         <td><b>白名单：</b></td>
-                        <td>${d.whetherWhiteList}</td>
+                        <td>${d.whetherWhiteList ? '是' : '否'}</td>
                     </tr>
                     <tr>
                         <td><b>手机号码：</b></td>
@@ -73,7 +73,7 @@ layui.use(['table', 'laydate'], () => {
                     </tr>
                     <tr>
                         <td><b>是否人工决策：</b></td>
-                        <td>${d.isAudit}</td>
+                        <td>${d.whetherAudit ? '是' : '否'}</td>
                     </tr>
                     <tr>
                         <td><b>批贷金额：</b></td>

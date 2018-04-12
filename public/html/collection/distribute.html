@@ -131,6 +131,14 @@
     外包催收
     {{# } }}
 </script>
+<script type="text/html" id="collectUser">
+    {{# if (d.collectWay === 0) { }}
+    {{# } else if (d.collectWay === 1) { }}
+    {{ d.collectUser }}
+    {{# } else if (d.collectWay === 3) { }}
+    <span style="color:red;">{{ d.collectCompany }}</span>
+    {{# } }}
+</script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script src="../../js/collection/distribute.js"></script>

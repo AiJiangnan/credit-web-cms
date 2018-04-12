@@ -16,9 +16,9 @@ layui.use(['table', 'laydate'], () => {
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'registerTime', title: '入网时间', align: 'center', width: 140, templet: d => dateFormat(d.registerTime)},
             {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
-            {field: 'rejectLoanCount', title: '拒贷数', align: 'center', width: 80, align: 'center', templet: '#loanCount'},
-            {field: 'loanCount', title: '申请次数', align: 'center', width: 100, sort: true, align: 'center', templet: '#state'},
             {field: 'loanCount', title: '放款次数', align: 'center', width: 100, sort: true, align: 'center'},
+            {field: 'rejectLoanCount', title: '拒贷数', align: 'center', width: 80, align: 'center'},
+            {field: 'applyCount', title: '申请次数', align: 'center', width: 100, sort: true, align: 'center', templet: d => d.rejectLoanCount + d.loanCount},
             {field: 'refuseNote', title: '机器拒绝原因', align: 'center', width: 120, align: 'center'},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]

@@ -10,27 +10,25 @@ layui.use(['table', 'laydate'], () => {
     });
 
     t.render({
-        id: 'distribute',
-        elem: '#distribute',
-        height: 'full-170',
+        id: 'phonecollect',
+        elem: '#phonecollect',
+        height: 'full-110',
         page: true,
-        url: '/collect',
+        url: '/collect/phonecollect',
         cols: [[
-            {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'collectUser', title: '催收人员', align: 'center', width: 100, templet: '#collectUser'},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
-            {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
+            {field: 'updateTime', title: '分配时间', align: 'center', width: 130, templet: d => dateFormat(d.updateTime)},
+            {field: 'remindTime', title: '提醒日期', align: 'center', width: 130, templet: d => dateFormat(d.remindTime)},
+            {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 130, templet: d => dateFormat(d.lastCollectTime)},
+            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 100, align: 'center'},
+            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120, align: 'center'},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120, align: 'center'},
-            {field: 'collectWay', title: '分配状态', align: 'center', width: 100, sort: true, align: 'center', templet: '#collectWay'},
-            {field: 'updateTime', title: '分配日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.updateTime)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
 
-    t.on('tool(distribute)', o => {
+    t.on('tool(phonecollect)', o => {
         let [e, d] = [o.event, o.data];
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
@@ -98,50 +96,10 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('distribute', {where: d.field});
+        t.reload('phonecollect', {where: d.field});
         return false;
     });
 
-    t.on('sort(distribute)', o => t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}}));
+    t.on('sort(phonecollect)', o => t.reload('phonecollect', {where: {sort: o.field, sortOrder: o.type}}));
 
-    t.on('checkbox(distribute)', o => {
-        if (o.checked) {
-            $('#allot').parent().show('fast');
-        } else {
-            $('#allot').parent().hide('fast');
-        }
-    });
-
-    $('#allot').click(() => {
-        const d = t.checkStatus('distribute');
-        let applyIds = [];
-        d.data.map((e, i) => applyIds.push(e.id));
-        layer.open({
-            title: '分配审核人员',
-            type: 2,
-            content: '/collection/admin.html',
-            area: ['300px', '400px'],
-            btn: ['确认', '取消'],
-            yes: (i, l) => {
-                let f = layer.getChildFrame('form', i);
-                const userId = f.find(':checked').val();
-                const userName = f.find(':checked').attr('title');
-                if (!userId) {
-                    layer.msg('没有选择催收人员！', {icon: 5});
-                    return;
-                }
-                $.post('/collect/phoneallot', {collectUserId: userId, collectUserName: userName, applyIds: JSON.stringify(applyIds)}, data => {
-                    if (data.code === 0) {
-                        layer.msg(data.data, {icon: 1});
-                        layer.close(i);
-                    }
-                    layer.msg(data.msg, {icon: 5});
-                    layer.close(i);
-                });
-            },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
-        });
-    });
 });
