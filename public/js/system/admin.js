@@ -116,7 +116,7 @@ layui.use('table', () => {
         });
     });
 
-    $('#refresh').click(() => t.reload('admin'));
+    $('#refresh').click(() => t.reload('admin', {where: null}));
 
     f.on('submit(submit)', d => {
         t.reload('admin', {where: d.field});

@@ -111,7 +111,7 @@ layui.use('table', () => {
         });
     });
 
-    $('#refresh').click(() => t.reload('role'));
+    $('#refresh').click(() => t.reload('role', {where: null}));
 
     f.on('submit(submit)', d => {
         t.reload('role', {where: d.field});
