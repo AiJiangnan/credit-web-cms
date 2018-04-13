@@ -9,7 +9,7 @@ layui.use('table', () => {
         url: '/user',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'username', title: '用户名', align: 'center', width: 100},
+            {field: 'username', title: '用户名', align: 'center', width: 120},
             {field: 'realname', title: '姓名', align: 'center', width: 120},
             {field: 'gender', title: '性别', align: 'center', width: 80, templet: '#gender'},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
