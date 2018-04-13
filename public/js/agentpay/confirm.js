@@ -1,0 +1,105 @@
+layui.use(['table', 'laydate'], () => {
+    const [$, t, f] = [layui.jquery, layui.table, layui.form];
+
+    layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
+
+    t.render({
+        id: 'confirm',
+        elem: '#confirm',
+        height: 'full-70',
+        page: true,
+        // url: '/approve/confirm',
+        url: '/role',
+        cols: [[
+            {type: 'checkbox'},
+            {type: 'numbers', title: '序号'},
+            {field: 'channel', title: '进件渠道', align: 'center', width: 100},
+            {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
+            {field: 'name', title: '姓名', align: 'center', width: 80},
+            {field: 'incomeTime', title: '进件日期', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
+            {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, align: 'center', templet: '#loanCount'},
+            {field: 'status', title: '审核状态', align: 'center', width: 100, align: 'center', templet: '#state'},
+            {field: 'registerTime', title: '入网时间', align: 'center', width: 140, align: 'center', templet: d => dateFormat(d.registerTime)},
+            {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
+        ]]
+    });
+
+    t.on('tool(confirm)', o => {
+        let [e, d] = [o.event, o.data];
+        if (e === 'userinfo') {
+            alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
+                    <tr>
+                        <td style="width:5em;"><b>姓　　名：</b></td>
+                        <td>${d.name}</td>
+                    </tr>
+                    <tr>
+                        <td><b>注册渠道：</b></td>
+                        <td>${d.sourceType}</td>
+                    </tr>
+                    <tr>
+                        <td><b>手机号码：</b></td>
+                        <td>${d.phone}</td>
+                    </tr>
+                    <tr>
+                        <td><b>身份证号：</b></td>
+                        <td>${d.idcard}</td>
+                    </tr>
+                    <tr>
+                        <td><b>定位位置：</b></td>
+                        <td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td>
+                    </tr>
+                </table>`);
+        }
+    });
+
+    f.on('submit(submit)', d => {
+        t.reload('confirm', {where: d.field});
+        return false;
+    });
+
+    t.on('sort(confirm)', o => t.reload('confirm', {where: {sort: o.field, sortOrder: o.type}}));
+
+    t.on('checkbox(confirm)', o => {
+        if (o.checked) {
+            $('#rongbao').parent().show('fast');
+        } else {
+            $('#rongbao').parent().hide('fast');
+        }
+    });
+
+    $('#rongbao').click(() => {
+        const d = t.checkStatus('confirm');
+        let applyIds = [];
+        d.data.map((e, i) => applyIds.push(e.id));
+        /*layer.open({
+            title: '分配审核人员',
+            type: 2,
+            content: '/approve/admin.html',
+            area: ['300px', '400px'],
+            btn: ['确认', '取消'],
+            yes: (i, l) => {
+                let f = layer.getChildFrame('form', i);
+                const userId = f.find(':checked').val();
+                if (!userId) {
+                    layer.msg('没有选择信审专员！', {icon: 5});
+                    return;
+                }
+                $.post('/approve/distribution', {auditUid: userId, applyIds: JSON.stringify(applyIds)}, data => {
+                    if (data.code === 0) {
+                        layer.msg(data.data, {icon: 1});
+                        layer.close(i);
+                    }
+                    layer.msg(data.msg, {icon: 5});
+                    layer.close(i);
+                });
+            },
+            btn2: (i, l) => {
+                layer.close(i);
+            }
+        });*/
+
+        $('#xianfeng').click(() => {
+
+        });
+    });
+});
