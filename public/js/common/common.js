@@ -53,6 +53,17 @@ const dateFormat = str => {
     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
 };
 
+/**
+ * 日期时间格式化
+ * @param str
+ * @returns {string}
+ */
+const dateTimeFormat = str => {
+    const date = new Date();
+    date.setTime(str);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+};
+
 layui.use('jquery', () => {
     const $ = layui.jquery;
     $('.morebtn').click(() => {
