@@ -23,7 +23,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'phone', title: '手机号码', align: 'center', width: 100},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 130},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
-            {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
+            {title: '操作', width: 280, align: 'center', toolbar: '#tool'}
         ]]
     });
 
@@ -90,7 +90,9 @@ layui.use(['table', 'laydate'], () => {
                     parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
                 }
             });
-
+        }
+        if (e === 'detail') {
+            location = 'detail.html';
         }
     });
 
