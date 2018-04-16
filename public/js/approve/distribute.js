@@ -84,9 +84,9 @@ layui.use(['table', 'laydate'], () => {
                 $.post('/approve/distribution', {auditUid: userId, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
                         layer.msg(data.data, {icon: 1});
-                        layer.close(i);
+                    } else {
+                        layer.msg('分配失败！', {icon: 5});
                     }
-                    layer.msg('分配失败！', {icon: 5});
                     layer.close(i);
                 });
             },
