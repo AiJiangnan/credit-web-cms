@@ -15,6 +15,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'channel', title: '进件渠道', align: 'center', width: 90},
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'registerTime', title: '入网时间', align: 'center', width: 140, templet: d => dateFormat(d.registerTime)},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
             {field: 'loanCount', title: '放款次数', align: 'center', width: 100, sort: true, align: 'center'},
             {field: 'rejectLoanCount', title: '拒贷数', align: 'center', width: 80, align: 'center'},
