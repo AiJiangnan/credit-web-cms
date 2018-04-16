@@ -86,7 +86,7 @@ layui.use(['table', 'laydate'], () => {
                         layer.msg(data.data, {icon: 1});
                         layer.close(i);
                     }
-                    layer.msg(data.msg, {icon: 5});
+                    layer.msg(data.data, {icon: 5});
                     layer.close(i);
                 });
             },
