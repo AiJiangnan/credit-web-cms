@@ -84,6 +84,7 @@ layui.use(['table', 'laydate'], () => {
                 $.post('/approve/distribution', {auditUid: userId, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
                         layer.msg(data.data, {icon: 1});
+                        t.reload('distribute', {where: null});
                     } else {
                         layer.msg('分配失败！', {icon: 5});
                     }
