@@ -17,7 +17,7 @@ layui.use(['table', 'laydate'], () => {
         url: '/collect/phonecollect',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=1">${d.applyNo}</a>`},
             {field: 'updateTime', title: '分配时间', align: 'center', width: 130, templet: d => dateFormat(d.updateTime)},
             {field: 'remindTime', title: '提醒日期', align: 'center', width: 130, templet: d => dateFormat(d.remindTime)},
             {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 130, templet: d => dateFormat(d.lastCollectTime)},

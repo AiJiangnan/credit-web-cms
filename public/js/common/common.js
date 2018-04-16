@@ -64,6 +64,17 @@ const dateTimeFormat = str => {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 };
 
+/**
+ * 获取URL中GET参数
+ * @param name
+ * @returns {any}
+ */
+const getQueryStr = name => {
+    const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    const res = location.search.substr(1).match(reg);
+    return res != null ? decodeURIComponent(res[2]) : null;
+};
+
 layui.use('jquery', () => {
     const $ = layui.jquery;
     $('.morebtn').click(() => {

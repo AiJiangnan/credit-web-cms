@@ -19,7 +19,7 @@ layui.use(['table', 'laydate'], () => {
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100, templet: '#collectUser'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
@@ -133,9 +133,9 @@ layui.use(['table', 'laydate'], () => {
                 $.post('/collect/phoneallot', {collectUserId: userId, collectUserName: userName, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
                         layer.msg(data.data, {icon: 1});
-                        layer.close(i);
+                    } else {
+                        layer.msg("分配失败！", {icon: 5});
                     }
-                    layer.msg(data.msg, {icon: 5});
                     layer.close(i);
                 });
             },

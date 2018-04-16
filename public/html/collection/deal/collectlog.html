@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加催收记录</title>
+    <link rel="stylesheet" href="../../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            width: 70px;
+            padding: 0 0 0 15px;
+        }
+
+        .layui-form-switch, .layui-form-radio {
+            margin: 0;
+        }
+
+        .layui-form-select dl {
+            max-height: 14em;
+        }
+
+        td {
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form">
+    <table style="width:90%;">
+        <tr>
+            <td><label class="layui-form-label">催收状态：</label></td>
+            <td id="stateView"></td>
+            <script type="text/html" id="stateTpl">
+                <select name="collectState" lay-filter="status" required lay-verify="required">
+                    <option value="">请选择催收状态</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.id }}">{{ s.status }}</option>
+                    {{# }); }}
+                </select>
+            </script>
+        </tr>
+        <tr id="sub" hidden>
+            <td></td>
+            <td id="stateView2"></td>
+            <script type="text/html" id="stateTpl2">
+                <select name="subCollectState" required lay-verify="required">
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.id }}">{{ s.status }}</option>
+                    {{# }); }}
+                </select>
+            </script>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">提醒日期：</label></td>
+            <td><input type="text" name="remindTimeStr" class="layui-input" required lay-verify="required" id="date1" placeholder="请待选择提醒日期"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">催收记录：</label></td>
+            <td><input type="text" name="collectRemark" placeholder="请输入催收记录" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">是否重要：</label></td>
+            <td><input type="checkbox" name="important" value="1" lay-skin="switch" lay-text="是|否"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<script src="../../../js/layui/layui.js"></script>
+<script src="../../../js/common/common.js"></script>
+<script>
+    layui.use(['form', 'laydate', 'laytpl', 'layer', 'table'], () => {
+        const [$, f, p] = [layui.jquery, layui.form, parent];
+        const applyId = getQueryStr('applyId');
+
+        layui.laydate.render({elem: '#date1'});
+
+        $.get('/collect/0', d => {
+            laytplrender(stateTpl, 'stateView', JSON.parse(d.data));
+            f.render();
+        });
+
+        f.on('select(status)', d => {
+            if (!d.value) {
+                $('[name="substate"]').val('');
+                $('#sub').hide();
+                f.render();
+                return;
+            }
+            $('#sub').show();
+            $.get('/collect/' + d.value, d => {
+                laytplrender(stateTpl2, 'stateView2', JSON.parse(d.data));
+                f.render();
+            });
+        });
+
+        f.on('submit(submit)', d => {
+            let log = d.field;
+            let $1 = $('option[value=' + log.collectState + ']').html();
+            let $2 = $('option[value=' + log.subCollectState + ']').html();
+            log.applyId = applyId;
+            log.collectStateRemark = `${$1}（${$2}）`;
+            $.post('/collect/log', log, data => {
+                if (data.code === 0) {
+                    p.layui.table.reload('collectlog');
+                    p.layer.close(p.layer.getFrameIndex(window.name));
+                    p.layer.msg(data.data, {icon: 1});
+                    return;
+                }
+                p.layer.msg(data.data, {icon: 2});
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>
