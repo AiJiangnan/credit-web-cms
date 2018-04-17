@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择外包公司</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            width: 70px;
+            padding: 0 0 0 15px;
+        }
+
+        .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">应还日期：</label></td>
+            <td><input type="text" name="planDate" class="layui-input" id="date1" placeholder="请选择应还款日期"></td>
+            <td style="padding-left:10px;">笔数：<span style="color:red;" id="count"></span></td>
+        </tr>
+    </table>
+    <hr class="layui-bg-gray">
+    <label class="layui-form-label" style="width:8em;">请选择外包公司：</label>
+    <div id="coms" style="margin-top:45px;margin-left:30px;"></div>
+</form>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script>
+    layui.use(['form', 'laydate'], () => {
+        const [$, f] = [layui.jquery, layui.form];
+
+        layui.laydate.render({
+            elem: '#date1', range: true, format: constants.DATE_RANGE,
+            done: (v, d, e) => {
+                $.get('/collect/companycount', {planDate: v}, data => {
+                    $('#count').html('');
+                    if (data.code === 0) {
+                        $('#count').html(data.data);
+                    } else {
+                        $('#count').html(data.msg);
+                    }
+                });
+            }
+        });
+
+        $.get('/collect/companylist?state=1', d => {
+            if (d.code === 0) {
+                let result = '';
+                d.data.map((e, i) => {
+                    result += `<div class="layui-form-item">
+                                   <input type="checkbox" name="companyIds" title="${e.name}" value="${e.id}" lay-skin="primary">
+                               </div>`;
+                });
+                $('#coms').html(result);
+                f.render();
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -115,7 +115,7 @@ layui.use(['table', 'laydate'], () => {
     $('#allot').click(() => {
         const d = t.checkStatus('distribute');
         let applyIds = [];
-        d.data.map((e, i) => applyIds.push(e.id));
+        d.data.map((e, i) => applyIds.push(e.applyId));
         layer.open({
             title: '分配审核人员',
             type: 2,
@@ -133,8 +133,48 @@ layui.use(['table', 'laydate'], () => {
                 $.post('/collect/phoneallot', {collectUserId: userId, collectUserName: userName, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
                         layer.msg(data.data, {icon: 1});
+                        t.reload('distribute');
                     } else {
                         layer.msg("分配失败！", {icon: 5});
+                    }
+                    layer.close(i);
+                });
+            },
+            btn2: (i, l) => {
+                layer.close(i);
+            }
+        });
+    });
+
+    $('#company').click(() => {
+        layer.open({
+            title: '分配外包催收',
+            type: 2,
+            content: '/collection/com.html',
+            area: ['600px', '450px'],
+            btn: ['确认', '取消'],
+            yes: (i, l) => {
+                let f = layer.getChildFrame('form', i);
+                const companyIds = f.find(':checked');
+                const planDate = f.find(':text').val();
+                if (!planDate) {
+                    layer.msg('没有选择应还款日期！', {icon: 5});
+                    return;
+                }
+                if (companyIds.length < 1) {
+                    layer.msg('没有选择外包公司！', {icon: 5});
+                    return;
+                }
+                let company = [];
+                companyIds.map((i, e) => company.push($(e).val()));
+                $.post('/collect/companyallot', {planDate: planDate, companyIds: JSON.stringify(company)}, data => {
+                    if (data.code === 0 || data.code === 3) {
+                        layer.msg(data.data, {icon: 1});
+                        if (data.code === 0) {
+                            t.reload('distribute');
+                        }
+                    } else {
+                        layer.msg(data.data, {icon: 5});
                     }
                     layer.close(i);
                 });
