@@ -8,18 +8,23 @@ layui.use(['table', 'laydate'], () => {
         elem: '#todeal',
         height: 'full-110',
         page: true,
-        // url: '/collect/todeal',
-        url: '/role',
+        url: '/agentpay/todeal',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
-            {field: 'updateTime', title: '分配时间', align: 'center', width: 130, templet: d => dateFormat(d.updateTime)},
-            {field: 'remindTime', title: '提醒日期', align: 'center', width: 130, templet: d => dateFormat(d.remindTime)},
-            {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 130, templet: d => dateFormat(d.lastCollectTime)},
-            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
-            {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
+            {field: 'applyNo', title: '申请单号', align: 'center', width: 100},
+            {field: 'repaymentDate', title: '还款日期', align: 'center', width: 130},
+            {field: 'repaymentAccountName', title: '还款账户名', align: 'center', width: 100},
+            {field: 'repaymentAccount', title: '还款账户', align: 'center', width: 100},
+            {field: 'name', title: '客户姓名', align: 'center', width: 100},
+            {field: 'phone', title: '手机号码', align: 'center', width: 100},
+            {field: 'planTotalAmount', title: '应还总额', align: 'center', width: 100},
+            {field: 'actualTotalAmount', title: '已还款金额', align: 'center', width: 100},
+            {field: 'residualAmount', title: '剩余应还款金额', align: 'center', width: 140},
+            {field: 'reduceAmount', title: '减免金额', align: 'center', width: 100},
+            {field: 'actualAmount', title: '实际还额金额', align: 'center', width: 100},
+            {field: 'planState', title: '是否逾期', align: 'center', width: 100},
+            {field: 'isPartRepayment', title: '是否部分还款', align: 'center', width: 140},
+            {title: '对公还款操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
 

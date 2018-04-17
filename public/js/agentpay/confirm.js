@@ -14,13 +14,13 @@ layui.use(['table', 'laydate'], () => {
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
             {field: 'orderNo', title: '申请编号', align: 'center', width: 100},
-            {field: 'accountName', title: '账户名', align: 'center', width: 120},
+            {field: 'accountName', title: '账户名', align: 'center', width: 80},
             {field: 'bankName', title: '银行名', align: 'center', width: 80},
-            {field: 'accountNumber', title: '银行卡号', align: 'center', width: 80},
-            {field: 'agreeAmount', title: '合同金额', align: 'center', width: 80},
-            {field: 'amount', title: '放款金额', align: 'center', width: 140},
-            {field: 'productType', title: '借款期限(天)', align: 'center', width: 100},
-            {field: 'applyTime', title: '进件时间', align: 'center', width: 100},
+            {field: 'accountNumber', title: '银行卡号', align: 'center', width: 120},
+            {field: 'agreeAmount', title: '合同金额', align: 'center', width: 100},
+            {field: 'amount', title: '放款金额', align: 'center', width: 100},
+            {field: 'productType', title: '借款期限', align: 'center', width: 100},
+            {field: 'applyTime', title: '进件时间', align: 'center', width: 140},
             {field: 'approveTime', title: '审核时间', align: 'center', width: 140},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]
@@ -32,11 +32,7 @@ layui.use(['table', 'laydate'], () => {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr>
                         <td style="width:5em;"><b>姓　　名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>注册渠道：</b></td>
-                        <td>${d.sourceType}</td>
+                        <td>${d.accountName}</td>
                     </tr>
                     <tr>
                         <td><b>手机号码：</b></td>
@@ -45,10 +41,6 @@ layui.use(['table', 'laydate'], () => {
                     <tr>
                         <td><b>身份证号：</b></td>
                         <td>${d.idcard}</td>
-                    </tr>
-                    <tr>
-                        <td><b>定位位置：</b></td>
-                        <td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td>
                     </tr>
                 </table>`);
         }

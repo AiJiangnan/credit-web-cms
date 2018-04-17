@@ -8,18 +8,18 @@ layui.use(['table', 'laydate'], () => {
         elem: '#deal',
         height: 'full-70',
         page: true,
-        // url: '/collect/deal',
+        // url: '/agentpay/deal',
         url: '/role',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
-            {field: 'updateTime', title: '分配时间', align: 'center', width: 130, templet: d => dateFormat(d.updateTime)},
-            {field: 'remindTime', title: '提醒日期', align: 'center', width: 130, templet: d => dateFormat(d.remindTime)},
-            {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 130, templet: d => dateFormat(d.lastCollectTime)},
-            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
-            {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
+            {field: 'batchNo', title: '批次号', align: 'center', width: 120},
+            {field: 'agentpayType', title: '划扣平台', align: 'center', width: 130},
+            {field: 'createTime', title: '创建时间', align: 'center', width: 130},
+            {field: 'totalNum', title: '总条数', align: 'center', width: 130},
+            {field: 'totalAmount', title: '总金额', align: 'center', width: 100},
+            {field: 'successNum', title: '成功条数', align: 'center', width: 120},
+            {field: 'successAmount', title: '成功金额', align: 'center', width: 130},
+            {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]
     });
 

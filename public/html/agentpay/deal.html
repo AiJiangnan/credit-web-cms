@@ -28,16 +28,10 @@
         <tr>
             <td><label class="layui-form-label">批次号：</label></td>
             <td><input type="text" name="batchNo" placeholder="请输入批次号" class="layui-input"></td>
-            <td><label class="layui-form-label">划扣类型：</label></td>
-            <td>
-                <select name="agentpayType">
-                    <option value="">请选择划扣类型</option>
-                    <option value="REAPAL">融宝</option>
-                    <option value="UCF">先锋</option>
-                </select>
-            </td>
             <td><label class="layui-form-label">回盘时间：</label></td>
             <td><input type="text" name="createTimeStr" class="layui-input" id="date1" placeholder="请选择回盘时间"></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td colspan="2" style="padding-left:20px;">
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
@@ -53,8 +47,7 @@
 </form>
 <table id="deal" lay-filter="deal"></table>
 <script type="text/html" id="tool">
-    <button class="layui-btn layui-btn-sm userinfo" lay-event="userinfo">个人信息</button>
-    <button class="layui-btn layui-btn-sm userinfo" lay-event="repayinfo">还款信息</button>
+    <button class="layui-btn layui-btn-sm layui-bg-green" lay-event="userinfo">再次划扣</button>
 </script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
