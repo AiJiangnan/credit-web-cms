@@ -12,14 +12,14 @@ layui.use(['table', 'laydate'], () => {
         url: '/collect/record',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'updateTime', title: '实际还款时间', align: 'center', width: 160, align: 'center', templet: d => dateTimeFormat(d.updateTime)},
+            {field: 'updateTime', title: '实际还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.updateTime)},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 100},
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100},
             {field: 'payTime', title: '放款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.payTime)},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 120, align: 'center'},
-            {field: 'payState', title: '划扣状态', align: 'center', width: 120, align: 'center'},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 120},
+            {field: 'payState', title: '划扣状态', align: 'center', width: 120},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });

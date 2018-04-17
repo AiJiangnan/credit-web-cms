@@ -8,18 +8,20 @@ layui.use(['table', 'laydate'], () => {
         elem: '#confirm',
         height: 'full-70',
         page: true,
-        // url: '/approve/confirm',
+        // url: '/agentpay/confirm',
         url: '/role',
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'channel', title: '进件渠道', align: 'center', width: 100},
-            {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
-            {field: 'name', title: '姓名', align: 'center', width: 80},
-            {field: 'incomeTime', title: '进件日期', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
-            {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, align: 'center', templet: '#loanCount'},
-            {field: 'status', title: '审核状态', align: 'center', width: 100, align: 'center', templet: '#state'},
-            {field: 'registerTime', title: '入网时间', align: 'center', width: 140, align: 'center', templet: d => dateFormat(d.registerTime)},
+            {field: 'orderNo', title: '申请编号', align: 'center', width: 100},
+            {field: 'accountName', title: '账户名', align: 'center', width: 120},
+            {field: 'bankName', title: '银行名', align: 'center', width: 80},
+            {field: 'accountNumber', title: '银行卡号', align: 'center', width: 80},
+            {field: 'agreeAmount', title: '合同金额', align: 'center', width: 80},
+            {field: 'amount', title: '放款金额', align: 'center', width: 140},
+            {field: 'productType', title: '借款期限(天)', align: 'center', width: 100},
+            {field: 'applyTime', title: '进件时间', align: 'center', width: 100},
+            {field: 'approveTime', title: '审核时间', align: 'center', width: 140},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]
     });

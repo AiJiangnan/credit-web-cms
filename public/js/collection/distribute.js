@@ -22,10 +22,10 @@ layui.use(['table', 'laydate'], () => {
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120, align: 'center'},
-            {field: 'collectWay', title: '分配状态', align: 'center', width: 100, sort: true, align: 'center', templet: '#collectWay'},
-            {field: 'updateTime', title: '分配日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.updateTime)},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
+            {field: 'collectWay', title: '分配状态', align: 'center', width: 100, sort: true, templet: '#collectWay'},
+            {field: 'updateTime', title: '分配日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.updateTime)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });

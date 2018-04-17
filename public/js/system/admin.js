@@ -13,7 +13,7 @@ layui.use('table', () => {
             {field: 'realname', title: '姓名', align: 'center', width: 120},
             {field: 'gender', title: '性别', align: 'center', width: 80, templet: '#gender'},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
-            {field: 'state', title: '状态', align: 'center', width: 80, align: 'center', sort: true, templet: '#state'},
+            {field: 'state', title: '状态', align: 'center', width: 80, sort: true, templet: '#state'},
             {title: '操作', width: 300, align: 'center', toolbar: '#tool'}
         ]]
     });

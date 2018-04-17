@@ -14,7 +14,7 @@ layui.use('table', () => {
             {field: 'phone', title: '联系电话', align: 'center', width: 120},
             {field: 'linkmanName', title: '联系人名称', align: 'center', width: 120},
             {field: 'linkmanPhone', title: '联系人电话', align: 'center', width: 120},
-            {field: 'state', title: '状态', align: 'center', width: 80, align: 'center', sort: true, templet: '#state'},
+            {field: 'state', title: '状态', align: 'center', width: 80, sort: true, templet: '#state'},
             {title: '操作', width: 200, align: 'center', toolbar: '#tool'}
         ]]
     });

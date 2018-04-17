@@ -16,9 +16,9 @@ layui.use(['table', 'laydate'], () => {
             {field: 'updateTime', title: '分配时间', align: 'center', width: 130, templet: d => dateFormat(d.updateTime)},
             {field: 'remindTime', title: '提醒日期', align: 'center', width: 130, templet: d => dateFormat(d.remindTime)},
             {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 130, templet: d => dateFormat(d.lastCollectTime)},
-            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 100, align: 'center'},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120, align: 'center'},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, align: 'center', templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 100},
+            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
