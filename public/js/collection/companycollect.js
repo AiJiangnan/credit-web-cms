@@ -17,82 +17,46 @@ layui.use(['table', 'laydate'], () => {
         url: '/collect/companycollect',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 260, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'collectCompany', title: '催收公司', align: 'center', width: 100},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'phone', title: '手机号码', align: 'center', width: 100},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 130},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
-            {title: '操作', width: 280, align: 'center', toolbar: '#tool'}
+            {title: '操作', width: 220, align: 'center', toolbar: '#tool'}
         ]]
     });
 
     t.on('tool(companycollect)', o => {
         let [e, d] = [o.event, o.data];
+        check(d);
         if (e === 'allotinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:7em;"><b>委案时间：</b></td>
-                        <td>${dateFormat(d.updateTime)}</td>
-                    </tr>
-                    <tr>
-                        <td><b>委案逾期天数：</b></td>
-                        <td>${d.lateDays}</td>
-                    </tr>
-                    <tr>
-                        <td><b>委案金额：</b></td>
-                        <td>${d.contractAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>委托催收金额：</b></td>
-                        <td>${d.contractAmount + d.totalInterestPenalty}</td>
-                    </tr>
+                    <tr><td style="width:7em;"><b>委案时间：</b></td><td>${dateFormat(d.updateTime)}</td></tr>
+                    <tr><td><b>委案逾期天数：</b></td><td>${d.lateDays}</td></tr>
+                    <tr><td><b>委案金额：</b></td><td>${d.contractAmount}</td></tr>
+                    <tr><td><b>委托催收金额：</b></td><td>${d.contractAmount + d.totalInterestPenalty}</td></tr>
                 </table>`);
         }
         if (e === 'repayinfo') {
             $.get('/repayment/' + d.applyId, p => {
                 if (p.code === 0) {
+                    let repay = p.data;
+                    check(repay);
                     alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:8em;"><b>客户姓名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>进件渠道：</b></td>
-                        <td>${d.sdChannel}</td>
-                    </tr>
-                    <tr>
-                        <td><b>违约天数：</b></td>
-                        <td>${p.overdueDays}</td>
-                    </tr>
-                    <tr>
-                        <td><b>逾期费：</b></td>
-                        <td>${d.overdueFee}</td>
-                    </tr>
-                    <tr>
-                        <td><b>应还总额：</b></td>
-                        <td>${d.planTotalAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>已还款金额：</b></td>
-                        <td>${d.actualTotalAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>剩余应还款金额：</b></td>
-                        <td>${d.planTotalAmount - d.actualTotalAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>还款状态：</b></td>
-                        <td>${d.state}</td>
-                    </tr>
-                </table>`);
+                        <tr><td style="width:8em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
+                        <tr><td><b>进件渠道：</b></td><td>${d.sdChannel}</td></tr>
+                        <tr><td><b>违约天数：</b></td><td>${repay.overdueDays}</td></tr>
+                        <tr><td><b>逾期费：</b></td><td>${repay.overdueFee}</td></tr>
+                        <tr><td><b>应还总额：</b></td><td>${repay.planTotalAmount}</td></tr>
+                        <tr><td><b>已还款金额：</b></td><td>${repay.actualTotalAmount}</td></tr>
+                        <tr><td><b>剩余应还款金额：</b></td><td>${repay.planTotalAmount - repay.actualTotalAmount}</td></tr>
+                        <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
+                    </table>`);
                 } else {
                     parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
                 }
             });
-        }
-        if (e === 'detail') {
-            location = 'detail.html';
         }
     });
 

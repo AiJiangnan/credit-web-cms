@@ -26,11 +26,11 @@
     <table>
         <tr>
             <td><label class="layui-form-label">金额：</label></td>
-            <td><input type="text" name="collectRemark" required lay-verify="required" placeholder="请输入减免金额" class="layui-input"></td>
+            <td><input type="text" name="reduceAmount" required lay-verify="required" placeholder="请输入减免金额" class="layui-input"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">备注：</label></td>
-            <td><input type="text" name="collectRemark" required lay-verify="required" placeholder="请输入备注" class="layui-input"></td>
+            <td><input type="text" name="remark" required lay-verify="required" placeholder="请输入备注" class="layui-input"></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
@@ -48,13 +48,16 @@
         const applyId = getQueryStr('applyId');
 
         f.on('submit(submit)', d => {
-            $.post('/repayment/reduce', d.field, data => {
+            let reduce = d.field;
+            reduce.applyId = applyId;
+            $.post('/repayment/reduce', reduce, data => {
                 if (data.code === 0) {
                     p.layer.close(p.layer.getFrameIndex(window.name));
                     p.layer.msg(data.data, {icon: 1});
                     return;
                 }
                 p.layer.msg(data.msg, {icon: 2});
+                p.layer.close(p.layer.getFrameIndex(window.name));
             });
             return false;
         });

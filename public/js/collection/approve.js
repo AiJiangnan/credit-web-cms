@@ -4,99 +4,29 @@ layui.use(['table', 'laydate'], () => {
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
 
-    $.get('/collect/0', d => {
-        laytplrender(stateTpl, 'stateView', JSON.parse(d.data));
-        f.render('select');
-    });
-
     t.render({
         id: 'approve',
         elem: '#approve',
         height: 'full-100',
         page: true,
-        // url: '/collect',
-        url: '/role',
+        url: '/repayment/reduce',
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'collectUser', title: '催收人员', align: 'center', width: 100, templet: '#collectUser'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 100},
+            {field: 'applyTime', title: '申请时间', align: 'center', width: 100, templet: d => dateFormat(d.applyTime)},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
-            {field: 'collectWay', title: '分配状态', align: 'center', width: 100, sort: true, templet: '#collectWay'},
-            {field: 'updateTime', title: '分配日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.updateTime)},
-            {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
+            {field: 'createUsername', title: '催收人员', align: 'center', width: 100},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 100, templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'planTotalAmount', title: '应还款金额', align: 'center', width: 100},
+            {field: 'reduceOverdueFee', title: '减免金额', align: 'center', width: 100},
+            {field: 'planState', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.planState)},
+            {field: 'applyRemark', title: '申请详情', align: 'center', width: 130},
+            {field: 'state', title: '操作', align: 'center', width: 130, templet: d => getStatus(d.state)}
         ]]
     });
 
-    t.on('tool(approve)', o => {
-        let [e, d] = [o.event, o.data];
-        if (e === 'userinfo') {
-            alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:6em;"><b>客户姓名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>注册渠道：</b></td>
-                        <td>${d.signChannel}</td>
-                    </tr>
-                    <tr>
-                        <td><b>手机号码：</b></td>
-                        <td>${d.phone}</td>
-                    </tr>
-                    <tr>
-                        <td><b>身份证号码：</b></td>
-                        <td>${d.idcard}</td>
-                    </tr>
-                </table>`);
-        }
-        if (e === 'repayinfo') {
-            $.get('/repayment/' + d.applyId, p => {
-                if (p.code === 0) {
-                    alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:8em;"><b>客户姓名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>进件渠道：</b></td>
-                        <td>${d.sdChannel}</td>
-                    </tr>
-                    <tr>
-                        <td><b>违约天数：</b></td>
-                        <td>${p.overdueDays}</td>
-                    </tr>
-                    <tr>
-                        <td><b>逾期费：</b></td>
-                        <td>${d.overdueFee}</td>
-                    </tr>
-                    <tr>
-                        <td><b>应还总额：</b></td>
-                        <td>${d.planTotalAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>已还款金额：</b></td>
-                        <td>${d.actualTotalAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>剩余应还款金额：</b></td>
-                        <td>${d.planTotalAmount - d.actualTotalAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>还款状态：</b></td>
-                        <td>${d.state}</td>
-                    </tr>
-                </table>`);
-                } else {
-                    parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
-                }
-            });
-
-        }
-    });
 
     f.on('submit(submit)', d => {
         t.reload('approve', {where: d.field});
@@ -107,83 +37,60 @@ layui.use(['table', 'laydate'], () => {
 
     t.on('checkbox(approve)', o => {
         const d = t.checkStatus('approve');
-        if (d.data.length > 0) {
-            $('#allot').parent().show('fast');
+        let v = 0;
+        d.data.map((e, i) => {
+            if (e.state === 'undo') v++;
+        });
+        if (v > 0) {
+            $('#pass').parent().show('fast');
         } else {
-            $('#allot').parent().hide('fast');
+            $('#pass').parent().hide('fast');
         }
     });
 
-    $('#allot').click(() => {
+    $('#pass').click(() => {
         const d = t.checkStatus('approve');
-        let applyIds = [];
-        d.data.map((e, i) => applyIds.push(e.applyId));
-        layer.open({
-            title: '分配审核人员',
-            type: 2,
-            content: '/collection/admin.html',
-            area: ['300px', '400px'],
-            btn: ['确认', '取消'],
-            yes: (i, l) => {
-                let f = layer.getChildFrame('form', i);
-                const userId = f.find(':checked').val();
-                const userName = f.find(':checked').attr('title');
-                if (!userId) {
-                    layer.msg('没有选择催收人员！', {icon: 5});
-                    return;
+        let ids = [];
+        d.data.map((e, i) => {
+            if (e.state === 'undo') ids.push(e.id);
+        });
+        if (ids.length < 1) {
+            layer.msg('没有选择未审批数据！');
+            return;
+        }
+        layer.confirm(`你确认批准这 ${ids.length} 笔减免申请？`, {icon: 3}, i => {
+            $.post('/repayment/dealreduce', {reduceIds: JSON.stringify(ids), pass: true}, d => {
+                if (d.code === 0) {
+                    layer.msg(d.data, {icon: 1});
+                    t.reload('approve');
+                } else {
+                    layer.msg(data.msg, {icon: 5});
                 }
-                $.post('/collect/phoneallot', {collectUserId: userId, collectUserName: userName, applyIds: JSON.stringify(applyIds)}, data => {
-                    if (data.code === 0) {
-                        layer.msg(data.data, {icon: 1});
-                        t.reload('approve');
-                    } else {
-                        layer.msg("分配失败！", {icon: 5});
-                    }
-                    layer.close(i);
-                });
-            },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            });
+            layer.close(i);
         });
     });
 
-    $('#company').click(() => {
-        layer.open({
-            title: '分配外包催收',
-            type: 2,
-            content: '/collection/com.html',
-            area: ['600px', '450px'],
-            btn: ['确认', '取消'],
-            yes: (i, l) => {
-                let f = layer.getChildFrame('form', i);
-                const companyIds = f.find(':checked');
-                const planDate = f.find(':text').val();
-                if (!planDate) {
-                    layer.msg('没有选择应还款日期！', {icon: 5});
-                    return;
+    $('#nopass').click(() => {
+        const d = t.checkStatus('approve');
+        let ids = [];
+        d.data.map((e, i) => {
+            if (e.state === 'undo') ids.push(e.id);
+        });
+        if (ids.length < 1) {
+            layer.msg('没有选择未审批数据！');
+            return;
+        }
+        layer.confirm(`你确认驳回这 ${ids.length} 笔减免申请？`, {icon: 3}, i => {
+            $.post('/repayment/dealreduce', {reduceIds: JSON.stringify(ids), pass: false}, d => {
+                if (d.code === 0) {
+                    layer.msg(d.data, {icon: 1});
+                    t.reload('approve');
+                } else {
+                    layer.msg(data.msg, {icon: 5});
                 }
-                if (companyIds.length < 1) {
-                    layer.msg('没有选择外包公司！', {icon: 5});
-                    return;
-                }
-                let company = [];
-                companyIds.map((i, e) => company.push($(e).val()));
-                $.post('/collect/companyallot', {planDate: planDate, companyIds: JSON.stringify(company)}, data => {
-                    if (data.code === 0 || data.code === 3) {
-                        layer.msg(data.data, {icon: 1});
-                        if (data.code === 0) {
-                            t.reload('approve');
-                        }
-                    } else {
-                        layer.msg(data.data, {icon: 5});
-                    }
-                    layer.close(i);
-                });
-            },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            });
+            layer.close(i);
         });
     });
 });

@@ -23,22 +23,10 @@ layui.use('table', () => {
         let [e, d] = [o.event, o.data];
         if (e === 'info') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:5em;"><b>委案单数：</b></td>
-                        <td>${d.entrustNum}</td>
-                    </tr>
-                    <tr>
-                        <td><b>委案金额：</b></td>
-                        <td>${d.entrustAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>成功单数：</b></td>
-                        <td>${d.successNum}</td>
-                    </tr>
-                    <tr>
-                        <td><b>成功金额：</b></td>
-                        <td>${d.successAmount}</td>
-                    </tr>
+                    <tr><td style="width:5em;"><b>委案单数：</b></td><td>${d.entrustNum}</td></tr>
+                    <tr><td><b>委案金额：</b></td><td>${d.entrustAmount}</td></tr>
+                    <tr><td><b>成功单数：</b></td><td>${d.successNum}</td></tr>
+                    <tr><td><b>成功金额：</b></td><td>${d.successAmount}</td></tr>
                 </table>`);
         }
         if (e === 'onoff') {

@@ -1,4 +1,6 @@
+// 颜色标签
 const r = str => `<span style="color:red;">${str}</span>`;
+const g = str => `<span style="color:green;">${str}</span>`;
 const constants = {
     // 表单输入日期范围格式
     DATE_RANGE: 'yyyyMMdd',
@@ -29,7 +31,11 @@ const constants = {
         wait_audit: '待审核',
         pass_loan: '通过审核',
         refuse_loan: r`拒贷`,
-        person_audit: '进入人工审核'
+        person_audit: '进入人工审核',
+        // 审批减免
+        pass: g`批准`,
+        no_pass: '驳回',
+        undo: r`未审批`
     }
 };
 
@@ -38,6 +44,16 @@ const constants = {
  * @param str
  */
 const getStatus = str => constants.STATUS[str];
+
+/**
+ * 非空判断
+ * @param obj
+ */
+const check = obj => {
+    for (let k in obj) {
+        obj[k] = obj[k] ? obj[k] : Number.isFinite(obj[k]) ? 0 : r`无数据`;
+    }
+};
 
 /**
  * 模板引擎
@@ -54,19 +70,7 @@ const laytplrender = (tpl, viewId, data) => layui.use('laytpl', () => {
  * 父级页面弹窗，用于显示详情
  * @param info
  */
-const alertinfo = info => {
-    parent.layer.open({
-        type: 0,
-        title: false,
-        btn: false,
-        content: info,
-        shade: 0.1,
-        shadeClose: true,
-        anim: 5,
-        isOutAnim: false,
-        resize: false
-    });
-};
+const alertinfo = info => parent.layer.open({type: 0, title: false, btn: false, content: info, shade: 0.1, shadeClose: true, anim: 5, isOutAnim: false, resize: false});
 
 /**
  * 将详细地址缩写成省（自治区）市（区、自治州）
@@ -86,7 +90,7 @@ const lessaddress = address => {
 const dateFormat = str => {
     const date = new Date();
     date.setTime(str);
-    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
 /**

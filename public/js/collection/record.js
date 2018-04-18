@@ -28,50 +28,20 @@ layui.use(['table', 'laydate'], () => {
         let [e, d] = [o.event, o.data];
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:6em;"><b>客户姓名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>手机号码：</b></td>
-                        <td>${d.phone}</td>
-                    </tr>
-                    <tr>
-                        <td><b>身份证号码：</b></td>
-                        <td>${d.idcard}</td>
-                    </tr>
+                    <tr><td style="width:6em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
+                    <tr><td><b>手机号码：</b></td><td>${d.phone}</td></tr>
+                    <tr><td><b>身份证号码：</b></td><td>${d.idcard}</td></tr>
                 </table>`);
         }
         if (e === 'collectinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:5em;"><b>合同金额：</b></td>
-                        <td>${d.contractAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>期数：</b></td>
-                        <td>${d.totalPeriod}</td>
-                    </tr>
-                    <tr>
-                        <td><b>订单号：</b></td>
-                        <td>${d.orderNo}</td>
-                    </tr>
-                    <tr>
-                        <td><b>逾期费：</b></td>
-                        <td>${d.totalInterestPenalty}</td>
-                    </tr>
-                    <tr>
-                        <td><b>是否减免：</b></td>
-                        <td>${d.reduceAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>减免金额：</b></td>
-                        <td>${d.reduceAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>划扣平台：</b></td>
-                        <td>${d.payOrgType}</td>
-                    </tr>
+                    <tr><td style="width:5em;"><b>合同金额：</b></td><td>${d.contractAmount}</td></tr>
+                    <tr><td><b>期数：</b></td><td>${d.totalPeriod}</td></tr>
+                    <tr><td><b>订单号：</b></td><td>${d.orderNo}</td></tr>
+                    <tr><td><b>逾期费：</b></td><td>${d.totalInterestPenalty}</td></tr>
+                    <tr><td><b>是否减免：</b></td><td>${d.reduceAmount}</td></tr>
+                    <tr><td><b>减免金额：</b></td><td>${d.reduceAmount}</td></tr>
+                    <tr><td><b>划扣平台：</b></td><td>${d.payOrgType}</td></tr>
                 </table>`);
         }
     });
