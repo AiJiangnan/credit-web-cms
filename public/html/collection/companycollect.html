@@ -41,7 +41,7 @@
             <td><label class="layui-form-label">催收公司：</label></td>
             <td id="stateView"></td>
             <script type="text/html" id="stateTpl">
-                <select name="lastCollectState">
+                <select name="collectCompanyId">
                     <option value="">请选择催收公司</option>
                     {{# layui.each(d,(i,s)=>{ }}
                     <option value="{{ s.id }}">{{ s.nickname }}</option>
@@ -50,11 +50,10 @@
             </script>
             <td><label class="layui-form-label">还款状态：</label></td>
             <td>
-                <select name="sourceType" lay-verify="">
+                <select name="payState" lay-verify="">
                     <option value="">请选择还款状态</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    <option value="overdue_wait_repayment">逾期未还款</option>
+                    <option value="overdue_already_repayment">逾期结清</option>
                 </select>
             </td>
             <td></td>

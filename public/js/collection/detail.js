@@ -34,6 +34,15 @@ layui.use(['element', 'table'], () => {
         });
     });
 
+    $('#reduce').click(() => {
+        layer.open({
+            title: '添加减免申请',
+            type: 2,
+            content: [`/collection/deal/reduce.html?applyId=${applyId}`, 'no'],
+            area: ['280px', '200px']
+        });
+    });
+
     e.on('nav(detail)', e => {
         const id = $(e).attr('id');
         if (id === 'n1') {

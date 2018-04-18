@@ -8,8 +8,8 @@ layui.use(['table', 'laydate'], () => {
         elem: '#confirm',
         height: 'full-70',
         page: true,
-        // url: '/agentpay/confirm',
-        url: '/role',
+        url: '/agentpay/confirm',
+        // url: '/role',
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
