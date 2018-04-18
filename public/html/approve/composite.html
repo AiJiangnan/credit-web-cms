@@ -36,18 +36,19 @@
             <td><input type="text" name="phone" placeholder="请输入手机号码" class="layui-input"></td>
             <td><label class="layui-form-label">审核状态：</label></td>
             <td>
-                <select name="status" lay-verify="">
+                <select name="status">
                     <option value="">请选择状态</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    <option value="wait_audit">待审核</option>
+                    <option value="pass_loan">通过审核</option>
+                    <option value="person_audit">进入人工审核</option>
+                    <option value="successed">放款成功</option>
                 </select>
             </td>
         </tr>
         <tr id="more" hidden>
             <td><label class="layui-form-label">注册渠道：</label></td>
             <td>
-                <select name="sourceType" lay-verify="">
+                <select name="sourceType" disabled class="layui-disabled">
                     <option value="">请选择注册渠道</option>
                     <option value="010">北京</option>
                     <option value="021">上海</option>
@@ -56,7 +57,7 @@
             </td>
             <td><label class="layui-form-label">进件渠道：</label></td>
             <td>
-                <select name="channel" lay-verify="">
+                <select name="channel" disabled class="layui-disabled">
                     <option value="">请选择进件渠道</option>
                     <option value="010">北京</option>
                     <option value="021">上海</option>
@@ -65,7 +66,7 @@
             </td>
             <td><label class="layui-form-label">人工决策：</label></td>
             <td>
-                <select name="whetherAudit" lay-verify="">
+                <select name="whetherAudit">
                     <option value="">是否人工决策</option>
                     <option value="1">是</option>
                     <option value="0">否</option>
@@ -75,7 +76,7 @@
             <td><input type="text" name="" placeholder="请输入人工拒贷码" class="layui-input layui-disabled"></td>
             <td><label class="layui-form-label">白名单：</label></td>
             <td>
-                <select name="whetherWhiteList" lay-verify="">
+                <select name="whetherWhiteList">
                     <option value="">是否为白名单</option>
                     <option value="1">是</option>
                     <option value="0">否</option>
@@ -108,6 +109,9 @@
 <script type="text/html" id="tool">
     <button class="layui-btn layui-btn-sm" lay-event="userinfo">个人信息</button>
     <button class="layui-btn layui-btn-sm" lay-event="loaninfo">批贷信息</button>
+</script>
+<script type="text/html" id="status">
+    {{ getStatus(d.status) }}
 </script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>

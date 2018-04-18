@@ -18,7 +18,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'approveTime', title: '审批时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.approveTime)},
             {field: 'applyAmount', title: '申请金额', align: 'center', width: 100},
-            {field: 'status', title: '审核状态', align: 'center', width: 100, templet: '#state'},
+            {field: 'status', title: '审核状态', align: 'center', width: 100, templet: '#status'},
             {title: '操作', width: 200, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -65,7 +65,7 @@ layui.use(['table', 'laydate'], () => {
                     </tr>
                     <tr>
                         <td><b>审核状态：</b></td>
-                        <td>${d.status}</td>
+                        <td>${getStatus(d.status)}</td>
                     </tr>
                     <tr>
                         <td><b>机器拒贷原因：</b></td>

@@ -1,7 +1,43 @@
+const r = str => `<span style="color:red;">${str}</span>`;
 const constants = {
     // 表单输入日期范围格式
-    DATE_RANGE: 'yyyyMMdd'
+    DATE_RANGE: 'yyyyMMdd',
+    // 状态
+    STATUS: {
+        // 还款状态
+        wait_repayment: '待还款',
+        already_repayment: '已还款',
+        overdue_wait_repayment: '逾期未还款',
+        overdue_already_repayment: '逾期结清',
+        repaying: '还款中',
+        // 批次状态
+        no_pay: '生成批次未放款',
+        no_confirm: '放款未查询',
+        pay_again: '需再次划扣',
+        processing: '处理中',
+        finish: '处理完成',
+        // 放款状态（批次详情状态）
+        loaning: '放款中',
+        successed: '放款成功',
+        failed: '放款失败',
+        second: '待再次划扣',
+        // 合同状态枚举
+        unconfirm: '未确认',
+        confirmed: '已确认',
+        canceled: '已取消',
+        // 审核
+        wait_audit: '待审核',
+        pass_loan: '通过审核',
+        refuse_loan: r`拒贷`,
+        person_audit: '进入人工审核'
+    }
 };
+
+/**
+ * 获取状态
+ * @param str
+ */
+const getStatus = str => constants.STATUS[str];
 
 /**
  * 模板引擎
