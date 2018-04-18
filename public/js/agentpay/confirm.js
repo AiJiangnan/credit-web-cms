@@ -54,7 +54,8 @@ layui.use(['table', 'laydate'], () => {
     t.on('sort(confirm)', o => t.reload('confirm', {where: {sort: o.field, sortOrder: o.type}}));
 
     t.on('checkbox(confirm)', o => {
-        if (o.checked) {
+        const d = t.checkStatus('confirm');
+        if (d.data.length > 0) {
             $('#rongbao').parent().show('fast');
         } else {
             $('#rongbao').parent().hide('fast');

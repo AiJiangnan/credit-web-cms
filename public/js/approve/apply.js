@@ -61,7 +61,8 @@ layui.use(['table', 'laydate'], () => {
     t.on('sort(apply)', o => t.reload('apply', {where: {sort: o.field, sortOrder: o.type}}));
 
     t.on('checkbox(apply)', o => {
-        if (o.checked) {
+        const d = t.checkStatus('apply');
+        if (d.data.length > 0) {
             $('#allot').parent().show('fast');
         } else {
             $('#allot').parent().hide('fast');

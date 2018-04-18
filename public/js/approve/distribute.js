@@ -57,7 +57,8 @@ layui.use(['table', 'laydate'], () => {
     t.on('sort(distribute)', o => t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}}));
 
     t.on('checkbox(distribute)', o => {
-        if (o.checked) {
+        const d = t.checkStatus('distribute');
+        if (d.data.length > 0) {
             $('#allot').parent().show('fast');
         } else {
             $('#allot').parent().hide('fast');
