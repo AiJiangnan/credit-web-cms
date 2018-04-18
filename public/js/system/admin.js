@@ -78,7 +78,7 @@ layui.use('table', () => {
         }
         if (e === 'onoff') {
             let s = d.state;
-            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
+            const m = r`${s ? '停用' : '启用'}`;
             layer.confirm(`你确定要${m}该管理员！`, {icon: 0}, i => {
                 $.post('/user', {id: d.id, state: !s}, data => {
                     if (data.code === 0) {
@@ -92,7 +92,7 @@ layui.use('table', () => {
             });
         }
         if (e === 'del') {
-            layer.confirm('你确定要<span style="color:red;">删除</span>该管理员吗？', {icon: 5}, i => {
+            layer.confirm('你确定要' + r`删除` + '该管理员吗？', {icon: 5}, i => {
                 $.post('/user/' + d.id, data => {
                     if (data.code === 0) {
                         layer.msg(data.data, {icon: 1});

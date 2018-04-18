@@ -27,7 +27,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
     $('#delete').click(() => {
         let id = $('#delete').attr('data-id');
         if (id) {
-            layer.confirm('你确定要<span style="color:red;">删除</span>该菜单吗？', {icon: 5}, i => {
+            layer.confirm('你确定要' + r`删除` + '该菜单吗？', {icon: 5}, i => {
                 $.post('/resource/' + id, data => {
                     if (data.code === 0) {
                         reload();
@@ -67,7 +67,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
                 f.render();
             }
         });
-    }
+    };
 
     const reload = () => $.get('/resource', d => load(d.data));
 

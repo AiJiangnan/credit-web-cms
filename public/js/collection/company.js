@@ -43,7 +43,7 @@ layui.use('table', () => {
         }
         if (e === 'onoff') {
             let s = d.state;
-            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
+            const m = r`${s ? '停用' : '启用'}`;
             layer.confirm(`你确定要${m}该外包公司！`, {icon: 0}, i => {
                 $.post('/collect/company', {id: d.id, state: !s}, data => {
                     if (data.code === 0) {

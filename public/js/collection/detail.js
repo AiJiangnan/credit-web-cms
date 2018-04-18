@@ -14,7 +14,7 @@ layui.use(['element', 'table'], () => {
         page: false,
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'important', title: '是否重要', align: 'center', width: 100, templet: d => d.important ? '<span style="color:red;">是</span>' : '否'},
+            {field: 'important', title: '是否重要', align: 'center', width: 100, templet: d => d.important ? r`是` : '否'},
             {field: 'remindTime', title: '提醒日期', align: 'center', width: 140, templet: d => dateFormat(d.remindTime)},
             {field: 'createTime', title: '添加时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => applyNo},

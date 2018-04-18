@@ -124,7 +124,7 @@
 </script>
 <script type="text/html" id="collectWay">
     {{# if (d.collectWay === 0) { }}
-    <span style="color:red;">未分配</span>
+    {{ r`未分配` }}
     {{# } else if (d.collectWay === 1) { }}
     电话催收
     {{# } else if (d.collectWay === 3) { }}
@@ -136,7 +136,7 @@
     {{# } else if (d.collectWay === 1) { }}
     {{ d.collectUser }}
     {{# } else if (d.collectWay === 3) { }}
-    <span style="color:red;">{{ d.collectCompany }}</span>
+    {{ r`d.collectCompany` }}
     {{# } }}
 </script>
 <script src="../../js/layui/layui.js"></script>

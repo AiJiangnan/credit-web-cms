@@ -75,7 +75,7 @@ const alertinfo = info => {
  */
 const lessaddress = address => {
     const exec = (/.*?(省|自治区)/.exec(address) ? /.*?(市|自治州)/ : /.*?区/).exec(address);
-    return exec ? exec[0] : '<span style="color:red;">无有效地址</span>';
+    return exec ? exec[0] : r`无有效地址`;
 };
 
 /**
