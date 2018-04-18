@@ -74,7 +74,7 @@ layui.use('table', () => {
         }
         if (e === 'onoff') {
             let s = d.enabled;
-            const m = r`${s ? '停用' : '启用'}`;
+            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
             layer.confirm(`你确定要${m}该角色！`, {icon: 0}, i => {
                 $.post('/role', {id: d.id, enabled: !s}, data => {
                     if (data.code === 0) {

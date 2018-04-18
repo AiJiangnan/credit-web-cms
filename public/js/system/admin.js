@@ -78,7 +78,7 @@ layui.use('table', () => {
         }
         if (e === 'onoff') {
             let s = d.state;
-            const m = r`${s ? '停用' : '启用'}`;
+            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
             layer.confirm(`你确定要${m}该管理员！`, {icon: 0}, i => {
                 $.post('/user', {id: d.id, state: !s}, data => {
                     if (data.code === 0) {
