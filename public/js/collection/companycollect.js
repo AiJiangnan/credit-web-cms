@@ -56,7 +56,7 @@ layui.use(['table', 'laydate'], () => {
                 } else {
                     parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
                 }
-            });
+            }).fail(() => layer.msg('服务器错误！', {icon: 5}));
         }
     });
 
