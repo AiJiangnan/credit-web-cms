@@ -4,7 +4,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'distribute',
         elem: '#distribute',
-        height: 'full-110',
+        height: 'full-120',
         page: true,
         url: '/approve/distribute',
         cols: [[

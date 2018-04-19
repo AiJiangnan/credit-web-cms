@@ -7,7 +7,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'record',
         elem: '#record',
-        height: 'full-110',
+        height: 'full-120',
         page: true,
         url: '/collect/record',
         cols: [[

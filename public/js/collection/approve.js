@@ -7,7 +7,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'approve',
         elem: '#approve',
-        height: 'full-100',
+        height: 'full-110',
         page: true,
         url: '/repayment/reduce',
         cols: [[

@@ -6,7 +6,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'apply',
         elem: '#apply',
-        height: 'full-170',
+        height: 'full-180',
         page: true,
         url: '/approve/apply',
         cols: [[

@@ -6,7 +6,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'todeal',
         elem: '#todeal',
-        height: 'full-110',
+        height: 'full-120',
         page: true,
         url: '/agentpay/todeal',
         cols: [[
