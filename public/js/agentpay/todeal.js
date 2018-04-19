@@ -8,8 +8,7 @@ layui.use(['table', 'laydate'], () => {
         elem: '#todeal',
         height: 'full-110',
         page: true,
-        // url: '/agentpay/todeal',
-        url: '/role',
+        url: '/agentpay/todeal',
         cols: [[
             {type: 'numbers', title: '序号'},
             {field: 'applyNo', title: '申请单号', align: 'center', width: 100},

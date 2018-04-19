@@ -7,7 +7,7 @@ layui.use('form', () => {
             } else {
                 layer.msg(data, constants.FAIL);
             }
-        }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+        }).fail(() => layer.msg('服务器错误！', constants.FAIL));
         return false;
     });
 });
