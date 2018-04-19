@@ -20,9 +20,9 @@ layui.use(['table', 'laydate'], () => {
             {field: 'applyNo', title: '申请编号', align: 'center', width: 260, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'collectCompany', title: '催收公司', align: 'center', width: 100},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'phone', title: '手机号码', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 130},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
+            {field: 'contractAmount', title: '合同金额', align: 'center', width: 100},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {title: '操作', width: 220, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -54,9 +54,9 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
                     </table>`);
                 } else {
-                    parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
+                    parent.layer.msg('没有该合同还款计划信息！', constants.ERROR);
                 }
-            }).fail(() => layer.msg('服务器错误！', {icon: 5}));
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
         }
     });
 

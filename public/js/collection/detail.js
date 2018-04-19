@@ -15,13 +15,13 @@ layui.use(['element', 'table'], () => {
         cols: [[
             {type: 'numbers', title: '序号'},
             {field: 'important', title: '是否重要', align: 'center', width: 100, templet: d => d.important ? r`是` : '否'},
-            {field: 'remindTime', title: '提醒日期', align: 'center', width: 140, templet: d => dateFormat(d.remindTime)},
+            {field: 'remindTime', title: '提醒日期', align: 'center', width: 100, templet: d => dateFormat(d.remindTime)},
             {field: 'createTime', title: '添加时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => applyNo},
-            {field: 'name', title: '客户姓名', align: 'center', width: 120},
-            {field: 'collectUser', title: '催收人员', align: 'center', width: 120},
+            {field: 'name', title: '客户姓名', align: 'center', width: 100},
+            {field: 'collectUser', title: '催收人员', align: 'center', width: 100},
             {field: 'collectStateRemark', title: '催收状态', align: 'center', width: 180},
-            {field: 'collectRemark', title: '催收记录', align: 'center', width: 120}
+            {field: 'collectRemark', title: '催收记录', align: 'center', width: 180}
         ]]
     });
 

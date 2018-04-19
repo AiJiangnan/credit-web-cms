@@ -18,6 +18,7 @@
 <body style="padding:10px;">
 <form class="layui-form"></form>
 <script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script>
     layui.use('form', () => {
         const [$, f] = [layui.jquery, layui.form];
@@ -41,7 +42,7 @@
                     $('.layui-form').html(result);
                 }
                 resolve();
-            });
+            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
         }).then(v => {
             const userid = $('form').attr('data-id');
             $.get('/resource/' + userid, d => {
@@ -49,7 +50,7 @@
                     d.data.map(id => $('input[value=' + id + ']').attr('checked', true));
                 }
                 f.render();
-            });
+            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
 
             f.on('checkbox(parent)', d => {
                 const clazz = $(d.elem).attr('data-id');

@@ -12,9 +12,9 @@ layui.use(['table', 'laydate'], () => {
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'channel', title: '进件渠道', align: 'center', width: 90},
-            {field: 'incomeTime', title: '申请时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
-            {field: 'registerTime', title: '入网时间', align: 'center', width: 140, templet: d => dateFormat(d.registerTime)},
+            {field: 'channel', title: '进件渠道', align: 'center', width: 100},
+            {field: 'incomeTime', title: '申请时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.incomeTime)},
+            {field: 'registerTime', title: '入网时间', align: 'center', width: 100, templet: d => dateFormat(d.registerTime)},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
             {field: 'loanCount', title: '放款次数', align: 'center', width: 100, sort: true},
@@ -27,38 +27,28 @@ layui.use(['table', 'laydate'], () => {
 
     t.on('tool(apply)', o => {
         let [e, d] = [o.event, o.data];
+        check(d);
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:6em;"><b>姓　　名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>注册渠道：</b></td>
-                        <td>${d.sourceType}</td>
-                    </tr>
-                    <tr>
-                        <td><b>手机号码：</b></td>
-                        <td>${d.phone}</td>
-                    </tr>
-                    <tr>
-                        <td><b>号码归属地：</b></td>
-                        <td>${d.phoneLoc}</td>
-                    </tr>
-                    <tr>
-                        <td><b>定位位置：</b></td>
-                        <td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td>
-                    </tr>
+                    <tr><td style="width:6em;"><b>姓　　名：</b></td><td>${d.name}</td></tr>
+                    <tr><td><b>注册渠道：</b></td><td>${d.sourceType}</td></tr>
+                    <tr><td><b>手机号码：</b></td><td>${d.phone}</td></tr>
+                    <tr><td><b>号码归属地：</b></td><td>${d.phoneLoc}</td></tr>
+                    <tr><td><b>定位位置：</b></td><td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td></tr>
                 </table>`);
         }
     });
 
     f.on('submit(submit)', d => {
         t.reload('apply', {where: d.field});
+        $('#allot').parent().hide('fast');
         return false;
     });
 
-    t.on('sort(apply)', o => t.reload('apply', {where: {sort: o.field, sortOrder: o.type}}));
+    t.on('sort(apply)', o => {
+        t.reload('apply', {where: {sort: o.field, sortOrder: o.type}});
+        $('#allot').parent().hide('fast');
+    });
 
     t.on('checkbox(apply)', o => {
         const d = t.checkStatus('apply');
@@ -85,16 +75,18 @@ layui.use(['table', 'laydate'], () => {
                 const remark = f.find(':text').val();
                 $.post('/approve/audit', {flag: flag, remark: remark, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
-                        layer.msg(data.data, {icon: 1});
-                        layer.close(i);
+                        layer.msg(data.data, constants.SUCCESS);
+                    } else {
+                        layer.msg(data.msg, constants.ERROR);
                     }
-                    layer.msg(data.msg, {icon: 5});
+                    $('#allot').parent().hide('fast');
                     layer.close(i);
-                });
+                }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
             },
             btn2: (i, l) => {
                 layer.close(i);
             }
         });
     });
-});
+})
+;

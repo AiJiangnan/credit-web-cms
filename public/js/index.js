@@ -5,9 +5,9 @@ layui.use('form', () => {
             if (data === 0) {
                 location = "main.html";
             } else {
-                layer.msg(data, {icon: 5});
+                layer.msg(data, constants.FAIL);
             }
-        });
+        }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
         return false;
     });
 });

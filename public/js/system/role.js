@@ -34,15 +34,15 @@ layui.use('table', () => {
                     let menuIds = [];
                     f.find(':checked').map((i, e) => menuIds.push($(e).val()));
                     if (menuIds.length < 1) {
-                        layer.msg('分配菜单不能为空！', {icon: 5});
+                        layer.msg('分配菜单不能为空！', constants.LOCK);
                         return;
                     }
                     $.post('/role/menu', {roleId: d.id, menuIds: JSON.stringify(menuIds)}, data => {
                         if (data.code === 0) {
-                            layer.msg(data.data, {icon: 1});
+                            layer.msg(data.data, constants.SUCCESS);
                             layer.close(i);
                         }
-                    });
+                    }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
                 },
                 btn2: (i, l) => {
                     layer.close(i);
@@ -75,28 +75,28 @@ layui.use('table', () => {
         if (e === 'onoff') {
             let s = d.enabled;
             const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
-            layer.confirm(`你确定要${m}该角色！`, {icon: 0}, i => {
+            layer.confirm(`你确定要${m}该角色！`, constants.WARM, i => {
                 $.post('/role', {id: d.id, enabled: !s}, data => {
                     if (data.code === 0) {
-                        layer.msg(`角色${m}成功！`, {icon: 1});
+                        layer.msg(`角色${m}成功！`, constants.SUCCESS);
                         o.update({enabled: !s});
                         return;
                     }
-                    layer.msg(`角色${m}失败！`, {icon: 2});
-                });
+                    layer.msg(`角色${m}失败！`, constants.ERROR);
+                }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
                 layer.close(i);
             });
         }
         if (e === 'del') {
-            layer.confirm('你确定要' + r`删除` + '该角色吗？', {icon: 5}, i => {
+            layer.confirm('你确定要' + r`删除` + '该角色吗？', constants.WARM, i => {
                 $.post('/role/' + d.id, data => {
                     if (data.code === 0) {
-                        layer.msg(data.data, {icon: 1});
+                        layer.msg(data.data, constants.SUCCESS);
                         o.del();
                         return;
                     }
-                    layer.msg('角色删除失败！', {icon: 2});
-                });
+                    layer.msg('角色删除失败！', constants.ERROR);
+                }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
                 layer.close(i);
             });
         }

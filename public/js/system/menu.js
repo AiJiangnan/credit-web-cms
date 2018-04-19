@@ -11,7 +11,7 @@ layui.use(['tree', 'form', 'laytpl'], () => {
                 p.layer.msg(data.data, {icon: 1});
                 return;
             }
-            p.layer.msg(data.data, {icon: 2});
+            p.layer.msg(data.msg, {icon: 2});
         });
         return false;
     });

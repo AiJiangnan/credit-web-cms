@@ -21,11 +21,11 @@ layui.use(['table', 'laydate'], () => {
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100, templet: '#collectUser'},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'contractAmount', title: '合同金额', align: 'center', width: 100},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
             {field: 'collectWay', title: '分配状态', align: 'center', width: 100, sort: true, templet: '#collectWay'},
-            {field: 'updateTime', title: '分配日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.updateTime)},
+            {field: 'updateTime', title: '分配日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.updateTime)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -66,10 +66,14 @@ layui.use(['table', 'laydate'], () => {
 
     f.on('submit(submit)', d => {
         t.reload('distribute', {where: d.field});
+        $('#allot').parent().hide('fast');
         return false;
     });
 
-    t.on('sort(distribute)', o => t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}}));
+    t.on('sort(distribute)', o => {
+        t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}})
+        $('#allot').parent().hide('fast');
+    });
 
     t.on('checkbox(distribute)', o => {
         const d = t.checkStatus('distribute');
@@ -84,6 +88,7 @@ layui.use(['table', 'laydate'], () => {
         const d = t.checkStatus('distribute');
         let applyIds = [];
         d.data.map((e, i) => applyIds.push(e.applyId));
+        if (applyIds.length < 1) return;
         layer.open({
             title: '分配审核人员',
             type: 2,
@@ -95,18 +100,19 @@ layui.use(['table', 'laydate'], () => {
                 const userId = f.find(':checked').val();
                 const userName = f.find(':checked').attr('title');
                 if (!userId) {
-                    layer.msg('没有选择催收人员！', {icon: 5});
+                    layer.msg('没有选择催收人员！', constants.LOCK);
                     return;
                 }
                 $.post('/collect/phoneallot', {collectUserId: userId, collectUserName: userName, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
-                        layer.msg(data.data, {icon: 1});
+                        layer.msg(data.data, constants.SUCCESS);
                         t.reload('distribute');
                     } else {
-                        layer.msg("分配失败！", {icon: 5});
+                        layer.msg("分配失败！", constants.ERROR);
                     }
+                    $('#allot').parent().hide('fast');
                     layer.close(i);
-                });
+                }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             },
             btn2: (i, l) => {
                 layer.close(i);
@@ -126,26 +132,27 @@ layui.use(['table', 'laydate'], () => {
                 const companyIds = f.find(':checked');
                 const planDate = f.find(':text').val();
                 if (!planDate) {
-                    layer.msg('没有选择应还款日期！', {icon: 5});
+                    layer.msg('没有选择应还款日期！', constants.LOCK);
                     return;
                 }
                 if (companyIds.length < 1) {
-                    layer.msg('没有选择外包公司！', {icon: 5});
+                    layer.msg('没有选择外包公司！', constants.LOCK);
                     return;
                 }
                 let company = [];
                 companyIds.map((i, e) => company.push($(e).val()));
                 $.post('/collect/companyallot', {planDate: planDate, companyIds: JSON.stringify(company)}, data => {
                     if (data.code === 0 || data.code === 3) {
-                        layer.msg(data.data, {icon: 1});
+                        layer.msg(data.data, constants.SUCCESS);
                         if (data.code === 0) {
                             t.reload('distribute');
                         }
                     } else {
-                        layer.msg(data.data, {icon: 5});
+                        layer.msg(data.msg, constants.ERROR);
                     }
+                    $('#allot').parent().hide('fast');
                     layer.close(i);
-                });
+                }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             },
             btn2: (i, l) => {
                 layer.close(i);

@@ -18,12 +18,12 @@ layui.use(['table', 'laydate'], () => {
         cols: [[
             {type: 'numbers', title: '序号'},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=1">${d.applyNo}</a>`},
-            {field: 'updateTime', title: '分配时间', align: 'center', width: 130, templet: d => dateFormat(d.updateTime)},
-            {field: 'remindTime', title: '提醒日期', align: 'center', width: 130, templet: d => dateFormat(d.remindTime)},
-            {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 130, templet: d => dateFormat(d.lastCollectTime)},
-            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 100},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 120},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
+            {field: 'updateTime', title: '分配时间', align: 'center', width: 100, templet: d => dateFormat(d.updateTime)},
+            {field: 'remindTime', title: '提醒日期', align: 'center', width: 100, templet: d => dateFormat(d.remindTime)},
+            {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 100, templet: d => dateFormat(d.lastCollectTime)},
+            {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 110},
+            {field: 'contractAmount', title: '合同金额', align: 'center', width: 100},
+            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });

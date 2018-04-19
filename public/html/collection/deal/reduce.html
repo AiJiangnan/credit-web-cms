@@ -52,16 +52,14 @@
             reduce.applyId = applyId;
             $.post('/repayment/reduce', reduce, data => {
                 if (data.code === 0) {
-                    p.layer.close(p.layer.getFrameIndex(window.name));
-                    p.layer.msg(data.data, {icon: 1});
-                    return;
+                    p.layer.msg(data.data, constants.SUCCESS);
+                } else {
+                    p.layer.msg(data.msg, constants.ERROR);
                 }
-                p.layer.msg(data.msg, {icon: 2});
                 p.layer.close(p.layer.getFrameIndex(window.name));
-            });
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             return false;
         });
-
     });
 </script>
 </body>

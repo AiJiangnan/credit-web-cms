@@ -87,7 +87,7 @@
         $.get('/collect/0', d => {
             laytplrender(stateTpl, 'stateView', JSON.parse(d.data));
             f.render();
-        });
+        }).fail(() => layer.msg('服务器错误！', constants.FAIL));
 
         f.on('select(status)', d => {
             if (!d.value) {
@@ -100,7 +100,7 @@
             $.get('/collect/' + d.value, d => {
                 laytplrender(stateTpl2, 'stateView2', JSON.parse(d.data));
                 f.render();
-            });
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
         });
 
         f.on('submit(submit)', d => {
@@ -113,11 +113,11 @@
                 if (data.code === 0) {
                     p.layui.table.reload('collectlog');
                     p.layer.close(p.layer.getFrameIndex(window.name));
-                    p.layer.msg(data.data, {icon: 1});
+                    p.layer.msg(data.data, constants.SUCCESS);
                     return;
                 }
-                p.layer.msg(data.msg, {icon: 2});
-            });
+                p.layer.msg(data.msg, constants.ERROR);
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             return false;
         });
 

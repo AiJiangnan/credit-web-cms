@@ -35,8 +35,19 @@ const constants = {
         // 审批减免
         pass: g`批准`,
         no_pass: '驳回',
-        undo: r`未审批`
-    }
+        undo: r`未审批`,
+        // 划扣平台
+        REAPAL: '融宝',
+        UCF: '先锋'
+    },
+    // 弹出图标示意
+    WARM: {icon: 0},
+    SUCCESS: {icon: 1},
+    ERROR: {icon: 2},
+    CONFIRM: {icon: 3},
+    LOCK: {icon: 4},
+    FAIL: {icon: 5},
+    HAPPY: {icon: 6}
 };
 
 /**
@@ -88,6 +99,7 @@ const lessaddress = address => {
  * @returns {string}
  */
 const dateFormat = str => {
+    if (!str) return r`无数据`;
     const date = new Date();
     date.setTime(str);
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -99,6 +111,7 @@ const dateFormat = str => {
  * @returns {string}
  */
 const dateTimeFormat = str => {
+    if (!str) return r`无数据`;
     const date = new Date();
     date.setTime(str);
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;

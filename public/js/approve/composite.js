@@ -13,10 +13,10 @@ layui.use(['table', 'laydate'], () => {
         cols: [[
             {type: 'numbers', title: '序号'},
             {field: 'channel', title: '进件渠道', align: 'center', width: 100},
-            {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
-            {field: 'name', title: '姓名', align: 'center', width: 80},
-            {field: 'incomeTime', title: '申请时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.incomeTime)},
-            {field: 'approveTime', title: '审批时间', align: 'center', width: 140, sort: true, templet: d => dateFormat(d.approveTime)},
+            {field: 'applyNum', title: '申请编号', align: 'center', width: 100},
+            {field: 'name', title: '姓名', align: 'center', width: 100},
+            {field: 'incomeTime', title: '申请时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.incomeTime)},
+            {field: 'approveTime', title: '审批时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.approveTime)},
             {field: 'applyAmount', title: '申请金额', align: 'center', width: 100},
             {field: 'status', title: '审核状态', align: 'center', width: 100, templet: '#status'},
             {title: '操作', width: 200, align: 'center', toolbar: '#tool'}
@@ -25,68 +25,27 @@ layui.use(['table', 'laydate'], () => {
 
     t.on('tool(composite)', o => {
         let [e, d] = [o.event, o.data];
+        check(d);
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:5em;"><b>姓　　名：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>注册渠道：</b></td>
-                        <td>${d.sourceType}</td>
-                    </tr>
-                    <tr>
-                        <td><b>白名单：</b></td>
-                        <td>${d.whetherWhiteList ? '是' : '否'}</td>
-                    </tr>
-                    <tr>
-                        <td><b>手机号码：</b></td>
-                        <td>${d.phone}</td>
-                    </tr>
-                    <tr>
-                        <td><b>身份证号：</b></td>
-                        <td>${d.idcard}</td>
-                    </tr>
-                    <tr>
-                        <td><b>定位位置：</b></td>
-                        <td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td>
-                    </tr>
+                    <tr><td style="width:5em;"><b>姓　　名：</b></td><td>${d.name}</td></tr>
+                    <tr><td><b>注册渠道：</b></td><td>${d.sourceType}</td></tr>
+                    <tr><td><b>白名单：</b></td><td>${d.whetherWhiteList ? '是' : '否'}</td></tr>
+                    <tr><td><b>手机号码：</b></td><td>${d.phone}</td></tr>
+                    <tr><td><b>身份证号：</b></td><td>${d.idcard}</td></tr>
+                    <tr><td><b>定位位置：</b></td><td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td></tr>
                 </table>`);
         }
         if (e === 'loaninfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr>
-                        <td style="width:7em;"><b>申请编号：</b></td>
-                        <td>${d.name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>进件渠道：</b></td>
-                        <td>${d.sourceType}</td>
-                    </tr>
-                    <tr>
-                        <td><b>审核状态：</b></td>
-                        <td>${getStatus(d.status)}</td>
-                    </tr>
-                    <tr>
-                        <td><b>机器拒贷原因：</b></td>
-                        <td>${d.refuseNote}</td>
-                    </tr>
-                    <tr>
-                        <td><b>是否人工决策：</b></td>
-                        <td>${d.whetherAudit ? '是' : '否'}</td>
-                    </tr>
-                    <tr>
-                        <td><b>批贷金额：</b></td>
-                        <td>${d.actualAmount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>贷款次数：</b></td>
-                        <td>${d.loanCount}</td>
-                    </tr>
-                    <tr>
-                        <td><b>申请金额：</b></td>
-                        <td>${d.applyAmount}</td>
-                    </tr>
+                    <tr><td style="width:7em;"><b>申请编号：</b></td><td>${d.name}</td></tr>
+                    <tr><td><b>进件渠道：</b></td><td>${d.sourceType}</td></tr>
+                    <tr><td><b>审核状态：</b></td><td>${getStatus(d.status)}</td></tr>
+                    <tr><td><b>机器拒贷原因：</b></td><td>${d.refuseNote}</td></tr>
+                    <tr><td><b>是否人工决策：</b></td><td>${d.whetherAudit ? '是' : '否'}</td></tr>
+                    <tr><td><b>批贷金额：</b></td><td>${d.actualAmount}</td></tr>
+                    <tr><td><b>贷款次数：</b></td><td>${d.loanCount}</td></tr>
+                    <tr><td><b>申请金额：</b></td><td>${d.applyAmount}</td></tr>
                 </table>`);
         }
     });
