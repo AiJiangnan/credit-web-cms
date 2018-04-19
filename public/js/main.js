@@ -11,7 +11,7 @@ layui.config({
         l(g).render(data, h => $('#menuView').html(h));
         layui.element.init();
         layui.app.init();
-    }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+    }).fail(() => layer.msg('服务器错误！', constants.FAIL));
 
     if (!sessionStorage.getItem("layer")) {
         layer.open({
