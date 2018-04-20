@@ -51,7 +51,8 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td><b>逾期费：</b></td><td>${repay.overdueFee}</td></tr>
                         <tr><td><b>应还总额：</b></td><td>${repay.planTotalAmount}</td></tr>
                         <tr><td><b>已还款金额：</b></td><td>${repay.actualTotalAmount}</td></tr>
-                        <tr><td><b>剩余应还款金额：</b></td><td>${repay.planTotalAmount - repay.actualTotalAmount}</td></tr>
+                        <tr><td><b>减免金额：</b></td><td>${repay.reduceAmount}</td></tr>
+                        <tr><td><b>剩余应还款金额：</b></td><td>${repay.planTotalAmount - repay.actualTotalAmount - repay.reduceAmount}</td></tr>
                         <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
                     </table>`);
                 } else {

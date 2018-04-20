@@ -102,6 +102,17 @@ const lessaddress = address => {
 };
 
 /**
+ * 人民币金额格式化
+ * @param rmb
+ */
+const rmbFormat = rmb => {
+    if (Number.isFinite(rmb)) {
+        return Math.round(rmb * 100) / 100;
+    }
+    return '0.00';
+};
+
+/**
  * 日期格式化
  * @param str
  * @returns {string}
