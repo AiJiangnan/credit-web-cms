@@ -43,8 +43,9 @@
         layui.laydate.render({
             elem: '#date1', range: true, format: constants.DATE_RANGE,
             done: (v, d, e) => {
+                $('#count').html('');
+                if (!v) return;
                 $.get('/collect/companycount', {planDate: v}, data => {
-                    $('#count').html('');
                     if (data.code === 0) {
                         $('#count').html(data.data);
                     } else {
