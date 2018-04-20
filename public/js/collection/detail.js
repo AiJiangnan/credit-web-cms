@@ -25,6 +25,15 @@ layui.use(['element', 'table'], () => {
         ]]
     });
 
+    $('#repay').click(() => {
+        layer.open({
+            title: '划扣',
+            type: 2,
+            content: [`/collection/deal/repay.html?applyId=${applyId}`, 'no'],
+            area: ['380px', '380px']
+        });
+    });
+
     $('#log').click(() => {
         layer.open({
             title: '添加催收记录',
@@ -41,6 +50,32 @@ layui.use(['element', 'table'], () => {
             content: [`/collection/deal/reduce.html?applyId=${applyId}`, 'no'],
             area: ['280px', '200px']
         });
+    });
+
+    e.on('collapse()', d => {
+        if (!d.show) return;
+        const id = d.title.attr('id');
+        if (id === 'c1') {
+
+        }
+        if (id === 'c2') {
+
+        }
+        if (id === 'c3') {
+
+        }
+        if (id === 'c4') {
+
+        }
+        if (id === 'c5') {
+
+        }
+        if (id === 'c6') {
+
+        }
+        if (id === 'c7') {
+            t.reload('collectlog');
+        }
     });
 
     e.on('nav(detail)', e => {

@@ -46,6 +46,7 @@
             {{# if(d == 1){ }}
             <a href="javascript:void(0);">操作</a>
             <dl class="layui-nav-child">
+                <dd id="repay"><a href="javascript:void(0);">划扣</a></dd>
                 <dd id="log"><a href="javascript:void(0);">添加催收记录</a></dd>
                 <dd id="reduce"><a href="javascript:void(0);">减免申请</a></dd>
                 <dd id="part"><a href="javascript:void(0);">部分还款确认</a></dd>
@@ -57,31 +58,31 @@
 <div id="page1">
     <div class="layui-collapse">
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">申请信息</h2>
+            <h2 class="layui-colla-title" id="c1">申请信息</h2>
             <div class="layui-colla-content">内容区域</div>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">减免记录</h2>
+            <h2 class="layui-colla-title" id="c2">减免记录</h2>
             <div class="layui-colla-content">内容区域</div>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">部分还款记录</h2>
+            <h2 class="layui-colla-title" id="c3">部分还款记录</h2>
             <div class="layui-colla-content">内容区域</div>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">借款记录</h2>
+            <h2 class="layui-colla-title" id="c4">借款记录</h2>
             <div class="layui-colla-content">内容区域</div>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">还款失败记录</h2>
+            <h2 class="layui-colla-title" id="c5">还款失败记录</h2>
             <div class="layui-colla-content">内容区域</div>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">逾期记录</h2>
+            <h2 class="layui-colla-title" id="c6">逾期记录</h2>
             <div class="layui-colla-content">内容区域</div>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">电话催收记录</h2>
+            <h2 class="layui-colla-title" id="c7">电话催收记录</h2>
             <div class="layui-colla-content">
                 <table id="collectlog" lay-filter="collectlog"></table>
             </div>

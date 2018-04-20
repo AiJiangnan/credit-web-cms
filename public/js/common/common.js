@@ -70,7 +70,7 @@ const getProductType = str => {
  */
 const check = obj => {
     for (let k in obj) {
-        obj[k] = obj[k] ? obj[k] : Number.isFinite(obj[k]) ? 0 : r`无数据`;
+        obj[k] = obj[k] ? obj[k] : Number.isFinite(obj[k]) ? 0 : '-';
     }
 };
 
@@ -107,7 +107,7 @@ const lessaddress = address => {
  * @returns {string}
  */
 const dateFormat = str => {
-    if (!str) return r`无数据`;
+    if (!str) return '-';
     const date = new Date();
     date.setTime(str);
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -119,7 +119,7 @@ const dateFormat = str => {
  * @returns {string}
  */
 const dateTimeFormat = str => {
-    if (!str) return r`无数据`;
+    if (!str) return '-';
     const date = new Date();
     date.setTime(str);
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
@@ -128,7 +128,7 @@ const dateTimeFormat = str => {
 /**
  * 获取URL中GET参数
  * @param name
- * @returns {any}
+ * @returns {name}
  */
 const getQueryStr = name => {
     const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
