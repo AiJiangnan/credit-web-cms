@@ -30,7 +30,7 @@ layui.use(['element', 'table'], () => {
             title: '划扣',
             type: 2,
             content: [`/collection/deal/repay.html?applyId=${applyId}`, 'no'],
-            area: ['380px', '380px']
+            area: ['360px', '260px']
         });
     });
 

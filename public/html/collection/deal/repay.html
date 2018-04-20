@@ -33,22 +33,11 @@
 <form class="layui-form">
     <table style="width:90%;">
         <tr>
-            <td><label class="layui-form-label">催收状态：</label></td>
+            <td><label class="layui-form-label">银行卡：</label></td>
             <td id="stateView"></td>
             <script type="text/html" id="stateTpl">
                 <select name="collectState" lay-filter="status" required lay-verify="required">
-                    <option value="">请选择催收状态</option>
-                    {{# layui.each(d,(i,s)=>{ }}
-                    <option value="{{ s.id }}">{{ s.status }}</option>
-                    {{# }); }}
-                </select>
-            </script>
-        </tr>
-        <tr id="sub" hidden>
-            <td></td>
-            <td id="stateView2"></td>
-            <script type="text/html" id="stateTpl2">
-                <select name="subCollectState" required lay-verify="required">
+                    <option value="">请选择银行卡</option>
                     {{# layui.each(d,(i,s)=>{ }}
                     <option value="{{ s.id }}">{{ s.status }}</option>
                     {{# }); }}
@@ -56,21 +45,24 @@
             </script>
         </tr>
         <tr>
-            <td><label class="layui-form-label">提醒日期：</label></td>
-            <td><input type="text" name="remindTimeStr" class="layui-input" required lay-verify="required" id="date1" placeholder="请待选择提醒日期"></td>
+            <td><label class="layui-form-label">应还总额：</label></td>
+            <td><input type="text" name="" placeholder="请输入应还总额" class="layui-input"></td>
         </tr>
         <tr>
-            <td><label class="layui-form-label">催收记录：</label></td>
-            <td><input type="text" name="collectRemark" placeholder="请输入催收记录" class="layui-input"></td>
+            <td><label class="layui-form-label">划扣方式：</label></td>
+            <td>
+                <select name="collectState" lay-filter="status" required lay-verify="required">
+                    <option value="">请选择划扣方式</option>
+                    <option value="1">快捷通</option>
+                    <option value="2">先锋</option>
+                </select>
+            </td>
         </tr>
-        <tr>
-            <td><label class="layui-form-label">是否重要：</label></td>
-            <td><input type="checkbox" name="important" value="1" lay-skin="switch" lay-text="是|否"></td>
-        </tr>
+        <tr></tr>
         <tr>
             <td colspan="2" style="text-align:center;">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
-                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">提交</button>
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="todeal">对公还款</button>
             </td>
         </tr>
     </table>
