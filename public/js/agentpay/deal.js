@@ -15,9 +15,9 @@ layui.use(['table', 'laydate'], () => {
             {field: 'agentpayType', title: '划扣平台', align: 'center', width: 100, templet: d => getStatus(d.agentpayType)},
             {field: 'createTime', title: '创建时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
             {field: 'totalNum', title: '总条数', align: 'center', width: 80},
-            {field: 'totalAmount', title: '总金额', align: 'center', width: 80},
+            {field: 'totalAmount', title: '总金额', align: 'center', width: 80, templet: d => rmbFormat(d.totalAmount)},
             {field: 'successNum', title: '成功条数', align: 'center', width: 100},
-            {field: 'successAmount', title: '成功金额', align: 'center', width: 100},
+            {field: 'successAmount', title: '成功金额', align: 'center', width: 100, templet: d => rmbFormat(d.successAmount)},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
         ]]
     });

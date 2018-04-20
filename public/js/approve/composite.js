@@ -17,7 +17,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'name', title: '姓名', align: 'center', width: 100},
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'approveTime', title: '审批时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.approveTime)},
-            {field: 'applyAmount', title: '申请金额', align: 'center', width: 100},
+            {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, templet: d => rmbFormat(d.applyAmount)},
             {field: 'status', title: '审核状态', align: 'center', width: 100, templet: '#status'},
             {title: '操作', width: 200, align: 'center', toolbar: '#tool'}
         ]]
@@ -43,9 +43,9 @@ layui.use(['table', 'laydate'], () => {
                     <tr><td><b>审核状态：</b></td><td>${getStatus(d.status)}</td></tr>
                     <tr><td><b>机器拒贷原因：</b></td><td>${d.refuseNote}</td></tr>
                     <tr><td><b>是否人工决策：</b></td><td>${d.whetherAudit ? '是' : '否'}</td></tr>
-                    <tr><td><b>批贷金额：</b></td><td>${d.actualAmount}</td></tr>
+                    <tr><td><b>批贷金额：</b></td><td>${rmbFormat(d.actualAmount)}</td></tr>
                     <tr><td><b>贷款次数：</b></td><td>${d.loanCount}</td></tr>
-                    <tr><td><b>申请金额：</b></td><td>${d.applyAmount}</td></tr>
+                    <tr><td><b>申请金额：</b></td><td>${rmbFormat(d.applyAmount)}</td></tr>
                 </table>`);
         }
     });

@@ -34,8 +34,8 @@
                 {field: 'accountNumber', title: '银行卡号', align: 'center', width: 100},
                 {field: 'phone', title: '手机号码', align: 'center', width: 120},
                 {field: 'idcard', title: '身份证号', align: 'center', width: 100},
-                {field: 'amount', title: '到账金额', align: 'center', width: 100},
-                {field: 'agreeAmount', title: '批贷金额', align: 'center', width: 100},
+                {field: 'amount', title: '到账金额', align: 'center', width: 100, templet: d => rmbFormat(d.amount)},
+                {field: 'agreeAmount', title: '批贷金额', align: 'center', width: 100, templet: d => rmbFormat(d.agreeAmount)},
                 {field: 'productType', title: '借款期限', align: 'center', width: 100, templet: d => getProductType(d.productType)},
                 {field: 'payCount', title: '划扣次数', align: 'center', width: 100},
                 {field: 'batchDetailState', title: '状态', align: 'center', width: 120, templet: d => getStatus(d.batchDetailState)}

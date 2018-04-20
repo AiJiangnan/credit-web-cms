@@ -18,7 +18,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100},
             {field: 'payTime', title: '放款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.payTime)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 100, templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 100},
+            {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 100, templet: d => rmbFormat(d.actualTotalAmount)},
             {field: 'payState', title: '划扣状态', align: 'center', width: 100},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
@@ -39,9 +39,9 @@ layui.use(['table', 'laydate'], () => {
                     <tr><td style="width:5em;"><b>合同金额：</b></td><td>${d.contractAmount}</td></tr>
                     <tr><td><b>期数：</b></td><td>${d.totalPeriod}</td></tr>
                     <tr><td><b>订单号：</b></td><td>${d.orderNo}</td></tr>
-                    <tr><td><b>逾期费：</b></td><td>${d.totalInterestPenalty}</td></tr>
-                    <tr><td><b>是否减免：</b></td><td>${d.reduceAmount}</td></tr>
-                    <tr><td><b>减免金额：</b></td><td>${d.reduceAmount}</td></tr>
+                    <tr><td><b>逾期费：</b></td><td>${rmbFormat(d.totalInterestPenalty)}</td></tr>
+                    <tr><td><b>是否减免：</b></td><td>${d.reduceAmount > 0 ? '是' : '否'}</td></tr>
+                    <tr><td><b>减免金额：</b></td><td>${rmbFormat(d.reduceAmount)}</td></tr>
                     <tr><td><b>划扣平台：</b></td><td>${d.payOrgType}</td></tr>
                 </table>`);
         }

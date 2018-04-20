@@ -106,10 +106,12 @@ const lessaddress = address => {
  * @param rmb
  */
 const rmbFormat = rmb => {
-    if (Number.isFinite(rmb)) {
+    if (Number.isInteger(rmb)) {
+        return rmb + '.00';
+    } else if (Number.isFinite(rmb)) {
         return Math.round(rmb * 100) / 100;
     }
-    return '0.00';
+    return !rmb ? '-' : '0.00';
 };
 
 /**

@@ -22,7 +22,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'remindTime', title: '提醒日期', align: 'center', width: 100, templet: d => dateFormat(d.remindTime)},
             {field: 'lastCollectTime', title: '最近催收时间', align: 'center', width: 120, templet: d => dateFormat(d.lastCollectTime)},
             {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 110},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 100},
+            {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
@@ -48,11 +48,11 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td style="width:8em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
                         <tr><td><b>进件渠道：</b></td><td>${d.sdChannel}</td></tr>
                         <tr><td><b>违约天数：</b></td><td>${repay.overdueDays}</td></tr>
-                        <tr><td><b>逾期费：</b></td><td>${repay.overdueFee}</td></tr>
-                        <tr><td><b>应还总额：</b></td><td>${repay.planTotalAmount}</td></tr>
-                        <tr><td><b>已还款金额：</b></td><td>${repay.actualTotalAmount}</td></tr>
-                        <tr><td><b>减免金额：</b></td><td>${repay.reduceAmount}</td></tr>
-                        <tr><td><b>剩余应还款金额：</b></td><td>${repay.planTotalAmount - repay.actualTotalAmount - repay.reduceAmount}</td></tr>
+                        <tr><td><b>逾期费：</b></td><td>${rmbFormat(repay.overdueFee)}</td></tr>
+                        <tr><td><b>应还总额：</b></td><td>${rmbFormat(repay.planTotalAmount)}</td></tr>
+                        <tr><td><b>已还款金额：</b></td><td>${rmbFormat(repay.actualTotalAmount)}</td></tr>
+                        <tr><td><b>已减免金额：</b></td><td>${rmbFormat(repay.reduceAmount)}</td></tr>
+                        <tr><td><b>剩余应还款金额：</b></td><td>${rmbFormat(repay.planTotalAmount - repay.actualTotalAmount - repay.reduceAmount)}</td></tr>
                         <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
                     </table>`);
                 } else {
