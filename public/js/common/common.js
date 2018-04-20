@@ -55,7 +55,15 @@ const constants = {
  * @param str
  */
 const getStatus = str => constants.STATUS[str];
-
+const getProductType = str => {
+    if (str === '1') {
+        return '7天';
+    } else if (str === '2') {
+        return '14天';
+    } else {
+        return r`数据错误`;
+    }
+};
 /**
  * 非空判断
  * @param obj

@@ -47,7 +47,15 @@
 </form>
 <table id="deal" lay-filter="deal"></table>
 <script type="text/html" id="tool">
-    <button class="layui-btn layui-btn-sm layui-bg-green" lay-event="userinfo">再次划扣</button>
+    {{# if(d.batchState === 'no_pay'){ }}
+    <button class="layui-btn layui-btn-sm layui-bg-green" lay-event="pay">放款</button>
+    {{# }else if(d.batchState === 'pay_again'){ }}
+    <button class="layui-btn layui-btn-sm layui-bg-green" lay-event="repay">再次划扣</button>
+    {{# }else if(d.batchState === 'no_confirm'){ }}
+    <button class="layui-btn layui-btn-sm layui-bg-green" lay-event="query">查询代付结果</button>
+    {{# }else{ }}
+    {{ getStatus(d.batchState) }}
+    {{# } }}
 </script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>

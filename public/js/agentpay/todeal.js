@@ -28,8 +28,30 @@ layui.use(['table', 'laydate'], () => {
         ]]
     });
 
+    const todealfn = (state, orderNo) => {
+        $.post('/agentpay/todeal', {state: state, orderNo: orderNo}, d => {
+            if (d.code === 0) {
+                layer.msg(d.data, constants.SUCCESS);
+                t.reload('todeal');
+            } else {
+                layer.msg(d.msg, constants.ERROR);
+            }
+        }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+    };
+
     t.on('tool(todeal)', o => {
         let [e, d] = [o.event, o.data];
+        if (!d.applyNo) {
+            layer.msg('没有订单号！', constants.LOCK);
+            return;
+        }
+        check(d);
+        if (e === 'success') {
+            todealfn(true, d.applyNo);
+        }
+        if (e === 'failure') {
+            todealfn(false, d.applyNo);
+        }
     });
 
     f.on('submit(submit)', d => {

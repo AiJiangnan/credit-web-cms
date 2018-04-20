@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>财务处理详情</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+</head>
+<body style="padding-top:10px;">
+<div style="padding-top:10px;padding-left:10px;">
+    <button class="layui-btn layui-btn-primary layui-btn-sm" title="返回" onclick="javascript:history.go(-1);">
+        <i class="layui-icon">&#xe65a;</i>
+    </button>
+</div>
+<table id="detail" lay-filter="detail"></table>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script>
+    layui.use(['table', 'laytpl'], () => {
+        const [$, t] = [layui.jquery, layui.table];
+        const batchId = getQueryStr('batchId');
+        t.render({
+            id: 'detail',
+            elem: '#detail',
+            height: 'full-70',
+            page: true,
+            url: `/agentpay/deal/${batchId}`,
+            cols: [[
+                {type: 'numbers', title: '序号'},
+                {field: 'orderNo', title: '申请编号', align: 'center', width: 100},
+                {field: 'bankName', title: '开户行', align: 'center', width: 100},
+                {field: 'accountName', title: '户名', align: 'center', width: 80},
+                {field: 'accountNumber', title: '银行卡号', align: 'center', width: 100},
+                {field: 'phone', title: '手机号码', align: 'center', width: 120},
+                {field: 'idcard', title: '身份证号', align: 'center', width: 100},
+                {field: 'amount', title: '到账金额', align: 'center', width: 100},
+                {field: 'agreeAmount', title: '批贷金额', align: 'center', width: 100},
+                {field: 'productType', title: '借款期限', align: 'center', width: 100, templet: d => getProductType(d.productType)},
+                {field: 'payCount', title: '划扣次数', align: 'center', width: 100},
+                {field: 'batchDetailState', title: '状态', align: 'center', width: 120, templet: d => getStatus(d.batchDetailState)}
+            ]]
+        });
+        t.on('sort(detail)', o => t.reload('detail', {where: {sort: o.field, sortOrder: o.type}}));
+    });
+</script>
+</body>
+</html>
