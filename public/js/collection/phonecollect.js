@@ -12,7 +12,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'phonecollect',
         elem: '#phonecollect',
-        height: 'full-110',
+        height: 'full-120',
         page: true,
         url: '/collect/phonecollect',
         cols: [[
