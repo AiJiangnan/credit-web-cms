@@ -47,7 +47,7 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td style="width:8em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
                         <tr><td><b>进件渠道：</b></td><td>${d.sdChannel}</td></tr>
                         <tr><td><b>违约天数：</b></td><td>${repay.overdueDays}</td></tr>
-                        <tr><td><b>逾期费：</b></td><td>${rmbFormat(repay.overdueFee)}</td></tr>
+                        <tr><td><b>逾期费：</b></td><td>${rmbFormat(repay.totalInterestPenalty)}</td></tr>
                         <tr><td><b>应还总额：</b></td><td>${rmbFormat(repay.planTotalAmount)}</td></tr>
                         <tr><td><b>已还款金额：</b></td><td>${rmbFormat(repay.actualTotalAmount)}</td></tr>
                         <tr><td><b>已减免金额：</b></td><td>${rmbFormat(repay.reduceAmount)}</td></tr>
