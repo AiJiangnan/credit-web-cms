@@ -14,7 +14,7 @@ layui.use(['table', 'laydate'], () => {
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 100},
-            {field: 'applyTime', title: '申请时间', align: 'center', width: 100, templet: d => dateFormat(d.applyTime)},
+            {field: 'applyTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.applyTime)},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'createUsername', title: '催收人员', align: 'center', width: 100},
