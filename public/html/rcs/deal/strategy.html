@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新增、修改策略</title>
+    <link rel="stylesheet" href="../../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+            width: 230px;
+        }
+
+        .layui-form-label {
+            width: 8em;
+            padding: 0 0 0 15px;
+        }
+
+        td {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">策略名称：</label></td>
+            <td><input type="text" name="policyName" required lay-verify="required" placeholder="请输入策略名称" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">排序：</label></td>
+            <td><input type="number" name="sort" required lay-verify="required" placeholder="请输入排序" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">是否为通过规则：</label></td>
+            <td>
+                <input type="radio" name="whetherPass" value="1" title="是" checked>
+                <input type="radio" name="whetherPass" value="0" title="否">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="id">
+</form>
+<script src="../../../js/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'laytpl'], () => {
+        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+
+        f.on('submit(submit)', d => {
+            $.post('/risk/policy', d.field, data => {
+                if (data.code === 0) {
+                    p.layer.msg(data.data, {icon: 1});
+                    p.layui.table.reload('strategy');
+                } else {
+                    p.layer.msg(data.msg, {icon: 2});
+                }
+                p.layer.close(p.layer.getFrameIndex(w));
+            }).fail(() => layer.msg('服务器错误！'), {icon: 5});
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

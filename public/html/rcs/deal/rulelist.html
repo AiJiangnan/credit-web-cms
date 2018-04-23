@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择规则</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <div id="coms" style="margin-top:10px;margin-left:10px;"></div>
+</form>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script>
+    layui.use(['form', 'laydate'], () => {
+        const [$, f] = [layui.jquery, layui.form];
+        let ruleNameArr = [];
+        if (sessionStorage.getItem('ruleNames')) {
+            ruleNameArr = sessionStorage.getItem('ruleNames').split(',');
+            sessionStorage.removeItem('ruleNames');
+        }
+        $.get('/risk/rule?page=0&limit=10000&closed=false', d => {
+            if (d.code === 0) {
+                let result = '';
+                d.data.map((e, i) => {
+                    result += `<div class="layui-form-item">
+                                   <input type="checkbox" name="ruleName" title="${e.ruleName}" value="${e.ruleName}" lay-skin="primary">
+                               </div>`;
+                });
+                $('#coms').html(result);
+                ruleNameArr.map((e, i) => $('[value="' + e + '"]').prop('checked', true));
+                f.render();
+            }
+        });
+    });
+</script>
+</body>
+</html>
