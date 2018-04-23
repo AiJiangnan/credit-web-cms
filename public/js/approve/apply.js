@@ -76,6 +76,7 @@ layui.use(['table', 'laydate'], () => {
                 $.post('/approve/audit', {flag: flag, remark: remark, applyIds: JSON.stringify(applyIds)}, data => {
                     if (data.code === 0) {
                         layer.msg(data.data, constants.SUCCESS);
+                        t.reload('apply');
                     } else {
                         layer.msg(data.msg, constants.ERROR);
                     }
