@@ -38,8 +38,8 @@ layui.use(['table', 'laydate'], () => {
         }
         if (e === 'loaninfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
-                    <tr><td style="width:7em;"><b>申请编号：</b></td><td>${d.name}</td></tr>
-                    <tr><td><b>进件渠道：</b></td><td>${d.sourceType}</td></tr>
+                    <tr><td style="width:7em;"><b>申请编号：</b></td><td>${d.applyNum}</td></tr>
+                    <tr><td><b>进件渠道：</b></td><td>${d.channel}</td></tr>
                     <tr><td><b>审核状态：</b></td><td>${getStatus(d.status)}</td></tr>
                     <tr><td><b>机器拒贷原因：</b></td><td>${d.refuseNote}</td></tr>
                     <tr><td><b>是否人工决策：</b></td><td>${d.whetherAudit ? '是' : '否'}</td></tr>
