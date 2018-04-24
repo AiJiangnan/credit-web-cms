@@ -30,7 +30,7 @@ layui.use('table', () => {
             {field: 'logical', title: '逻辑关系', align: 'center', width: 100},
             {field: 'field', title: '字段', align: 'center', width: 120, templet: d => getField(d.field)},
             {field: 'determine', title: '比较符', align: 'center', width: 120, templet: d => d.determine ? d.determine : '-'},
-            {field: 'param', title: '比较参数', align: 'center', width: 100},
+            {field: 'param', title: '比较参数', align: 'center', width: 100, templet: d => d.param ? d.param : '-'},
             {field: 'closed', title: '状态', align: 'center', width: 80, templet: '#closed'},
             {title: '操作', width: 300, align: 'center', toolbar: '#tool'}
         ]]
