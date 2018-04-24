@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新增、修改规则</title>
+    <link rel="stylesheet" href="../../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            width: 8em;
+            padding: 0 0 0 15px;
+        }
+
+        .layui-form-radio {
+            margin: 0;
+        }
+
+        .layui-form-select dl {
+            max-width: 250px;
+            max-height: 180px;
+        }
+
+        td {
+            padding: 5px 0;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">产品名称：</label></td>
+            <td id="productView"></td>
+            <script type="text/html" id="productTpl">
+                <select name="productId" style="max-height:100px;">
+                    <option value="">请选择产品名称</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.id }}">{{ s.productName }}</option>
+                    {{# }); }}
+                </select>
+            </script>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">规则名称：</label></td>
+            <td><input type="text" name="ruleName" required lay-verify="required" placeholder="请输入规则名称" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">类型：</label></td>
+            <td>
+                <input type="radio" lay-filter="type" name="type" value="base" title="基本" checked>
+                <input type="radio" lay-filter="type" name="type" value="group" title="组合">
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">是否加入黑名单：</label></td>
+            <td>
+                <input type="radio" name="whetherBlacklist" value="1" title="是" checked>
+                <input type="radio" name="whetherBlacklist" value="0" title="否">
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">详情：</label></td>
+            <td><input type="text" name="detail" required lay-verify="required" placeholder="请输入详情" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">逻辑关系：</label></td>
+            <td>
+                <input type="radio" name="logical" value="AND" title="AND" disabled>
+                <input type="radio" name="logical" value="OR" title="OR" disabled>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">字段：</label></td>
+            <td id="fieldView"></td>
+            <script type="text/html" id="fieldTpl">
+                <select name="field" style="max-height:100px;">
+                    <option value="">请选择字段</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.value }}">{{ s.detail }}</option>
+                    {{# }); }}
+                </select>
+            </script>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">比较符：</label></td>
+            <td id="condView"></td>
+            <script type="text/html" id="condTpl">
+                <select name="determine" style="max-height:100px;">
+                    <option value="">请选择比较符</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s }}">{{ s }}</option>
+                    {{# }); }}
+                </select>
+            </script>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">比较参数：</label></td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="param" required lay-verify="required" placeholder="请输入比较参数" class="layui-input">
+                </div>
+                <a href="javascript:void(0);" id="choose">选择</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="id">
+</form>
+<form id="paramView" class="layui-form" hidden style="padding:5px;"></form>
+<script type="text/html" id="paramTpl">
+    {{# layui.each(d,(i,s)=>{ }}
+    <div class="layui-form-item">
+        <input type="radio" name="choose" lay-filter="choose" title="{{ s.detail }}" value="{{ s.value }}" lay-skin="primary">
+    </div>
+    {{# }); }}
+</script>
+<script src="../../../js/layui/layui.js"></script>
+<script src="../../../js/common/common.js"></script>
+<script>
+    layui.use(['form', 'laytpl'], () => {
+        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        let clayer;
+
+        new Promise(resolve => {
+            $.get('/risk/enum', d => {
+                laytplrender(fieldTpl, 'fieldView', d.field);
+                laytplrender(paramTpl, 'paramView', d.field);
+                laytplrender(condTpl, 'condView', d.condition);
+                $.get('/risk/product?page=1&limit=10000&closed=false', d => {
+                    laytplrender(productTpl, 'productView', d.data);
+                    resolve();
+                });
+            });
+        }).then(v => {
+            if (sessionStorage.getItem('rule')) {
+                let rule = JSON.parse(sessionStorage.getItem('rule'));
+                $('[name="ruleName"]').val(rule.ruleName);
+                $('[name="detail"]').val(rule.detail);
+                $('[name="param"]').val(rule.param);
+                $('option[value=' + rule.productId + ']').prop('selected', 'selected');
+                $('option[value=' + rule.determine + ']').prop('selected', 'selected');
+                $('option[value=' + rule.field + ']').first().prop('selected', 'selected');
+                $(':radio[value=' + rule.type + ']').prop('checked', true);
+                $(':radio[value=' + rule.logical + ']').prop('checked', true);
+                $(':radio[value=' + (rule.whetherBlacklist ? '1' : '0') + ']').prop('checked', true);
+                f.render();
+                sessionStorage.removeItem('rule');
+            }
+            f.render();
+        });
+
+        $('#choose').click(() => {
+            clayer = layer.open({
+                type: 1,
+                title: false,
+                area: ['380px', '380px'],
+                content: $('#paramView')
+            });
+        });
+
+        f.on('submit(submit)', d => {
+            if (d.field.param) {
+                d.field.param = `{${d.field.param}}`;
+            }
+            $.post('/risk/rule', d.field, data => {
+                if (data.code === 0) {
+                    p.layer.msg(data.data, constants.SUCCESS);
+                    p.layui.table.reload('rule');
+                } else {
+                    p.layer.msg(data.msg, constants.ERROR);
+                }
+                p.layer.close(p.layer.getFrameIndex(w));
+            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+            return false;
+        });
+
+        f.on('radio(type)', d => {
+            if (d.value === 'base') {
+                $('[name="logical"]').prop('checked', false);
+                $('[name="logical"]').prop('disabled', true);
+                $('[name="field"]').prop('disabled', false);
+                $('[name="determine"]').prop('disabled', false);
+                $('[name="param"]').prop('disabled', false);
+            } else if (d.value === 'group') {
+                $('[name="logical"]').prop('checked', true);
+                $('[name="logical"]').prop('disabled', false);
+                $('[name="field"]').val('');
+                $('[name="determine"]').val('');
+                $('[name="param"]').val('');
+                $('[name="field"]').prop('disabled', true);
+                $('[name="determine"]').prop('disabled', true);
+                $('[name="param"]').prop('disabled', true);
+            }
+            f.render();
+        });
+
+        f.on('radio(choose)', d => {
+            const ser = $('#paramView').serialize();
+            $('[name="param"]').val('{' + ser.substr(7) + '}');
+            layer.close(clayer);
+        });
+    });
+</script>
+</body>
+</html>

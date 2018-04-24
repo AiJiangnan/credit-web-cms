@@ -33,10 +33,10 @@
     <form class="layui-form">
         <table>
             <tr>
-                <td><label class="layui-form-label">用户名：</label></td>
-                <td><input type="text" name="username" placeholder="请输入用户账号" class="layui-input"></td>
-                <td><label class="layui-form-label">姓名：</label></td>
-                <td><input type="text" name="realname" placeholder="请输入用户名" class="layui-input"></td>
+                <td><label class="layui-form-label">规则名称：</label></td>
+                <td><input type="text" name="ruleName" placeholder="请输入规则名称" class="layui-input"></td>
+                <td></td>
+                <td></td>
                 <td style="padding-left:20px;">
                     <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
                         <i class="layui-icon">&#xe615;</i>
@@ -53,23 +53,25 @@
 </div>
 <table id="rule" lay-filter="rule"></table>
 <script type="text/html" id="tool">
-    <button class="layui-btn layui-btn-sm layui-bg-cyan" lay-event="allot">分配角色</button>
+    {{# if(d.type==='group'){ }}
+    <button class="layui-btn layui-btn-sm" lay-event="rule">选择规则</button>
+    {{# } }}
     <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
     <button class="layui-btn layui-btn-sm" lay-event="onoff">启|停</button>
     <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="del">删除</button>
 </script>
-<script type="text/html" id="gender">
-    {{#  if(d.gender == 1){ }}
-    <i class="layui-icon">&#xe662;</i>
+<script type="text/html" id="closed">
+    {{#  if(d.closed){ }}
+    {{ r`禁用` }}
     {{#  } else { }}
-    <i class="layui-icon">&#xe661;</i>
+    启用
     {{#  } }}
 </script>
-<script type="text/html" id="state">
-    {{#  if(d.state){ }}
-    启用
-    {{#  } else { }}
-    {{ r`禁用` }}
+<script type="text/html" id="type">
+    {{#  if(d.type==='base'){ }}
+    基本
+    {{#  } else if(d.type==='group') { }}
+    组合
     {{#  } }}
 </script>
 <script src="../../js/layui/layui.js"></script>
