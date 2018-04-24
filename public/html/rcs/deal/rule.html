@@ -69,7 +69,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">详情：</label></td>
-            <td><input type="text" name="detail" required lay-verify="required" placeholder="请输入详情" class="layui-input"></td>
+            <td><input type="text" name="detail" placeholder="请输入详情" class="layui-input"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">逻辑关系：</label></td>
@@ -148,6 +148,7 @@
         }).then(v => {
             if (sessionStorage.getItem('rule')) {
                 let rule = JSON.parse(sessionStorage.getItem('rule'));
+                $('[name="id"]').val(rule.id);
                 $('[name="ruleName"]').val(rule.ruleName);
                 $('[name="detail"]').val(rule.detail);
                 $('[name="param"]').val(rule.param);
@@ -167,15 +168,12 @@
             clayer = layer.open({
                 type: 1,
                 title: false,
-                area: ['380px', '380px'],
+                area: ['420px', '380px'],
                 content: $('#paramView')
             });
         });
 
         f.on('submit(submit)', d => {
-            if (d.field.param) {
-                d.field.param = `{${d.field.param}}`;
-            }
             $.post('/risk/rule', d.field, data => {
                 if (data.code === 0) {
                     p.layer.msg(data.data, constants.SUCCESS);

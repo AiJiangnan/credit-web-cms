@@ -68,37 +68,37 @@ app.route('/*')
         next();
     })
     .get((req, res) => {
-        try {
-            request.get({url: config.API_BASE_URL + req.originalUrl}, (err, resp, body) => {
-                if (err) {
-                    res.send(500);
-                    return;
-                }
+        request.get({url: config.API_BASE_URL + req.originalUrl}, (err, resp, body) => {
+            if (err) {
+                res.send(500);
+                return;
+            }
+            try {
                 logger.info(__filename, "响应参数：", body);
                 const json = JSON.parse(body);
                 res.send(resp.statusCode, json);
-            });
-        } catch (e) {
-            logger.error(e);
-            res.send(500, '服务器错误！');
-        }
+            } catch (e) {
+                logger.error(e);
+                res.send(500, '服务器错误！');
+            }
+        });
     })
     .post((req, res) => {
         logger.info(__filename, "请求参数：", JSON.stringify(req.body));
-        try {
-            request.post({url: config.API_BASE_URL + req.path, form: req.body}, (err, resp, body) => {
-                if (err) {
-                    res.send(500);
-                    return;
-                }
+        request.post({url: config.API_BASE_URL + req.path, form: req.body}, (err, resp, body) => {
+            if (err) {
+                res.send(500);
+                return;
+            }
+            try {
                 logger.info(__filename, "响应参数：", body);
                 const json = JSON.parse(body);
                 res.send(resp.statusCode, json);
-            });
-        } catch (e) {
-            logger.error(e);
-            res.send(500, '服务器错误！');
-        }
+            } catch (e) {
+                logger.error(e);
+                res.send(500, '服务器错误！');
+            }
+        });
     });
 
 module.exports = app;

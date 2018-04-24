@@ -119,7 +119,7 @@ layui.use('table', () => {
             title: '新建规则',
             type: 2,
             content: ['/rcs/deal/rule.html', 'no'],
-            area: ['400px', '460px']
+            area: ['450px', '460px']
         });
     });
 
