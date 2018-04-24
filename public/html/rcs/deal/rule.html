@@ -152,12 +152,12 @@
                 $('[name="ruleName"]').val(rule.ruleName);
                 $('[name="detail"]').val(rule.detail);
                 $('[name="param"]').val(rule.param);
-                $('option[value=' + rule.productId + ']').prop('selected', 'selected');
-                $('option[value=' + rule.determine + ']').prop('selected', 'selected');
-                $('option[value=' + rule.field + ']').first().prop('selected', 'selected');
-                $(':radio[value=' + rule.type + ']').prop('checked', true);
-                $(':radio[value=' + rule.logical + ']').prop('checked', true);
-                $(':radio[value=' + (rule.whetherBlacklist ? '1' : '0') + ']').prop('checked', true);
+                $('option[value="' + rule.productId + '"]').prop('selected', 'selected');
+                $('option[value="' + rule.determine + '"]').prop('selected', 'selected');
+                $('option[value="' + rule.field + '"]').prop('selected', 'selected');
+                $(':radio[value="' + rule.type + '"]').prop('checked', true);
+                $(':radio[value="' + rule.logical + '"]').prop('checked', true);
+                $(':radio[value="' + (rule.whetherBlacklist ? '1' : '0') + '"]').prop('checked', true);
                 f.render();
                 sessionStorage.removeItem('rule');
             }
