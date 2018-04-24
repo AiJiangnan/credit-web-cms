@@ -66,7 +66,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(export)', d => {
-
+        location = '/collect/export?' + $('.layui-form').serialize();
         return false;
     });
 
@@ -77,7 +77,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     t.on('sort(distribute)', o => {
-        t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}})
+        t.reload('distribute', {where: {sort: o.field, sortOrder: o.type}});
         $('#allot').parent().hide('fast');
     });
 

@@ -65,6 +65,10 @@ app.get('/exit', (req, res) => {
 app.route('/*')
     .all((req, res, next) => {
         logger.info(__filename, req.originalUrl, req.method);
+        if (req.path.includes('export')) {
+            request(config.API_BASE_URL + req.originalUrl).pipe(res);
+            return;
+        }
         next();
     })
     .get((req, res) => {
