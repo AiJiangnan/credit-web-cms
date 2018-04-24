@@ -65,6 +65,11 @@ layui.use(['table', 'laydate'], () => {
         }
     });
 
+    f.on('submit(export)', d => {
+
+        return false;
+    });
+
     f.on('submit(submit)', d => {
         t.reload('distribute', {where: d.field});
         $('#allot').parent().hide('fast');

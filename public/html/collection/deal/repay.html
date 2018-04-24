@@ -34,19 +34,19 @@
     <table style="width:90%;">
         <tr>
             <td><label class="layui-form-label">银行卡：</label></td>
-            <td id="stateView"></td>
-            <script type="text/html" id="stateTpl">
-                <select name="" lay-filter="status" required lay-verify="required">
+            <td id="bankView"></td>
+            <script type="text/html" id="bankTpl">
+                <select lay-filter="bank" required lay-verify="required">
                     <option value="">请选择银行卡</option>
                     {{# layui.each(d,(i,s)=>{ }}
-                    <option value="{{ s.id }}">{{ s.status }}</option>
+                    <option value="{{ s.bankInfoId }}" title="{{ s.bankName }}">{{ s.accountNumber }}</option>
                     {{# }); }}
                 </select>
             </script>
         </tr>
         <tr>
             <td><label class="layui-form-label">应还总额：</label></td>
-            <td><input type="text" disabled placeholder="请输入应还总额" class="layui-input layui-disabled"></td>
+            <td><input type="text" name="amount" disabled placeholder="请输入应还总额" class="layui-input layui-disabled"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">划扣方式：</label></td>
@@ -62,7 +62,6 @@
         <tr>
             <td colspan="2" style="text-align:center;">
                 <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">提交</button>
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="todeal">对公还款</button>
             </td>
         </tr>
     </table>
@@ -75,46 +74,50 @@
         const applyId = getQueryStr('applyId');
         const userId = getQueryStr('userId');
 
-        layui.laydate.render({elem: '#date1'});
-
-        $.get('/collect/0', d => {
-            laytplrender(stateTpl, 'stateView', JSON.parse(d.data));
+        $.get('/repayment/bankcard', {userId: userId}, d => {
+            const banks = d.data.userBindBanks;
+            laytplrender(bankTpl, 'bankView', banks);
+            banks.map((e, i) => {
+                if (e.isDefault === '1') {
+                    $('option[value="' + e.bankInfoId + '"]').prop('selected', 'selected');
+                }
+            });
             f.render();
         }).fail(() => layer.msg('服务器错误！', constants.FAIL));
 
-        f.on('select(status)', d => {
-            if (!d.value) {
-                $('[name="substate"]').val('');
-                $('#sub').hide();
-                f.render();
+        $.get('/repayment/amount', {applyId: applyId}, d => {
+            if (d.code !== 0) {
+                layer.msg(d.msg, constants.ERROR);
                 return;
             }
-            $('#sub').show();
-            $.get('/collect/' + d.value, d => {
-                laytplrender(stateTpl2, 'stateView2', JSON.parse(d.data));
-                f.render();
+            $('[name="amount"]').val(d.data);
+        }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+
+        f.on('select(bank)', d => {
+            if (!d.value) return;
+            $.post('/repayment/bankcard', {userId: userId, bankId: d.value}, d => {
+                if (d.code !== 0) {
+                    layer.msg(d.msg, constants.ERROR);
+                }
             }).fail(() => layer.msg('服务器错误！', constants.FAIL));
         });
 
         f.on('submit(submit)', d => {
-            let log = d.field;
-            let $1 = $('option[value=' + log.collectState + ']').html();
-            let $2 = $('option[value=' + log.subCollectState + ']').html();
-            log.applyId = applyId;
-            log.collectStateRemark = `${$1}（${$2}）`;
-            $.post('/collect/log', log, data => {
+            let repay = d.field;
+            repay.applyId = applyId;
+            $.post('/repayment', repay, data => {
                 if (data.code === 0) {
-                    p.layui.table.reload('collectlog');
-                    p.layer.close(p.layer.getFrameIndex(window.name));
                     p.layer.msg(data.data, constants.SUCCESS);
-                    return;
+                } else {
+                    p.layer.msg(data.msg, constants.ERROR);
                 }
-                p.layer.msg(data.msg, constants.ERROR);
+                p.layer.close(p.layer.getFrameIndex(window.name));
             }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             return false;
         });
 
-    });
+    })
+    ;
 </script>
 </body>
 </html>

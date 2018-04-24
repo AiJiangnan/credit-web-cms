@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对公还款</title>
+    <link rel="stylesheet" href="../../../js/layui/css/layui.css">
+    <style>
+        .layui-form-label {
+            width: 6em;
+            padding: 0 0 0 15px;
+        }
+
+        td {
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">还款账户名：</label></td>
+            <td><input type="text" name="repaymentAccountName" required lay-verify="required" placeholder="请输入还款账户名" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">还款账户：</label></td>
+            <td><input type="text" name="repaymentAccount" required lay-verify="required" placeholder="请输入还款账户" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">还款日期：</label></td>
+            <td><input type="text" name="repaymentDateStr" class="layui-input" id="date1" placeholder="请选择还款日期"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">备注：</label></td>
+            <td><input type="text" name="remark" required lay-verify="required" placeholder="请输入备注" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<script src="../../../js/layui/layui.js"></script>
+<script src="../../../js/common/common.js"></script>
+<script>
+    layui.use(['form', 'laytpl', 'laydate'], () => {
+        const [$, f, p] = [layui.jquery, layui.form, parent];
+        const applyId = getQueryStr('applyId');
+
+        layui.laydate.render({elem: '#date1', type: 'datetime'});
+
+        f.on('submit(submit)', d => {
+            let reduce = d.field;
+            reduce.applyId = applyId;
+            $.post('/repayment/todeal', reduce, data => {
+                if (data.code === 0) {
+                    p.layer.msg(data.data, constants.SUCCESS);
+                } else {
+                    p.layer.msg(data.msg, constants.ERROR);
+                }
+                p.layer.close(p.layer.getFrameIndex(window.name));
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

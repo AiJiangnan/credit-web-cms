@@ -3,6 +3,7 @@ layui.use(['element', 'table'], () => {
 
     const applyId = getQueryStr('applyId');
     const applyNo = getQueryStr('applyNo');
+    const userId = getQueryStr('userId');
     const from = getQueryStr('from');
 
     laytplrender(setTpl, 'setView', from);
@@ -29,8 +30,17 @@ layui.use(['element', 'table'], () => {
         layer.open({
             title: '划扣',
             type: 2,
-            content: [`/collection/deal/repay.html?applyId=${applyId}`, 'no'],
+            content: [`/collection/deal/repay.html?applyId=${applyId}&userId=${userId}`, 'no'],
             area: ['360px', '260px']
+        });
+    });
+
+    $('#todeal').click(() => {
+        layer.open({
+            title: '划扣',
+            type: 2,
+            content: [`/collection/deal/todeal.html?applyId=${applyId}&userId=${userId}`, 'no'],
+            area: ['320px', '380px']
         });
     });
 
@@ -49,6 +59,24 @@ layui.use(['element', 'table'], () => {
             type: 2,
             content: [`/collection/deal/reduce.html?applyId=${applyId}`, 'no'],
             area: ['280px', '200px']
+        });
+    });
+
+    $('#part').click(() => {
+        layer.prompt({title: '部分还款金额'}, (v, i, e) => {
+            const reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+            if (!reg.test(v)) {
+                layer.msg('输入金额有误！', constants.LOCK);
+                return;
+            }
+            $.post('/repayment/part', {applyId: applyId, partAmount: v}, d => {
+                if (d.code === 0) {
+                    layer.msg(d.data, constants.SUCCESS);
+                } else {
+                    layer.msg(d.msg, constants.ERROR);
+                }
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+            layer.close(i);
         });
     });
 
