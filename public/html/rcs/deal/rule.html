@@ -158,7 +158,6 @@
                 $(':radio[value="' + rule.type + '"]').prop('checked', true);
                 $(':radio[value="' + rule.logical + '"]').prop('checked', true);
                 $(':radio[value="' + (rule.whetherBlacklist ? '1' : '0') + '"]').prop('checked', true);
-                f.render();
                 sessionStorage.removeItem('rule');
             }
             f.render();
