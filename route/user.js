@@ -75,7 +75,8 @@ app.route('/*')
                     return;
                 }
                 logger.info(__filename, "响应参数：", body);
-                res.send(resp.statusCode, JSON.parse(body));
+                const json = JSON.parse(body);
+                res.send(resp.statusCode, json);
             });
         } catch (e) {
             logger.error(e);
@@ -91,7 +92,8 @@ app.route('/*')
                     return;
                 }
                 logger.info(__filename, "响应参数：", body);
-                res.send(resp.statusCode, JSON.parse(body));
+                const json = JSON.parse(body);
+                res.send(resp.statusCode, json);
             });
         } catch (e) {
             logger.error(e);
