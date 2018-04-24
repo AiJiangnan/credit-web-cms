@@ -36,7 +36,7 @@
             <td><label class="layui-form-label">银行卡：</label></td>
             <td id="stateView"></td>
             <script type="text/html" id="stateTpl">
-                <select name="collectState" lay-filter="status" required lay-verify="required">
+                <select name="" lay-filter="status" required lay-verify="required">
                     <option value="">请选择银行卡</option>
                     {{# layui.each(d,(i,s)=>{ }}
                     <option value="{{ s.id }}">{{ s.status }}</option>
@@ -46,15 +46,15 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">应还总额：</label></td>
-            <td><input type="text" name="" placeholder="请输入应还总额" class="layui-input"></td>
+            <td><input type="text" disabled placeholder="请输入应还总额" class="layui-input layui-disabled"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">划扣方式：</label></td>
             <td>
-                <select name="collectState" lay-filter="status" required lay-verify="required">
+                <select name="type" lay-filter="status" required lay-verify="required">
                     <option value="">请选择划扣方式</option>
-                    <option value="1">快捷通</option>
-                    <option value="2">先锋</option>
+                    <option value="kjtpay">快捷通</option>
+                    <option value="ucf">先锋</option>
                 </select>
             </td>
         </tr>
@@ -73,6 +73,7 @@
     layui.use(['form', 'laydate', 'laytpl', 'layer', 'table'], () => {
         const [$, f, p] = [layui.jquery, layui.form, parent];
         const applyId = getQueryStr('applyId');
+        const userId = getQueryStr('userId');
 
         layui.laydate.render({elem: '#date1'});
 

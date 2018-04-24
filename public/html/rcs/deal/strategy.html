@@ -20,6 +20,10 @@
         td {
             padding: 5px 0;
         }
+
+        .layui-form-select dl {
+            max-height: 120px;
+        }
     </style>
 </head>
 <body style="padding:10px;">
@@ -27,7 +31,15 @@
     <table>
         <tr>
             <td><label class="layui-form-label">策略名称：</label></td>
-            <td><input type="text" name="policyName" required lay-verify="required" placeholder="请输入策略名称" class="layui-input"></td>
+            <td id="view"></td>
+            <script type="text/html" id="tpl">
+                <select name="policyName" style="max-height:100px;">
+                    <option value="">请选择策略名称</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.policyName }}">{{ s.policyName }}</option>
+                    {{# }); }}
+                </select>
+            </script>
         </tr>
         <tr>
             <td><label class="layui-form-label">排序：</label></td>
@@ -50,9 +62,17 @@
     <input type="hidden" name="id">
 </form>
 <script src="../../../js/layui/layui.js"></script>
+<script src="../../../js/common/common.js"></script>
 <script>
     layui.use(['form', 'laytpl'], () => {
         const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        const name = getQueryStr('name');
+
+        $.get('/risk/policyName?limit=10000', d => {
+            laytplrender(tpl, 'view', d.data);
+            $('option[value="' + name + '"]').prop('selected', 'selected');
+            f.render();
+        });
 
         f.on('submit(submit)', d => {
             $.post('/risk/policy', d.field, data => {

@@ -60,14 +60,11 @@ layui.use('table', () => {
                 layer.open({
                     title: '修改策略',
                     type: 2,
-                    content: ['/rcs/deal/strategy.html', 'no'],
+                    content: [`/rcs/deal/strategy.html?name=${d.policyName}`, 'no'],
                     area: ['400px', '240px'],
                     success: (l, i) => {
                         let f = layer.getChildFrame('form', i);
-                        for (let k in d) {
-                            if (k === 'whetherPass') continue;
-                            f.find("input[name='" + k + "']").val(d[k]);
-                        }
+                        f.find("input[name='sort']").val(d.sort);
                         f.find("input[name='whetherPass'][value=" + (d.whetherPass ? '1' : '0') + "]").prop('checked', true);
                     }
                 });
