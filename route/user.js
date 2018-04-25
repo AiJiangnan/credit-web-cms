@@ -21,7 +21,7 @@ app.post('/login', (req, res) => {
             res.send(500);
             return;
         }
-        res.cookie(resp.headers['set-cookie'][0], {maxAge: 60 * 1000 * 30, httpOnly: true});
+        res.cookie(resp.headers['set-cookie'][0], {maxAge: 60 * 1000 * 60 * 24, httpOnly: true});
         const respJson = JSON.parse(body);
         logger.info(__filename, "登录响应：", body);
         if (respJson.code === 0) {
@@ -39,7 +39,7 @@ app.post('/login', (req, res) => {
  */
 app.get('/show', (req, res) => {
     const cookie = request.cookie('sid=' + req.cookies.sid);
-    logger.info('cookie:', 'sid=' + req.cookies.sid, 'user:', req.session.user);
+    logger.info('cookie:', 'sid=' + req.cookies.sid, 'user:', req.session.user.realname);
     j.setCookie(cookie, config.API_BASE_URL);
     request = request.defaults({jar: j});
     const user = req.session.user;
