@@ -39,6 +39,7 @@ app.post('/login', (req, res) => {
  */
 app.get('/show', (req, res) => {
     const cookie = request.cookie('sid=' + req.cookies.sid);
+    logger.info('cookie:', 'sid=' + req.cookies.sid, 'user:', req.session.user);
     j.setCookie(cookie, config.API_BASE_URL);
     request = request.defaults({jar: j});
     const user = req.session.user;
