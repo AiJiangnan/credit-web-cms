@@ -18,6 +18,8 @@ const constants = {
         pay_again: '需再次划扣',
         processing: '处理中',
         finish: '处理完成',
+        // 部分还款
+        init: r`初始状态`,
         // 放款状态（批次详情状态）
         loaning: '放款中',
         successed: '放款成功',
