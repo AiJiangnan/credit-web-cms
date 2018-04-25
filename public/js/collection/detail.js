@@ -9,6 +9,24 @@ layui.use(['element', 'table'], () => {
     laytplrender(setTpl, 'setView', from);
 
     t.render({
+        id: 'partlog',
+        elem: '#partlog',
+        url: '/repayment/part/' + applyId,
+        page: false,
+        cols: [[
+            {type: 'numbers', title: '序号'},
+            {field: 'partAmount', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
+            {field: 'currentPlanTotalAmount', title: '应还款总金额', align: 'center', width: 120, templet: d => rmbFormat(d.currentPlanTotalAmount)},
+            {field: 'currentActualTotalAmount', title: '已还款金额', align: 'center', width: 110, templet: d => rmbFormat(d.currentActualTotalAmount)},
+            {field: 'reduceAmount', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
+            {field: '', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.currentPlanTotalAmount - d.currentActualTotalAmount)},
+            {field: 'createTime', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
+            {field: 'repaymentTime', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
+            {field: 'status', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
+        ]]
+    });
+
+    t.render({
         id: 'collectlog',
         elem: '#collectlog',
         url: '/collect/log/' + applyId,
@@ -37,7 +55,7 @@ layui.use(['element', 'table'], () => {
 
     $('#todeal').click(() => {
         layer.open({
-            title: '划扣',
+            title: '对公还款',
             type: 2,
             content: [`/collection/deal/todeal.html?applyId=${applyId}&userId=${userId}`, 'no'],
             area: ['320px', '380px']

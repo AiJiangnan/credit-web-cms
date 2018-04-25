@@ -15,10 +15,7 @@ const logger = log4js.getLogger('user');
  */
 app.post('/login', (req, res) => {
     logger.info(__filename, "登录参数：", req.body, req.method);
-    request.post({
-        url: config.API_BASE_URL + '/login',
-        form: req.body
-    }, (err, resp, body) => {
+    request.post({url: config.API_BASE_URL + '/login', form: req.body}, (err, resp, body) => {
         if (err) {
             res.send(500);
             return;

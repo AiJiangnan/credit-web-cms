@@ -9,8 +9,9 @@ const user = require('./route/user');
 app.use(session({
     secret: 'aikdw123',
     cookie: {maxAge: 60 * 1000 * 30},
+    name: 'NODESESSIONID',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 // 创建 application/x-www-form-urlencoded 编码解析
