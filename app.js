@@ -1,11 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const app = express();
 
 const user = require('./route/user');
 
+app.use(cookieParser());
 app.use(session({
     secret: 'aikdw123',
     cookie: {maxAge: 60 * 1000 * 30},

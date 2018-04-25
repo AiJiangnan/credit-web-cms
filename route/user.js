@@ -2,7 +2,8 @@ const express = require('express');
 const log4js = require('log4js');
 const app = express();
 let request = require('request');
-request = request.defaults({jar: true});
+let j = request.jar();
+
 
 const config = require('../config/global');
 const log4j = require('../config/log4j');
@@ -20,6 +21,7 @@ app.post('/login', (req, res) => {
             res.send(500);
             return;
         }
+        res.cookie(resp.headers['set-cookie'][0]);
         const respJson = JSON.parse(body);
         logger.info(__filename, "登录响应：", body);
         if (respJson.code === 0) {
@@ -36,6 +38,9 @@ app.post('/login', (req, res) => {
  * 获取当前登陆管理员信息
  */
 app.get('/show', (req, res) => {
+    const cookie = request.cookie('sid=' + req.cookies.sid);
+    j.setCookie(cookie, config.API_BASE_URL);
+    request = request.defaults({jar: j});
     const user = req.session.user;
     res.send(200, user.realname);
 });

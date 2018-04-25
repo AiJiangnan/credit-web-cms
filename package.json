@@ -9,6 +9,7 @@
   "author": "AiJiangnan",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "log4js": "^2.5.3"
