@@ -6,6 +6,8 @@ layui.use(['element', 'table'], () => {
     const userId = getQueryStr('userId');
     const from = getQueryStr('from');
 
+    let partId;
+
     laytplrender(setTpl, 'setView', from);
 
     t.render({
@@ -22,7 +24,15 @@ layui.use(['element', 'table'], () => {
             {field: 'createTime', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
             {field: 'repaymentTime', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
             {field: 'status', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
-        ]]
+        ]],
+        done: (r, c, count) => {
+            r.data.map((e, i) => {
+                if (e.status === 'init') {
+                    partId = e.id;
+                    return;
+                }
+            });
+        }
     });
 
 
@@ -63,14 +73,18 @@ layui.use(['element', 'table'], () => {
     });
 
     $('#part').click(() => {
+        if (!partId) {
+            layer.msg('没有获取到有效部分还款！', constants.LOCK);
+            return;
+        }
         layer.prompt({title: '部分还款金额'}, (v, i, e) => {
-            const reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
-            if (!reg.test(v)) {
+            if (!regex.AMOUNT.test(v)) {
                 layer.msg('输入金额有误！', constants.LOCK);
                 return;
             }
-            $.post('/repayment/part', {applyId: applyId, partAmount: v}, d => {
+            $.post('/repayment/part', {id: partId, applyId: applyId, partAmount: v}, d => {
                 if (d.code === 0) {
+                    t.reload('partlog');
                     layer.msg(d.data, constants.SUCCESS);
                 } else {
                     layer.msg(d.msg, constants.ERROR);
@@ -105,22 +119,7 @@ layui.use(['element', 'table'], () => {
             });
         }
         if (id === 'c3') {
-            t.render({
-                id: 'partlog',
-                elem: '#partlog',
-                url: '/repayment/part/' + applyId,
-                cols: [[
-                    {type: 'numbers', title: '序号'},
-                    {field: 'partAmount', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
-                    {field: 'currentPlanTotalAmount', title: '应还款总金额', align: 'center', width: 120, templet: d => rmbFormat(d.currentPlanTotalAmount)},
-                    {field: 'currentActualTotalAmount', title: '已还款金额', align: 'center', width: 110, templet: d => rmbFormat(d.currentActualTotalAmount)},
-                    {field: 'reduceAmount', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
-                    {field: '', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.currentPlanTotalAmount - d.currentActualTotalAmount - d.reduceAmount)},
-                    {field: 'createTime', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
-                    {field: 'repaymentTime', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
-                    {field: 'status', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
-                ]]
-            });
+            t.reload('partlog');
         }
         if (id === 'c4') {
             t.render({
@@ -162,7 +161,7 @@ layui.use(['element', 'table'], () => {
             t.render({
                 id: 'overduelog',
                 elem: '#overduelog',
-                url: '/repayment/part/' + applyId,
+                // url: '/repayment/part/' + applyId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
                     {field: '', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
