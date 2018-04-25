@@ -52,6 +52,11 @@ layui.use(['table', 'laydate'], () => {
         return false;
     });
 
+    f.on('submit(export)', d => {
+        location = `/collect/record/export?${$('.layui-form').serialize()}`;
+        return false;
+    });
+
     t.on('sort(record)', o => t.reload('record', {where: {sort: o.field, sortOrder: o.type}}));
 
 });

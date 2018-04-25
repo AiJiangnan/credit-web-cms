@@ -21,7 +21,7 @@ app.post('/login', (req, res) => {
             res.send(500);
             return;
         }
-        res.cookie(resp.headers['set-cookie'][0]);
+        res.cookie(resp.headers['set-cookie'][0], {maxAge: 60 * 1000 * 30, httpOnly: true});
         const respJson = JSON.parse(body);
         logger.info(__filename, "登录响应：", body);
         if (respJson.code === 0) {
