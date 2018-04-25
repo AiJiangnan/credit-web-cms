@@ -56,7 +56,7 @@ const constants = {
  * 获取状态
  * @param str
  */
-const getStatus = str => constants.STATUS[str];
+const getStatus = str => str ? constants.STATUS[str] : '-';
 const getProductType = str => {
     if (str === '1') {
         return '7天';
