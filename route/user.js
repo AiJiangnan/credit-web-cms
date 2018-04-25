@@ -66,7 +66,12 @@ app.route('/*')
     .all((req, res, next) => {
         logger.info(__filename, req.originalUrl, req.method);
         if (req.path.includes('export')) {
-            request(config.API_BASE_URL + req.originalUrl).pipe(res);
+            try {
+                request(config.API_BASE_URL + req.originalUrl).pipe(res);
+            } catch (e) {
+                logger.error(e);
+                res.send(500, '服务器错误！');
+            }
             return;
         }
         next();
