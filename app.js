@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 
 const user = require('./route/user');
+const middle = require('./route/middle');
 
 app.use(cookieParser());
 app.use(session({
@@ -26,8 +27,8 @@ app.use('/img', express.static(path.join(__dirname, 'public/img')));
 
 //登录拦截器
 app.use((req, res, next) => {
-    let url = req.originalUrl;
-    if (!((url === "/login" && req.method === "POST") || url === "/" || req.session.user)) {
+    let url = req.path;
+    if (!((url === "/user/login" && req.method === "POST") || url === "/" || req.session.user)) {
         return res.redirect("/");
     }
     next();
@@ -35,7 +36,8 @@ app.use((req, res, next) => {
 // 在拦截器后添加静态资源
 app.use(express.static(path.join(__dirname, 'public/html')));
 
-app.use('/', user);
+app.use('/user', user);
+app.use('/', middle);
 
 app.listen(8080);
 

@@ -4,14 +4,14 @@ layui.config({
     const $ = layui.jquery;
     layui.app.set({type: 'iframe'});
 
-    $.get('show', data => $('#show').html(data)).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+    $.get('/user/show', data => $('#show').html(data));
 
     $.get('menus', data => {
         const [l, g] = [layui.laytpl, menusTpl.innerHTML];
         l(g).render(data, h => $('#menuView').html(h));
         layui.element.init();
         layui.app.init();
-    }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+    });
 
     if (!sessionStorage.getItem("layer")) {
         layer.open({
