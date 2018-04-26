@@ -97,7 +97,7 @@
                 <select name="determine" style="max-height:100px;">
                     <option value="">请选择比较符</option>
                     {{# layui.each(d,(i,s)=>{ }}
-                    <option value="{{ s }}">{{ s }}</option>
+                    <option value="{{ s.value }}">{{ s.detail }}</option>
                     {{# }); }}
                 </select>
             </script>
@@ -151,10 +151,12 @@
                 $('[name="id"]').val(rule.id);
                 $('[name="ruleName"]').val(rule.ruleName);
                 $('[name="detail"]').val(rule.detail);
-                $('[name="param"]').val(rule.param);
                 $('option[value="' + rule.productId + '"]').prop('selected', 'selected');
-                $('option[value="' + rule.determine + '"]').prop('selected', 'selected');
-                $('option[value="' + rule.field + '"]').prop('selected', 'selected');
+                if (rule.type === 'base') {
+                    $('[name="param"]').val(rule.param);
+                    $('option[value="' + rule.determine + '"]').prop('selected', 'selected');
+                    $('option[value="' + rule.field + '"]').prop('selected', 'selected');
+                }
                 $(':radio[value="' + rule.type + '"]').prop('checked', true);
                 $(':radio[value="' + rule.logical + '"]').prop('checked', true);
                 $(':radio[value="' + (rule.whetherBlacklist ? '1' : '0') + '"]').prop('checked', true);

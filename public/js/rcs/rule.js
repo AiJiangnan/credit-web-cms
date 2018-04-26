@@ -1,16 +1,20 @@
 layui.use('table', () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
     let field = {};
+    let deter = {};
 
     $.get('/risk/enum', d => {
-        d.field.map((e, i) => {
-            field[e.value] = e.detail;
-        });
+        d.field.map((e, i) => field[e.value] = e.detail);
+        d.condition.map((e, i) => deter[e.value] = e.detail);
     });
 
     const getField = str => {
         if (!str) return '-';
         return field[str]
+    };
+    const getDeter = str => {
+        if (!str) return '-';
+        return deter[str]
     };
 
     t.render({
@@ -29,7 +33,7 @@ layui.use('table', () => {
             {field: 'ruleList', title: '规则列表', align: 'center', width: 100},
             {field: 'logical', title: '逻辑关系', align: 'center', width: 100},
             {field: 'field', title: '字段', align: 'center', width: 120, templet: d => getField(d.field)},
-            {field: 'determine', title: '比较符', align: 'center', width: 120, templet: d => d.determine ? d.determine : '-'},
+            {field: 'determine', title: '比较符', align: 'center', width: 120, templet: d => getDeter(d.determine)},
             {field: 'param', title: '比较参数', align: 'center', width: 100, templet: d => d.param ? d.param : '-'},
             {field: 'closed', title: '状态', align: 'center', width: 80, templet: '#closed'},
             {title: '操作', width: 300, align: 'center', toolbar: '#tool'}
