@@ -156,6 +156,15 @@
                     $('[name="param"]').val(rule.param);
                     $('option[value="' + rule.determine + '"]').prop('selected', 'selected');
                     $('option[value="' + rule.field + '"]').prop('selected', 'selected');
+                } else if (rule.type === 'group') {
+                    $('[name="logical"]').prop('checked', true);
+                    $('[name="logical"]').prop('disabled', false);
+                    $('[name="field"]').val('');
+                    $('[name="determine"]').val('');
+                    $('[name="param"]').val('');
+                    $('[name="field"]').prop('disabled', true);
+                    $('[name="determine"]').prop('disabled', true);
+                    $('[name="param"]').prop('disabled', true);
                 }
                 $(':radio[value="' + rule.type + '"]').prop('checked', true);
                 $(':radio[value="' + rule.logical + '"]').prop('checked', true);
