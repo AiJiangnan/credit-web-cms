@@ -11,7 +11,10 @@ layui.config({
         l(g).render(data, h => $('#menuView').html(h));
         layui.element.init();
         layui.app.init();
-    }).fail(() => location = '/');
+    }).fail(() => {
+        console.log('menus error!');
+        location = '/';
+    });
 
     if (!sessionStorage.getItem("layer")) {
         layer.open({
