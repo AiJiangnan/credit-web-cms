@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用于选择展示表头</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form"></form>
+<script src="../../js/layui/layui.js"></script>
+<script>
+    layui.use('form', () => {
+        const [$, f] = [layui.jquery, layui.form];
+        const cols = {
+            sourceType: '注册渠道',
+            channel: '进件渠道',
+            applyNum: '申请编号',
+            incomeTime: '申请时间',
+            approveTime: '审批时间',
+            gpsAddress: '定位位置',
+            name: '姓名',
+            phone: '手机号码',
+            status: '审核状态',
+            refuseNote: '机器拒贷原因',
+            whetherAudit: '是否人工决策',
+            loanCount: '是否复贷',
+            loanCount: '贷款次数',
+            name: '审核员',
+            applyAmount: '申请金额',
+            actualAmount: '批贷金额'
+        };
+        let result = '';
+        new Promise(resolve => {
+            for (let k in cols) {
+                result += `<div class="layui-form-item">
+                        <input type="checkbox" title="${cols[k]}" value="${k}" lay-skin="primary">
+                    </div>`
+            }
+            $('.layui-form').html(result);
+            resolve();
+        }).then(v => {
+            if (sessionStorage.getItem('choose')) {
+                let choice = JSON.parse(sessionStorage.getItem('choose'));
+                choice.map((e, i) => $('[value="' + e + '"]').prop('checked', true));
+                sessionStorage.removeItem('choose');
+            }
+        }).then(v => {
+            f.render();
+        });
+    });
+</script>
+</body>
+</html>
