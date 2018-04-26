@@ -22,6 +22,7 @@ app.post('/login', (req, res) => {
         }
         res.cookie(resp.headers['set-cookie'][0], {maxAge: 60 * 1000 * 60 * 24, httpOnly: true});
         const respJson = JSON.parse(body);
+        logger.info('当前登录用户信息：Cookie:', resp.headers['set-cookie'][0], 'name:', respJson.data.realname);
         logger.info(__filename, "登录响应：", body);
         if (respJson.code === 0) {
             req.session.user = respJson.data;
