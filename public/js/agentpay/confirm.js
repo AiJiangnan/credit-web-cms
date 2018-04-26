@@ -18,7 +18,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'accountNumber', title: '银行卡号', align: 'center', width: 100},
             {field: 'agreeAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.agreeAmount)},
             {field: 'amount', title: '放款金额', align: 'center', width: 100, templet: d => rmbFormat(d.amount)},
-            {field: 'productType', title: '借款期限', align: 'center', width: 100},
+            {field: 'productType', title: '借款期限', align: 'center', width: 100, templet: d => d.productType === 1 ? '7天' : '14天'},
             {field: 'applyTime', title: '进件时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.applyTime)},
             {field: 'approveTime', title: '审核时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.approveTime)},
             {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
