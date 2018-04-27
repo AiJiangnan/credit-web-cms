@@ -1,13 +1,28 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
+    let channel = JSON.parse(sessionStorage.getItem('channel'));
+
+    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    f.render('select');
+
+    const getChannel = c => {
+        let name = '0';
+        channel.map((e, i) => {
+            if (e.code === c) {
+                name = e.name;
+            }
+        });
+        return name;
+    };
+
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
     let colums = [{type: 'numbers', title: '序号'}];
     let columsData = {
         choice: ['sourceType', 'channel', 'applyNum', 'incomeTime', 'approveTime', 'gpsAddress'],
-        sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100},
-        channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100},
+        sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
+        channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100, templet: d => getStatus(d.channel)},
         applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240},
         incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
         approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.approveTime)},

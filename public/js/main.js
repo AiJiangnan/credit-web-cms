@@ -11,9 +11,19 @@ layui.config({
         l(g).render(data, h => $('#menuView').html(h));
         layui.element.init();
         layui.app.init();
-    }).fail(() => {
-        console.log('menus error!');
-        location = '/';
+    }).fail(() => location = '/');
+
+    // 初始化渠道信息
+    $.get('/channel/all', d => {
+        let channel = [];
+        if (d.code === 0) {
+            d.data.map((e, i) => {
+                if (e.channelNumber) channel.push({code: e.channelNumber, name: e.channelName});
+            });
+            sessionStorage.setItem('channel', JSON.stringify(channel));
+        } else {
+            layer.msg('没有获取到渠道信息！', constants.ERROR);
+        }
     });
 
     if (!sessionStorage.getItem("layer")) {

@@ -7,10 +7,7 @@ layui.use('form', () => {
             } else {
                 layer.msg(data, constants.FAIL);
             }
-        }).fail(() => {
-            console.log('login error!');
-            location = '/'
-        });
+        }).fail(() => location = '/');
         return false;
     });
 });
