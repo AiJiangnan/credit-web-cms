@@ -108,10 +108,10 @@
             $.post('/repayment', repay, data => {
                 if (data.code === 0) {
                     p.layer.msg(data.data, constants.SUCCESS);
+                    p.layer.close(p.layer.getFrameIndex(window.name));
                 } else {
                     p.layer.msg(data.msg, constants.ERROR);
                 }
-                p.layer.close(p.layer.getFrameIndex(window.name));
             }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             return false;
         });
