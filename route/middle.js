@@ -15,7 +15,7 @@ const logger = log4js.getLogger('middle');
  */
 app.route('/*')
     .all((req, res, next) => {
-        logger.info(__filename, req.originalUrl, req.method);
+        logger.info(req.originalUrl, req.method);
         if (req.path.includes('export')) {
             try {
                 request({url: config.API_BASE_URL + req.originalUrl, headers: {Cookie: req.session.sid}}).pipe(res);
@@ -36,10 +36,10 @@ app.route('/*')
             try {
                 if (body) {
                     const json = JSON.parse(body);
-                    logger.info(__filename, "响应结果：", json.msg);
+                    logger.info("响应结果：", json.msg);
                     res.send(resp.statusCode, json);
                 } else {
-                    logger.error(__filename, '响应结果为空！', req.path);
+                    logger.error('响应结果为空！', req.path);
                     res.send(resp.statusCode);
                 }
             } catch (e) {
@@ -49,7 +49,7 @@ app.route('/*')
         });
     })
     .post((req, res) => {
-        logger.info(__filename, "请求参数：", JSON.stringify(req.body));
+        logger.info("请求参数：", JSON.stringify(req.body));
         request.post({url: config.API_BASE_URL + req.path, form: req.body, headers: {Cookie: req.session.sid}}, (err, resp, body) => {
             if (err) {
                 res.send(500);
@@ -58,10 +58,10 @@ app.route('/*')
             try {
                 if (body) {
                     const json = JSON.parse(body);
-                    logger.info(__filename, "响应结果：", json.msg);
+                    logger.info("响应结果：", json.msg);
                     res.send(resp.statusCode, json);
                 } else {
-                    logger.error(__filename, '响应结果为空！', req.path);
+                    logger.error('响应结果为空！', req.path);
                     res.send(resp.statusCode);
                 }
             } catch (e) {
