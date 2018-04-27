@@ -1,8 +1,7 @@
 const express = require('express');
 const log4js = require('log4js');
 const app = express();
-let request = require('request');
-let j = request.jar();
+const request = require('request');
 
 const config = require('../config/global');
 const log4j = require('../config/log4j');
@@ -20,29 +19,17 @@ app.post('/login', (req, res) => {
             res.send(500);
             return;
         }
-        res.cookie(resp.headers['set-cookie'][0], {maxAge: 60 * 1000 * 60 * 24, httpOnly: true});
         const respJson = JSON.parse(body);
-        logger.info('当前登录用户信息：Cookie:', resp.headers['set-cookie'][0], 'name:', respJson.data.realname);
-        logger.info(__filename, "登录响应：", body);
         if (respJson.code === 0) {
             req.session.user = respJson.data;
+            req.session.sid = resp.headers['set-cookie'][0].split(';')[0];
+            logger.info('当前登录人：', req.session.user.realname, 'sid:', req.session.sid);
             res.send(resp.statusCode, respJson.code);
         } else {
             req.session.destroy();
             res.send(resp.statusCode, respJson.msg);
         }
     });
-});
-
-/**
- * 获取cookie中间件
- */
-app.use((req, res, next) => {
-    logger.info('cookie:', 'sid=' + req.cookies.sid, 'user:', req.session.user.realname);
-    const cookie = request.cookie('sid=' + req.cookies.sid);
-    j.setCookie(cookie, config.API_BASE_URL);
-    request = request.defaults({jar: j});
-    next();
 });
 
 /**
@@ -57,7 +44,7 @@ app.get('/show', (req, res) => {
  * 退出
  */
 app.get('/exit', (req, res) => {
-    request.post({url: config.API_BASE_URL + '/logout'});
+    request.post({url: config.API_BASE_URL + '/logout', headers: {Cookie: req.session.sid}});
     req.session.destroy();
     res.redirect("/");
 });
