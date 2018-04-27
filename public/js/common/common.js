@@ -124,6 +124,7 @@ const rmbFormat = rmb => {
     return !rmb ? '-' : '0.00';
 };
 
+const zero = n => n < 10 ? '0' + n : n;
 /**
  * 日期格式化
  * @param str
@@ -133,7 +134,7 @@ const dateFormat = str => {
     if (!str) return '-';
     const date = new Date();
     date.setTime(str);
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    return `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())}`;
 };
 
 /**
@@ -145,7 +146,7 @@ const dateTimeFormat = str => {
     if (!str) return '-';
     const date = new Date();
     date.setTime(str);
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    return `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())} ${zero(date.getHours())}:${zero(date.getMinutes())}:${zero(date.getSeconds())}`;
 };
 
 /**

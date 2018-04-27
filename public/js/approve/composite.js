@@ -9,8 +9,8 @@ layui.use(['table', 'laydate'], () => {
         sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100},
         channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100},
         applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240},
-        incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.incomeTime)},
-        approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.approveTime)},
+        incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
+        approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.approveTime)},
         gpsAddress: {field: 'gpsAddress', title: '定位位置', align: 'center', width: 200},
         name: {field: 'name', title: '姓名', align: 'center', width: 100},
         phone: {field: 'phone', title: '手机号码', align: 'center', width: 140},
@@ -19,7 +19,7 @@ layui.use(['table', 'laydate'], () => {
         whetherAudit: {field: 'whetherAudit', title: '是否人工决策', align: 'center', width: 100, templet: d => d.whetherAudit ? '是' : '否'},
         loanCount: {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, templet: d => d.loanCount > 0 ? '是' : '否'},
         loanCount: {field: 'loanCount', title: '贷款次数', align: 'center', width: 100},
-        name: {field: 'name', title: '审核员', align: 'center', width: 100},
+        auditName: {field: 'auditName', title: '审核员', align: 'center', width: 100},
         applyAmount: {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, templet: d => rmbFormat(d.applyAmount)},
         actualAmount: {field: 'actualAmount', title: '批贷金额', align: 'center', width: 100, templet: d => rmbFormat(d.applyAmount)}
     };
