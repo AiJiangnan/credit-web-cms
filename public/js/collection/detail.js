@@ -37,21 +37,33 @@ layui.use(['element', 'table'], () => {
 
 
     $('#repay').click(() => {
-        layer.open({
-            title: '划扣',
-            type: 2,
-            content: [`/collection/deal/repay.html?applyId=${applyId}&userId=${userId}`, 'no'],
-            area: ['360px', '260px']
-        });
+        $.get('/repayment/amount', {applyId: applyId}, d => {
+            if (d.data == 0) {
+                layer.msg('该订单已结清！', constants.HAPPY);
+            } else {
+                layer.open({
+                    title: '划扣',
+                    type: 2,
+                    content: [`/collection/deal/repay.html?applyId=${applyId}&userId=${userId}`, 'no'],
+                    area: ['360px', '260px']
+                });
+            }
+        }).fail(() => layer.msg('服务器错误！', constants.FAIL));
     });
 
     $('#todeal').click(() => {
-        layer.open({
-            title: '对公还款',
-            type: 2,
-            content: [`/collection/deal/todeal.html?applyId=${applyId}&userId=${userId}`, 'no'],
-            area: ['320px', '380px']
-        });
+        $.get('/repayment/amount', {applyId: applyId}, d => {
+            if (d.data == 0) {
+                layer.msg('该订单已结清！', constants.HAPPY);
+            } else {
+                layer.open({
+                    title: '对公还款',
+                    type: 2,
+                    content: [`/collection/deal/todeal.html?applyId=${applyId}&userId=${userId}`, 'no'],
+                    area: ['320px', '380px']
+                });
+            }
+        }).fail(() => layer.msg('服务器错误！', constants.FAIL));
     });
 
     $('#log').click(() => {
