@@ -1,6 +1,13 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
+    $.get('/userrole', d => {
+        d.data.map((e, i) => {
+            if (e === 'CSZG')
+                $('#btn').append('<button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="export" title="导出"><i class="layui-icon">&#xe61e;</i></button>');
+        });
+    });
+
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
 

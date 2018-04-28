@@ -48,8 +48,15 @@
                     {{# }); }}
                 </select>
             </script>
-            <td></td>
-            <td></td>
+            <td><label class="layui-form-label">还款状态：</label></td>
+            <td>
+                <select name="payState">
+                    <option value="">请选择还款状态</option>
+                    <option value="overdue_wait_repayment">逾期未还款</option>
+                    <option value="overdue_already_repayment">逾期结清</option>
+                    <option value="part_repay">部分还款</option>
+                </select>
+            </td>
             <td></td>
             <td colspan="2" style="padding-left:20px;">
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">

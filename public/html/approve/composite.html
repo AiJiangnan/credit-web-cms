@@ -60,7 +60,7 @@
             <td>
                 <select name="channel">
                     <option value="">请选择进件渠道</option>
-                    <option value="Mobile">手机</option>
+                    <option value="Mobile">手机APP</option>
                     <option value="xjbk">现金白卡</option>
                 </select>
             </td>
@@ -109,13 +109,6 @@
 </form>
 <div class="morebtn"><i class="layui-icon" style="width:16px;margin:0 auto;display:block;">&#xe61a;</i></div>
 <table id="composite" lay-filter="composite"></table>
-<script type="text/html" id="tool">
-    <button class="layui-btn layui-btn-sm" lay-event="userinfo">个人信息</button>
-    <button class="layui-btn layui-btn-sm" lay-event="loaninfo">批贷信息</button>
-</script>
-<script type="text/html" id="status">
-    {{ getStatus(d.status) }}
-</script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script src="../../js/approve/composite.js"></script>

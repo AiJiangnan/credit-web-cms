@@ -1,6 +1,21 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
+    let channel = JSON.parse(sessionStorage.getItem('channel'));
+
+    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    f.render('select');
+
+    const getChannel = c => {
+        let name = '0';
+        channel.map((e, i) => {
+            if (e.code === c) {
+                name = e.name;
+            }
+        });
+        return name;
+    };
+
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
 
     t.render({
@@ -12,8 +27,8 @@ layui.use(['table', 'laydate'], () => {
         cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            {field: 'sourceType', title: '注册渠道', align: 'center', width: 100},
-            {field: 'channel', title: '进件渠道', align: 'center', width: 100},
+            {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
+            {field: 'channel', title: '进件渠道', align: 'center', width: 100, templet: d => getStatus(d.channel)},
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'registerTime', title: '入网时间', align: 'center', width: 120, templet: d => dateFormat(d.registerTime)},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
@@ -31,7 +46,7 @@ layui.use(['table', 'laydate'], () => {
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:6em;"><b>姓　　名：</b></td><td>${d.name}</td></tr>
-                    <tr><td><b>注册渠道：</b></td><td>${d.sourceType}</td></tr>
+                    <tr><td><b>注册渠道：</b></td><td>${getChannel(d.sourceType)}</td></tr>
                     <tr><td><b>手机号码：</b></td><td>${d.phone}</td></tr>
                     <tr><td><b>号码归属地：</b></td><td>${d.phoneLoc}</td></tr>
                     <tr><td><b>定位位置：</b></td><td title="${d.gpsAddress}">${lessaddress(d.gpsAddress)}</td></tr>
