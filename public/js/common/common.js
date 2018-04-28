@@ -13,7 +13,6 @@ const constants = {
         overdue_already_repayment: '逾期结清',
         repaying: '还款中',
         part_repay: '部分还款',
-        repaying: '还款中',
         repay_failed: r`还款失败`,
         repay_success: '还款成功',
         // 批次状态
