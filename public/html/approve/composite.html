@@ -47,21 +47,21 @@
         </tr>
         <tr id="more" hidden>
             <td><label class="layui-form-label">注册渠道：</label></td>
-            <td>
-                <select name="sourceType" disabled class="layui-disabled">
+            <td id="sourceTypeView"></td>
+            <script type="text/html" id="sourceTypeTpl">
+                <select name="sourceType">
                     <option value="">请选择注册渠道</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.code }}">{{ s.name }}</option>
+                    {{# }) }}
                 </select>
-            </td>
+            </script>
             <td><label class="layui-form-label">进件渠道：</label></td>
             <td>
-                <select name="channel" disabled class="layui-disabled">
+                <select name="channel">
                     <option value="">请选择进件渠道</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    <option value="Mobile">手机</option>
+                    <option value="xjbk">现金白卡</option>
                 </select>
             </td>
             <td><label class="layui-form-label">人工决策：</label></td>

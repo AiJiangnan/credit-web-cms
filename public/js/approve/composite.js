@@ -1,16 +1,31 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
+    let channel = JSON.parse(sessionStorage.getItem('channel'));
+
+    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    f.render('select');
+
+    const getChannel = c => {
+        let name = '0';
+        channel.map((e, i) => {
+            if (e.code === c) {
+                name = e.name;
+            }
+        });
+        return name;
+    };
+
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
     let colums = [{type: 'numbers', title: '序号'}];
     let columsData = {
         choice: ['sourceType', 'channel', 'applyNum', 'incomeTime', 'approveTime', 'gpsAddress'],
-        sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100},
-        channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100},
+        sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
+        channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100, templet: d => getStatus(d.channel)},
         applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240},
-        incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.incomeTime)},
-        approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 100, sort: true, templet: d => dateFormat(d.approveTime)},
+        incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
+        approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.approveTime)},
         gpsAddress: {field: 'gpsAddress', title: '定位位置', align: 'center', width: 200},
         name: {field: 'name', title: '姓名', align: 'center', width: 100},
         phone: {field: 'phone', title: '手机号码', align: 'center', width: 140},
@@ -19,7 +34,7 @@ layui.use(['table', 'laydate'], () => {
         whetherAudit: {field: 'whetherAudit', title: '是否人工决策', align: 'center', width: 100, templet: d => d.whetherAudit ? '是' : '否'},
         loanCount: {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, templet: d => d.loanCount > 0 ? '是' : '否'},
         loanCount: {field: 'loanCount', title: '贷款次数', align: 'center', width: 100},
-        name: {field: 'name', title: '审核员', align: 'center', width: 100},
+        auditName: {field: 'auditName', title: '审核员', align: 'center', width: 100},
         applyAmount: {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, templet: d => rmbFormat(d.applyAmount)},
         actualAmount: {field: 'actualAmount', title: '批贷金额', align: 'center', width: 100, templet: d => rmbFormat(d.applyAmount)}
     };

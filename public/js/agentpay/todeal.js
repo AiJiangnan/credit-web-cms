@@ -41,16 +41,16 @@ layui.use(['table', 'laydate'], () => {
 
     t.on('tool(todeal)', o => {
         let [e, d] = [o.event, o.data];
-        if (!d.applyNo) {
+        if (!d.orderNo) {
             layer.msg('没有订单号！', constants.LOCK);
             return;
         }
         check(d);
         if (e === 'success') {
-            todealfn(true, d.applyNo);
+            todealfn(true, d.orderNo);
         }
         if (e === 'failure') {
-            todealfn(false, d.applyNo);
+            todealfn(false, d.orderNo);
         }
     });
 

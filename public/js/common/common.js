@@ -12,6 +12,7 @@ const constants = {
         overdue_wait_repayment: '逾期未还款',
         overdue_already_repayment: '逾期结清',
         repaying: '还款中',
+        part_repay: '部分还款',
         // 批次状态
         no_pay: '生成批次未放款',
         no_confirm: '放款未查询',
@@ -40,7 +41,10 @@ const constants = {
         undo: r`未审批`,
         // 划扣平台
         REAPAL: '融宝',
-        UCF: '先锋'
+        UCF: '先锋',
+        // 进件渠道
+        Mobile: '手机APP',
+        xjbk: '现金白卡'
     },
     // 弹出图标示意
     WARM: {icon: 0},
@@ -124,6 +128,7 @@ const rmbFormat = rmb => {
     return !rmb ? '-' : '0.00';
 };
 
+const zero = n => n < 10 ? '0' + n : n;
 /**
  * 日期格式化
  * @param str
@@ -133,7 +138,7 @@ const dateFormat = str => {
     if (!str) return '-';
     const date = new Date();
     date.setTime(str);
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    return `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())}`;
 };
 
 /**
@@ -145,7 +150,7 @@ const dateTimeFormat = str => {
     if (!str) return '-';
     const date = new Date();
     date.setTime(str);
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    return `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())} ${zero(date.getHours())}:${zero(date.getMinutes())}:${zero(date.getSeconds())}`;
 };
 
 /**
