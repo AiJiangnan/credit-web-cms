@@ -31,21 +31,21 @@
             <td><label class="layui-form-label">手机号码：</label></td>
             <td><input type="text" name="phone" placeholder="请输入手机号码" class="layui-input"></td>
             <td><label class="layui-form-label">注册渠道：</label></td>
-            <td>
-                <select name="sourceType" lay-verify="">
+            <td id="sourceTypeView"></td>
+            <script type="text/html" id="sourceTypeTpl">
+                <select name="sourceType">
                     <option value="">请选择注册渠道</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.code }}">{{ s.name }}</option>
+                    {{# }) }}
                 </select>
-            </td>
+            </script>
             <td><label class="layui-form-label">进件渠道：</label></td>
             <td>
-                <select name="channel" lay-verify="">
+                <select name="channel">
                     <option value="">请选择进件渠道</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    <option value="Mobile">手机APP</option>
+                    <option value="xjbk">现金白卡</option>
                 </select>
             </td>
             <td><label class="layui-form-label">是否复贷：</label></td>
