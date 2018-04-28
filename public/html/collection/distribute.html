@@ -28,7 +28,7 @@
         <tr>
             <td><label class="layui-form-label">分配状态：</label></td>
             <td>
-                <select name="collectWay" lay-verify="">
+                <select name="collectWay">
                     <option value="">请选择分配状态</option>
                     <option value="0">未分配</option>
                     <option value="1">电话催收</option>
@@ -59,28 +59,29 @@
             </script>
             <td><label class="layui-form-label">还款状态：</label></td>
             <td>
-                <select name="payState" lay-verify="">
+                <select name="payState">
                     <option value="">请选择还款状态</option>
                     <option value="overdue_wait_repayment">逾期未还款</option>
                     <option value="overdue_already_repayment">逾期结清</option>
+                    <option value="part_repay">部分还款</option>
                 </select>
             </td>
             <td><label class="layui-form-label">注册渠道：</label></td>
-            <td>
-                <select name="signChannel" lay-verify="" class="layui-disabled" disabled>
+            <td id="sourceTypeView"></td>
+            <script type="text/html" id="sourceTypeTpl">
+                <select name="signChannel">
                     <option value="">请选择注册渠道</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.code }}">{{ s.name }}</option>
+                    {{# }) }}
                 </select>
-            </td>
+            </script>
             <td><label class="layui-form-label">进件渠道：</label></td>
             <td>
-                <select name="sdChannel" lay-verify="" class="layui-disabled" disabled>
+                <select name="sdChannel">
                     <option value="">请选择进件渠道</option>
-                    <option value="010">北京</option>
-                    <option value="021">上海</option>
-                    <option value="0571">杭州</option>
+                    <option value="Mobile">手机APP</option>
+                    <option value="xjbk">现金白卡</option>
                 </select>
             </td>
         </tr>
