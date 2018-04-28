@@ -17,14 +17,14 @@ layui.use(['table', 'laydate'], () => {
         url: '/collect/phonecollect',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 240, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=1">${d.applyNo}</a>`},
-            {field: 'remindTime', title: '提醒日期', align: 'center', width: 100, templet: d => dateFormat(d.remindTime)},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=1">${d.applyNo}</a>`},
+            {field: 'remindTime', title: '提醒日期', align: 'center', width: 120, templet: d => dateFormat(d.remindTime)},
             {field: 'lastCollectTime', title: '最近催收日期', align: 'center', width: 120, templet: d => dateFormat(d.lastCollectTime)},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'phone', title: '手机号码', align: 'center', width: 100},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'updateTime', title: '分配日期', align: 'center', width: 100, templet: d => dateFormat(d.updateTime)},
+            {field: 'updateTime', title: '分配日期', align: 'center', width: 120, templet: d => dateFormat(d.updateTime)},
             {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 110},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
