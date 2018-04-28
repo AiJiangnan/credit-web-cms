@@ -13,6 +13,9 @@ const constants = {
         overdue_already_repayment: '逾期结清',
         repaying: '还款中',
         part_repay: '部分还款',
+        repaying: '还款中',
+        repay_failed: r`还款失败`,
+        repay_success: '还款成功',
         // 批次状态
         no_pay: '生成批次未放款',
         no_confirm: '放款未查询',
@@ -41,7 +44,9 @@ const constants = {
         undo: r`未审批`,
         // 划扣平台
         REAPAL: '融宝',
+        reapal: '融宝',
         UCF: '先锋',
+        ucf: '先锋',
         // 进件渠道
         Mobile: '手机APP',
         xjbk: '现金白卡'
@@ -70,9 +75,9 @@ const regex = {
  */
 const getStatus = str => str ? constants.STATUS[str] : '-';
 const getProductType = str => {
-    if (str === '1') {
+    if (str == '1') {
         return '7天';
-    } else if (str === '2') {
+    } else if (str == '2') {
         return '14天';
     } else {
         return r`数据错误`;
