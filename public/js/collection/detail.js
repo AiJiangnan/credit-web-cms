@@ -106,6 +106,26 @@ layui.use(['element', 'table'], () => {
         });
     });
 
+    $('#black').click(() => {
+        layer.confirm('你确定将该用户加入黑名单？', constants.CONFIRM, ii => {
+            layer.prompt({title: '加入黑名单原因'}, (v, i, e) => {
+                if (!v || v === '') {
+                    layer.msg('原因不能为空！', constants.LOCK);
+                    return;
+                }
+                $.post('/collect/black', {userId: userId, message: v}, d => {
+                    if (d.code === 0) {
+                        layer.msg(d.data, constants.SUCCESS);
+                        layer.close(i);
+                    } else {
+                        layer.msg(d.msg, constants.ERROR);
+                    }
+                }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+            });
+            layer.close(ii);
+        });
+    });
+
     e.on('collapse()', d => {
         if (!d.show) return;
         const id = d.title.attr('id');
