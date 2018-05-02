@@ -1,6 +1,18 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
+    let channel = JSON.parse(sessionStorage.getItem('channel'));
+
+    const getChannel = c => {
+        let name = '0';
+        channel.map((e, i) => {
+            if (e.code === c) {
+                name = e.name;
+            }
+        });
+        return name;
+    };
+
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
 
@@ -36,7 +48,7 @@ layui.use(['table', 'laydate'], () => {
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:6em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
-                    <tr><td><b>注册渠道：</b></td><td>${d.signChannel}</td></tr>
+                    <tr><td><b>注册渠道：</b></td><td>${getChannel(d.signChannel)}</td></tr>
                     <tr><td><b>手机号码：</b></td><td>${d.phone}</td></tr>
                     <tr><td><b>身份证号码：</b></td><td>${d.idcard}</td></tr>
                 </table>`);
@@ -48,7 +60,7 @@ layui.use(['table', 'laydate'], () => {
                     check(repay);
                     alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                         <tr><td style="width:8em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
-                        <tr><td><b>进件渠道：</b></td><td>${d.sdChannel}</td></tr>
+                        <tr><td><b>进件渠道：</b></td><td>${getStatus(d.sdChannel)}</td></tr>
                         <tr><td><b>违约天数：</b></td><td>${repay.overdueDays}</td></tr>
                         <tr><td><b>逾期费：</b></td><td>${rmbFormat(repay.totalInterestPenalty)}</td></tr>
                         <tr><td><b>应还总额：</b></td><td>${rmbFormat(repay.planTotalAmount)}</td></tr>
