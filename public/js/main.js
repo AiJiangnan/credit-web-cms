@@ -26,6 +26,46 @@ layui.config({
         }
     });
 
+    $('#show').click(() => {
+        layer.open({
+            title: '修改密码',
+            type: 2,
+            content: '/system/password.html',
+            area: ['300px', '240px'],
+            btn: ['确认', '取消'],
+            yes: (i, l) => {
+                let f = layer.getChildFrame('form', i);
+                const pwd = f.find('[name="password"]').val();
+                const oldpwd = f.find('[name="oldpassword"]').val();
+                const repwd = f.find('[name="check"]').val();
+                if (pwd === '' || repwd === '' || oldpwd === '') {
+                    layer.msg('必填项不能为空！', constants.LOCK);
+                    return;
+                }
+                if (!(/(.+){6,12}$/.test(pwd))) {
+                    layer.msg('密码必须6到12位！', constants.LOCK);
+                    return;
+                }
+                if (pwd !== repwd) {
+                    layer.msg('两次密码输入不一致！', constants.LOCK);
+                    return;
+                }
+                $.post('/user/password', {password: pwd, oldpassword: oldpwd}, data => {
+                    if (data.code === 0) {
+                        layer.msg(data.data, constants.SUCCESS);
+                        layer.close(i);
+                        location = '/';
+                    } else {
+                        layer.msg(data.msg, constants.ERROR);
+                    }
+                }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+            },
+            btn2: (i, l) => {
+                layer.close(i);
+            }
+        });
+    });
+
     if (!sessionStorage.getItem("layer")) {
         layer.open({
             type: 1,
