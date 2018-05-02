@@ -34,8 +34,8 @@ layui.use(['table', 'laydate'], () => {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:7em;"><b>委案时间：</b></td><td>${dateFormat(d.updateTime)}</td></tr>
                     <tr><td><b>委案逾期天数：</b></td><td>${d.lateDays}</td></tr>
-                    <tr><td><b>委案金额：</b></td><td>${rmbFormat(d.contractAmount)}</td></tr>
-                    <tr><td><b>委托催收金额：</b></td><td>${rmbFormat(d.contractAmount + d.totalInterestPenalty)}</td></tr>
+                    <tr><td><b>委案金额：</b></td><td>${rmbFormat(d.planTotalAmount)}</td></tr>
+                    <tr><td><b>委托催收金额：</b></td><td>${rmbFormat(d.repaymentAmount)}</td></tr>
                 </table>`);
         }
         if (e === 'repayinfo') {
@@ -63,6 +63,11 @@ layui.use(['table', 'laydate'], () => {
 
     f.on('submit(submit)', d => {
         t.reload('companycollect', {where: d.field});
+        return false;
+    });
+
+    f.on('submit(export)', d => {
+        location = `/collect/companycollect/export?${$('.layui-form').serialize()}`;
         return false;
     });
 
