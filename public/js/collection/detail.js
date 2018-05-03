@@ -1,5 +1,5 @@
-layui.use(['element', 'table'], () => {
-    const [$, e, t] = [layui.jquery, layui.element, layui.table];
+layui.use(['element', 'table', 'form'], () => {
+    const [$, e, t, f] = [layui.jquery, layui.element, layui.table, layui.form];
 
     const applyId = getQueryStr('applyId');
     const applyNo = getQueryStr('applyNo');
@@ -9,6 +9,23 @@ layui.use(['element', 'table'], () => {
     let partId;
 
     laytplrender(setTpl, 'setView', from);
+
+    $.get('/info/phonelog/' + userId, d => {
+        if (d.code === 0) {
+            $('#rate').html(d.data.proportion + '%');
+            laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
+        }
+    });
+
+    f.on('submit(submit)', d => {
+        $.get('/info/phonelog/' + userId + '?' + $('.layui-form').serialize(), d => {
+            if (d.code === 0) {
+                $('#rate').html(d.data.proportion + '%');
+                laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
+            }
+        });
+        return false;
+    });
 
     t.render({
         id: 'partlog',
