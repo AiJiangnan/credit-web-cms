@@ -38,7 +38,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'updateTime', title: '分配日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.updateTime)},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'phone', title: '手机号码', align: 'center', width: 100},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
@@ -115,7 +115,7 @@ layui.use(['table', 'laydate'], () => {
             title: '分配审核人员',
             type: 2,
             content: '/collection/admin.html',
-            area: ['300px', '400px'],
+            area: ['400px', '400px'],
             btn: ['确认', '取消'],
             yes: (i, l) => {
                 let f = layer.getChildFrame('form', i);
