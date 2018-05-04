@@ -7,28 +7,45 @@
     <title>选择信审专员</title>
     <link rel="stylesheet" href="../../js/layui/css/layui.css">
     <style>
-        .layui-form-item {
-            margin: 0;
+        .layui-table td {
+            padding: 0;
+        }
+
+        .layui-table th {
+            text-align: center;
         }
     </style>
 </head>
-<body style="padding:10px;">
-<form class="layui-form"></form>
+<body>
+<form class="layui-form">
+    <table class="layui-table">
+        <thead>
+        <th>员工姓名</th>
+        <th>总数</th>
+        <th>分案金额</th>
+        </thead>
+        <tbody id="userView"></tbody>
+    </table>
+</form>
+<script type="text/html" id="userTpl">
+    {{# layui.each(d,(i,s)=>{ }}
+    <tr>
+        <td style="padding-left:10px;"><input type="radio" name="applyIds" title="{{ s.name }}" value="{{ s.id }}" lay-skin="primary"></td>
+        <td style="text-align:center;">{{ s.distributeNum }}</td>
+        <td style="text-align:center;">{{ s.distributeAmount }}</td>
+    </tr>
+    {{# }); }}
+</script>
 <script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script>
-    layui.use('form', () => {
+    layui.use(['form', 'table'], () => {
         const [$, f] = [layui.jquery, layui.form];
         $.get('/collect/user', d => {
             if (d.code === 0) {
-                let result = '';
-                d.data.map((e, i) => {
-                    result += `<div class="layui-form-item">
-                                   <input type="radio" name="applyIds" title="${e.realname}" value="${e.id}" lay-skin="primary">
-                               </div>`;
-                });
-                $('.layui-form').html(result);
-                f.render();
+                laytplrender(userTpl, 'userView', d.data)
             }
+            f.render();
         });
     });
 </script>
