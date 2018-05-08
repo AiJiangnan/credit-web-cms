@@ -141,7 +141,9 @@ const zero = n => n < 10 ? '0' + n : n;
 const dateFormat = str => {
     if (!str) return '-';
     const date = new Date();
-    date.setTime(str);
+    if (str !== 'now') {
+        date.setTime(str);
+    }
     return `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())}`;
 };
 
