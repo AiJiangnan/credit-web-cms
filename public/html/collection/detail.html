@@ -44,6 +44,12 @@
         .layui-form-label {
             padding: 0 0 0 15px;
         }
+
+        .label {
+            text-align: right;
+            width: 9em;
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +76,27 @@
     <div class="layui-collapse">
         <div class="layui-colla-item">
             <h2 class="layui-colla-title" id="c1">申请信息</h2>
-            <div class="layui-colla-content">待开发</div>
+            <div class="layui-colla-content" id="userInfoView"></div>
+            <script type="text/html" id="userInfoTpl">
+                <table class="layui-table">
+                    <tr>
+                        <td class="label">姓名：</td>
+                        <td>{{ d.realName }}</td>
+                        <td class="label">身份证号：</td>
+                        <td>{{ d.idcard }}</td>
+                        <td class="label">手机号码：</td>
+                        <td>{{ d.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">家庭地址：</td>
+                        <td>{{ d.liveAddress }}</td>
+                        <td class="label">紧急联系人：</td>
+                        <td>{{ d.emergencyContact }}</td>
+                        <td class="label">紧急联系人电话：</td>
+                        <td>{{ d.emergencyContactPhone }}</td>
+                    </tr>
+                </table>
+            </script>
         </div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title" id="c2">减免记录</h2>
