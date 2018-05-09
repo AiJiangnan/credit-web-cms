@@ -45,7 +45,7 @@ layui.use(['table', 'laydate'], () => {
         if (e === 'collectinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:5em;"><b>合同金额：</b></td><td>${d.contractAmount}</td></tr>
-                    <tr><td><b>期数：</b></td><td>${getProductType(d.totalPeriod)}</td></tr>
+                    <tr><td><b>期数：</b></td><td>${getProductType(d.productType)}</td></tr>
                     <tr><td><b>订单号：</b></td><td>${d.orderNo}</td></tr>
                     <tr><td><b>逾期费：</b></td><td>${rmbFormat(d.totalInterestPenalty)}</td></tr>
                     <tr><td><b>是否减免：</b></td><td>${d.reduceAmount > 0 ? '是' : '否'}</td></tr>

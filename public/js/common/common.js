@@ -48,7 +48,8 @@ const constants = {
         ucf: '先锋',
         // 进件渠道
         Mobile: '手机APP',
-        xjbk: '现金白卡'
+        xjbk: '现金白卡',
+        rongshu: '榕树'
     },
     // 弹出图标示意
     WARM: {icon: 0},
