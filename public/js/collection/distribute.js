@@ -87,6 +87,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
+        d.field.page = 1;
         t.reload('distribute', {where: d.field});
         $('#allot').parent().hide('fast');
         return false;

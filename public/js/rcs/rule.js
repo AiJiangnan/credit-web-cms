@@ -130,6 +130,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('rule', {where: null}));
 
     f.on('submit(submit)', d => {
+        d.field.page = 1;
         t.reload('rule', {where: d.field});
         return false;
     });

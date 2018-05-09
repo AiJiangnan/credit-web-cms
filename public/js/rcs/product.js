@@ -83,6 +83,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('product', {where: null}));
 
     f.on('submit(submit)', d => {
+        d.field.page = 1;
         t.reload('product', {where: d.field});
         return false;
     });
