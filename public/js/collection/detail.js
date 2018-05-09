@@ -19,6 +19,7 @@ layui.use(['element', 'table', 'form'], () => {
 
     $.get('/info/user/' + userId, d => {
         if (d.code === 0) {
+            check(d.data);
             laytplrender(userInfoTpl, 'userInfoView', d.data);
         }
     });
