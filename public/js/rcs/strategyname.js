@@ -104,6 +104,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('strategyname', {where: null}));
 
     f.on('submit(submit)', d => {
+        d.field.page = 1;
         t.reload('strategyname', {where: d.field});
         return false;
     });

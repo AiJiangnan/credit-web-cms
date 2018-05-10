@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>综合查询详情页面</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <style>
+        .layui-nav {
+            height: 40px;
+            margin: 10px 0;
+            background-color: #f2f2f2;
+        }
+
+        .layui-nav li, .layui-nav a {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .layui-nav .layui-nav-item a, .layui-nav .layui-nav-item a:hover {
+            color: black;
+        }
+
+        .layui-nav-child {
+            top: 40px;
+        }
+
+        .layui-colla-title {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .layui-colla-content {
+            padding: 0;
+        }
+
+        .layui-input {
+            height: 30px;
+            margin: 5px 0;
+        }
+
+        .layui-form-label {
+            padding: 0 0 0 15px;
+        }
+
+        .layui-table td {
+            padding: 5px 15px;
+        }
+
+        .label {
+            text-align: right;
+            width: 7em;
+            height: 10px;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<ul class="layui-nav" lay-filter="detail">
+    <li id="n1" class="layui-nav-item layui-this"><a href="javascript:void(0);">申请信息</a></li>
+    <li class="layui-nav-item"><a href="javascript:history.go(-1);">返回</a></li>
+</ul>
+<table class="layui-table">
+    <tr>
+        <td class="label">姓名：</td>
+        <td></td>
+        <td class="label">身份证：</td>
+        <td></td>
+        <td class="label">手机号码：</td>
+        <td></td>
+        <td class="label"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="label">注册渠道：</td>
+        <td></td>
+        <td class="label">机器审核状态：</td>
+        <td></td>
+        <td class="label">机器拒贷原因：</td>
+        <td></td>
+        <td class="label">身份证住址：</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="label">亲密联系人：</td>
+        <td></td>
+        <td class="label">贷款期限：</td>
+        <td></td>
+        <td class="label">审核结果：</td>
+        <td></td>
+        <td class="label">拒贷码：</td>
+        <td></td>
+    </tr>
+</table>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/approve/detail.js"></script>
+</body>
+</html>

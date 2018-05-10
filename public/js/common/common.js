@@ -48,7 +48,8 @@ const constants = {
         ucf: '先锋',
         // 进件渠道
         Mobile: '手机APP',
-        xjbk: '现金白卡'
+        xjbk: '现金白卡',
+        rongshu: '榕树'
     },
     // 弹出图标示意
     WARM: {icon: 0},
@@ -118,6 +119,13 @@ const lessaddress = address => {
     const exec = (/.*?(省|自治区)/.exec(address) ? /.*?(市|自治州)/ : /.*?区/).exec(address);
     return exec ? exec[0] : r`无有效地址`;
 };
+
+/**
+ * 从申请单号中获取借款时间
+ * @param str
+ * @returns {string}
+ */
+const getLoanTimeFromApplyNo = str => str ? str.substr(2, 4) + '-' + str.substr(6, 2) + '-' + str.substr(8, 2) : '-';
 
 /**
  * 人民币金额格式化
