@@ -180,10 +180,10 @@ layui.use(['element', 'table', 'form'], () => {
                     {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
                     {field: '', title: '借款日期', align: 'center', width: 120, templet: d => getLoanTimeFromApplyNo(d.applyNo)},
                     {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 110, templet: d => dateFormat(d.repaymentPlanDate)},
-                    {field: 'updateTime', title: '实还时间', align: 'center', width: 100, templet: d => dateTimeFormat(d.updateTime)},
-                    {field: 'overdueDays', title: '逾期天数', align: 'center', width: 140},
-                    {field: 'planTotalAmount', title: '应还金额', align: 'center', width: 160, templet: d => rmbFormat(d.planTotalAmount)},
-                    {field: 'reduceAmount', title: '减免金额', align: 'center', width: 160, templet: d => rmbFormat(d.reduceAmount)},
+                    {field: 'updateTime', title: '实还时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.updateTime)},
+                    {field: 'overdueDays', title: '逾期天数', align: 'center', width: 100},
+                    {field: 'planTotalAmount', title: '应还金额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)},
+                    {field: 'reduceAmount', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
                     {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 100, templet: d => rmbFormat(d.actualTotalAmount)},
                     {field: 'payOrgType', title: '还款类型', align: 'center', width: 100, templet: d => getStatus(d.payOrgType)}
                 ]]

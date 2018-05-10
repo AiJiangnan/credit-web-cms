@@ -46,6 +46,7 @@ const constants = {
         reapal: '融宝',
         UCF: '先锋',
         ucf: '先锋',
+        kjtpay: '快捷通',
         // 进件渠道
         Mobile: '手机APP',
         xjbk: '现金白卡',
