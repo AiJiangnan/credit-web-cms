@@ -121,6 +121,13 @@ const lessaddress = address => {
 };
 
 /**
+ * 从申请单号中获取借款时间
+ * @param str
+ * @returns {string}
+ */
+const getLoanTimeFromApplyNo = str => str ? str.substr(2, 4) + '-' + str.substr(6, 2) + '-' + str.substr(8, 2) : '-';
+
+/**
  * 人民币金额格式化
  * @param rmb
  */
