@@ -92,6 +92,10 @@ layui.use(['table', 'laydate'], () => {
         t.reload('composite', {where: d.field});
         return false;
     });
+    f.on('submit(export)', d => {
+        location = '/approve/integrate/export?' + $('.layui-form').serialize();
+        return false;
+    });
 
     t.on('sort(composite)', o => t.reload('composite', {where: {sort: o.field, sortOrder: o.type}}));
 
