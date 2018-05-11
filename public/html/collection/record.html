@@ -38,6 +38,16 @@
             <td><input type="text" name="actualRepaymentDateStr" class="layui-input" id="date2" placeholder="请选择实还日期"></td>
         </tr>
         <tr>
+            <td><label class="layui-form-label">还款方式：</label></td>
+            <td>
+                <select name="payOrgType">
+                    <option value="">请选择还款方式</option>
+                    <option value="reapal">APP还款</option>
+                    <option value="kjtpay">快捷通划扣</option>
+                    <option value="ucf">先锋划扣</option>
+                    <option value="offline">对公还款</option>
+                </select>
+            </td>
             <td><label class="layui-form-label">还款状态：</label></td>
             <td>
                 <select name="type">
@@ -64,8 +74,6 @@
                     <i class="layui-icon">&#xe639;</i>
                 </button>
             </td>
-            <td></td>
-            <td></td>
             <td></td>
             <td></td>
         </tr>

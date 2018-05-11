@@ -46,6 +46,7 @@ layui.use(['element', 'table', 'form'], () => {
             r.data.map((e, i) => {
                 if (e.status === 'init') {
                     partId = e.id;
+                    $('#logo').attr('class', 'layui-badge-dot');
                     return;
                 }
             });
