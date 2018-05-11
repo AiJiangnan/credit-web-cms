@@ -21,6 +21,7 @@ layui.use(['table', 'laydate'], () => {
             {type: 'numbers', title: '序号'},
             {field: 'updateTime', title: '实际还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.updateTime)},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 100},
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100},
             {field: 'payTime', title: '放款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.payTime)},

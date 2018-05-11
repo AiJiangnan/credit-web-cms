@@ -23,17 +23,12 @@
             color: black;
         }
 
-        .layui-nav-child {
-            top: 40px;
+        .layui-table td, .layui-table th {
+            padding: 5px 15px;
         }
 
-        .layui-colla-title {
-            height: 30px;
-            line-height: 30px;
-        }
-
-        .layui-colla-content {
-            padding: 0;
+        .layui-table th {
+            text-align: center;
         }
 
         .layui-input {
@@ -45,15 +40,20 @@
             padding: 0 0 0 15px;
         }
 
-        .layui-table td {
+        .label {
+            text-align: right;
+            height: 10px;
+            background-color: #f2f2f2;
+        }
+
+        caption {
+            text-align: left;
             padding: 5px 15px;
         }
 
-        .label {
-            text-align: right;
-            width: 7em;
-            height: 10px;
-            background-color: #f2f2f2;
+        img {
+            width: 400px;
+            padding: 15px;
         }
     </style>
 </head>
@@ -63,37 +63,301 @@
     <li class="layui-nav-item"><a href="javascript:history.go(-1);">返回</a></li>
 </ul>
 <table class="layui-table">
-    <tr>
-        <td class="label">姓名：</td>
-        <td></td>
-        <td class="label">身份证：</td>
-        <td></td>
-        <td class="label">手机号码：</td>
-        <td></td>
-        <td class="label"></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="label">注册渠道：</td>
-        <td></td>
-        <td class="label">机器审核状态：</td>
-        <td></td>
-        <td class="label">机器拒贷原因：</td>
-        <td></td>
-        <td class="label">身份证住址：</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="label">亲密联系人：</td>
-        <td></td>
-        <td class="label">贷款期限：</td>
-        <td></td>
-        <td class="label">审核结果：</td>
-        <td></td>
-        <td class="label">拒贷码：</td>
-        <td></td>
-    </tr>
+    <tbody id="applyInfoView"></tbody>
+    <script id="applyInfoTpl" type="text/html">
+        <tr>
+            <td class="label" style="width:7em;">姓名：</td>
+            <td>{{ d.name }}</td>
+            <td class="label" style="width:9em;">身份证：</td>
+            <td>{{ d.idcard }}</td>
+            <td class="label" style="width:5em;">手机号码：</td>
+            <td>{{ d.phone }}</td>
+            <td class="label" style="width:5em;">注册渠道：</td>
+            <td>{{ d.channel }}</td>
+        </tr>
+        <tr>
+            <td class="label">机器拒贷原因：</td>
+            <td>{{ d.refuseNote }}</td>
+            <td class="label">身份证住址：</td>
+            <td>{{ d.idcardAddress }}</td>
+            <td class="label">贷款期限：</td>
+            <td>{{ d.loanTerm }}</td>
+            <td class="label"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="label">亲密联系人：</td>
+            <td>{{ d.emergencyContact }}</td>
+            <td class="label">亲密联系人手机号：</td>
+            <td>{{ d.emergencyContactPhone }}</td>
+            <td class="label">审核结果：</td>
+            <td>{{ d.approveResult }}</td>
+            <td class="label"></td>
+            <td></td>
+        </tr>
+    </script>
 </table>
+<div class="layui-tab layui-tab-card" lay-filter="tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">运营商报告</li>
+        <li>联系人详单</li>
+        <li>手机通讯录</li>
+        <li>历史记录</li>
+        <li>附件</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>手机号码</th>
+                    <th>归属地</th>
+                    <th>姓名检查</th>
+                    <th>身份证号检查</th>
+                    <th>注册时间</th>
+                    <th>最后使用时间</th>
+                </tr>
+                </thead>
+                <tbody id="reportView"></tbody>
+                <script id="reportTpl" type="text/html">
+                    <tr>
+                        <td>{{ d.phone }}</td>
+                        <td>{{ d.operatorsAddress }}</td>
+                        <td>{{ d.checkName }}</td>
+                        <td>{{ d.chechIdCard }}</td>
+                        <td>{{ d.regTime }}</td>
+                        <td>{{ d.endUserTime }}</td>
+                    </tr>
+                </script>
+            </table>
+            <table class="layui-table">
+                <caption class="layui-bg-green">月账单数据</caption>
+                <thead>
+                <tr>
+                    <th>月份</th>
+                    <th>呼叫次数</th>
+                    <th>主叫次数</th>
+                    <th>主叫时间</th>
+                    <th>被叫次数</th>
+                    <th>被叫时间</th>
+                    <th>短信数量</th>
+                    <th>话费数量</th>
+                </tr>
+                </thead>
+                <tbody id="monthView"></tbody>
+                <script id="monthTpl" type="text/html">
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <tr>
+                        <td>{{ s.month }}</td>
+                        <td>{{ s.callCnt }}</td>
+                        <td>{{ s.callOutCnt }}</td>
+                        <td>{{ rmbFormat(s.callOutLen) }}</td>
+                        <td>{{ s.callInCnt }}</td>
+                        <td>{{ rmbFormat(s.callInLen) }}</td>
+                        <td>{{ s.massageCnt }}</td>
+                        <td>{{ s.totalAmount }}</td>
+                    </tr>
+                    {{# }); }}
+                </script>
+            </table>
+            <table class="layui-table">
+                <caption class="layui-bg-green">欺诈检测</caption>
+                <tbody id="fraudView"></tbody>
+                <script id="fraudTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">身份证组合过其他电话</td>
+                        <td>{{ d.idcardWithOtherPhones }}</td>
+                        <td class="label" style="width:15em;">黑中介分数</td>
+                        <td>{{ d.blackScore }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">电话号码组合过其他姓名</td>
+                        <td>{{ d.phoneWithOtherNames }}</td>
+                        <td class="label">直接联系人中黑名单人数</td>
+                        <td>{{ d.contactsClass1BlacklistCnt }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">电话号码组合过其他身份证</td>
+                        <td>{{ d.phoneWithOtherIdcards }}</td>
+                        <td class="label">引起黑名单的直接联系人数量</td>
+                        <td>{{ d.contactsClass1Cnt }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">法院黑名单检查</td>
+                        <td>{{ d.courtBlackCheck?'是':'否' }}</td>
+                        <td class="label">直接联系人中引起间接黑名单占比</td>
+                        <td>{{ rmbFormat(d.contactsRouterRatio)+'%' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">金融服务类机构黑名单检查</td>
+                        <td>{{ d.financialServiceBlackCheck?'是':'否' }}</td>
+                        <td class="label">查询过该用户的相关企业数量</td>
+                        <td>{{ d.searchedOrgCnt }}</td>
+                    </tr>
+                </script>
+            </table>
+            <table class="layui-table">
+                <caption class="layui-bg-green">行为检测</caption>
+                <thead>
+                <tr>
+                    <th>检测项</th>
+                    <th>结果</th>
+                    <th>依据</th>
+                </tr>
+                </thead>
+                <tbody id="behaviorView"></tbody>
+                <script id="behaviorTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:14em">朋友圈在哪里</td>
+                        <td>{{ d.regularCircleResult }}</td>
+                        <td>{{ d.regularCircleEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">号码使用时间</td>
+                        <td>{{ d.phoneUsedTimeResult }}</td>
+                        <td>{{ d.phoneUsedTimeEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">手机静默情况</td>
+                        <td>{{ d.phoneSilentResult }}</td>
+                        <td>{{ d.phoneSilentEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">互通过电话的号码数量</td>
+                        <td>{{ d.contactEachOtherResult }}</td>
+                        <td>{{ d.contactEachOtherEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">澳门电话通话情况</td>
+                        <td>{{ d.contactMacaoResult }}</td>
+                        <td>{{ d.contactMacaoEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">法院号码通话情况</td>
+                        <td>{{ d.contactCourtResult }}</td>
+                        <td>{{ d.contactCourtEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">夜间活动情况（23点-6点）</td>
+                        <td>{{ d.contactNightResult }}</td>
+                        <td>{{ d.contactNightEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">贷款类号码联系情况</td>
+                        <td>{{ d.contactLoanResult }}</td>
+                        <td>{{ d.contactLoanEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">银行类号码联系情况</td>
+                        <td>{{ d.contactBankResult }}</td>
+                        <td>{{ d.contactBankEvidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">信用卡类号码联系情况</td>
+                        <td>{{ d.contactCreditCardResult }}</td>
+                        <td>{{ d.contactCreditCardEvidence }}</td>
+                    </tr>
+                </script>
+            </table>
+            <table class="layui-table">
+                <caption class="layui-bg-green">联系人数据</caption>
+                <thead>
+                <tr>
+                    <th>联系人/关系</th>
+                    <th>联系电话/归属地</th>
+                    <th>是否小号</th>
+                    <th>最早联系时间</th>
+                    <th>联系号码检查</th>
+                </tr>
+                </thead>
+                <tbody id="linkView"></tbody>
+                <script id="linkTpl" type="text/html">
+                    <tr>
+                        <td>{{ d.relationship }}</td>
+                        <td>{{ d.phoneLoc }}</td>
+                        <td>{{ d.checkXiaohao }}</td>
+                        <td>{{ d.transStart }}</td>
+                        <td>{{ d.checkMobile }}</td>
+                    </tr>
+                </script>
+            </table>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form">
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label">手机号码：</label></td>
+                        <td><input type="text" name="phone" class="layui-input"></td>
+                        <td style="padding-left:20px;">
+                            <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                            <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
+                                <i class="layui-icon">&#xe639;</i>
+                            </button>
+                        </td>
+                        <td style="padding-left:30px;">通讯录号码占比：<span id="rate"></span></td>
+                    </tr>
+                </table>
+            </form>
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>号码</th>
+                    <th>互联网标识</th>
+                    <th>归属地</th>
+                    <th>联系次数</th>
+                    <th>联系时间（分）</th>
+                    <th>主叫次数</th>
+                    <th>被叫次数</th>
+                </tr>
+                </thead>
+                <tbody id="phonelogView"></tbody>
+                <script type="text/html" id="phonelogTpl">
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <tr>
+                        <td>{{ s.name }}</td>
+                        <td>{{ s.phone }}</td>
+                        <td>{{ s.needType }}</td>
+                        <td>{{ s.phoneLoc }}</td>
+                        <td>{{ s.callCnt }}</td>
+                        <td>{{ s.callTime }}</td>
+                        <td>{{ s.callOutCnt }}</td>
+                        <td>{{ s.callInCnt }}</td>
+                    </tr>
+                    {{# }); }}
+                </script>
+            </table>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form">
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label">姓名：</label></td>
+                        <td><input type="text" name="name" class="layui-input"></td>
+                        <td><label class="layui-form-label">手机号码：</label></td>
+                        <td><input type="text" name="phone" class="layui-input"></td>
+                        <td style="padding-left:20px;">
+                            <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="c-submit" title="搜索">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                            <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
+                                <i class="layui-icon">&#xe639;</i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <table id="contacts" lay-filter="contacts"></table>
+        </div>
+        <div class="layui-tab-item">内容4</div>
+        <div class="layui-tab-item">
+            <img id="idcard" alt="没有获取到身份证正面信息">
+            <img id="idcardback" alt="没有获取到身份证反面信息">
+        </div>
+    </div>
+</div>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script src="../../js/approve/detail.js"></script>

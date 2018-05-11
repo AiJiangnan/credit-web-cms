@@ -46,6 +46,8 @@ const constants = {
         reapal: '融宝',
         UCF: '先锋',
         ucf: '先锋',
+        kjtpay: '快捷通',
+        offline: '对公还款',
         // 进件渠道
         Mobile: '手机APP',
         xjbk: '现金白卡',
@@ -73,7 +75,7 @@ const regex = {
  * 获取状态
  * @param str
  */
-const getStatus = str => str ? constants.STATUS[str] : '-';
+const getStatus = str => str && str !== '-' ? constants.STATUS[str] : '-';
 const getProductType = str => {
     if (str == '1') {
         return '7天';
