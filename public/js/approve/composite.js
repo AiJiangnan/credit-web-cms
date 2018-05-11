@@ -23,7 +23,7 @@ layui.use(['table', 'laydate'], () => {
         choice: ['sourceType', 'channel', 'applyNum', 'incomeTime', 'approveTime', 'gpsAddress'],
         sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
         channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100, templet: d => getStatus(d.channel)},
-        applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a href="/approve/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNum}&from=0">${d.applyNum}</a>`},
+        applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}&from=0">${d.applyNum}</a>`},
         incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
         approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.approveTime)},
         gpsAddress: {field: 'gpsAddress', title: '定位位置', align: 'center', width: 200},
@@ -90,6 +90,10 @@ layui.use(['table', 'laydate'], () => {
     f.on('submit(submit)', d => {
         d.field.page = 1;
         t.reload('composite', {where: d.field});
+        return false;
+    });
+    f.on('submit(export)', d => {
+        location = '/approve/integrate/export?' + $('.layui-form').serialize();
         return false;
     });
 
