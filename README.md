@@ -88,3 +88,5 @@ npm update express      # 更新模块
 ### Express: http://www.expressjs.com.cn/
 
 ### request: https://www.npmjs.com/package/request
+
+### layui: http://www.layui.com/doc/
