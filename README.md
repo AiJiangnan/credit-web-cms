@@ -1,7 +1,7 @@
 # Node.js
 ## 一、安装与配置
 
-1. 下载：http://nodejs.cn/download/（最好下载解压版）
+1. 下载：[http://nodejs.cn/download/](http://nodejs.cn/download/)（最好下载解压版）
 
 2. 配置环境变量：在`Path`中添加，添加node的可执行文件的目录
 
