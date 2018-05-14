@@ -97,6 +97,10 @@
         </tr>
     </script>
 </table>
+<div>
+    <p class="layui-bg-green" style="padding:5px 15px;">重复进件申请编号</p>
+    <p style="padding:5px;" id="his"></p>
+</div>
 <div class="layui-tab layui-tab-card" lay-filter="tab">
     <ul class="layui-tab-title">
         <li class="layui-this">运营商报告</li>
@@ -283,7 +287,7 @@
             </table>
         </div>
         <div class="layui-tab-item">
-            <form class="layui-form">
+            <form class="layui-form" id="phonelog">
                 <table>
                     <tr>
                         <td><label class="layui-form-label">手机号码：</label></td>
