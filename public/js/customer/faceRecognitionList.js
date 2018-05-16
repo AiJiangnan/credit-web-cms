@@ -10,11 +10,11 @@ layui.use(['table', 'laydate'], () => {
         url: '/customerCare/faceRecognition/list',
         cols: [[
              {type: 'numbers', title: '序号'},
-            {field: 'idcardName', title: '用户名', align: 'center', width: 210},
+            {field: 'idcardName', title: '用户名', align: 'center', width: 130},
             {field: 'idcardNumber', title: '反馈内容', align: 'center', width: 210},
             {field: 'confidence', title: '置信度', align: 'center', width: 160},
             {field: 'threshold', title: '对比参照值', align: 'center', width: 130},
-            {field: 'errorMessage', title: '错误原因', align: 'center', width: 160},
+            {field: 'errorMessage', title: '错误原因', align: 'center', width: 330},
             {field: 'createTime', title: '创建日期', align: 'center', width: 210,templet: d => dateTimeFormat(d.createTime)},
         ]]
     });

@@ -10,10 +10,10 @@ layui.use(['table', 'laydate'], () => {
         url: '/customerCare/verificationCode/list',
         cols: [[
              {type: 'numbers', title: '序号'},
-            {field: 'mobile', title: '手机号', align: 'center', width: 160},
-            {field: 'status', title: '发送状态', align: 'center', width: 300},
-            {field: 'statusDesc', title: '状态详情', align: 'center', width: 300},
-            {field: 'notifyTime', title: '发送时间', align: 'center', width: 300,templet: d => dateTimeFormat(d.createTime)},
+            {field: 'phone', title: '手机号', align: 'center', width: 160},
+            {field: 'code', title: '验证码', align: 'center', width: 300},
+            {field: 'content', title: '发送内容', align: 'center', width: 300},
+            {field: 'createDate', title: '发送时间', align: 'center', width: 300,templet: d => dateTimeFormat(d.createDate)},
         ]]
     });
 

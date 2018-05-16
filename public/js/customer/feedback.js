@@ -23,14 +23,14 @@ layui.use(['table', 'laydate'], () => {
         if (e === 'deviceInfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:6em;"></tr>
-                    <tr><td><b>客户端类型：</b></td><td>${d.clientType}</td></tr>
+                    <tr><td><b>客户端类型：</b></td><td>${d.clientType.toLowerCase()}</td></tr>
             		<tr><td><b>App版本：</b></td><td>${d.appVersion}</td></tr>
             		<tr><td><b>手机型号：</b></td><td>${d.deviceModel}</td></tr>
             		<tr><td><b>IMEI：</b></td><td>${d.deviceId}</td></tr>
             		<tr><td><b>联系电话：</b></td><td>${d.contactNo}</td></tr>
             		<tr><td><b>反馈意见：</b></td><td>${d.content}</td></tr>
-            		<tr><td><b>最后更新时间：</b></td><td>${d.createTime}</td></tr>
-            		<tr><td><b>创建时间：</b></td><td>${d.updateTime}</td></tr>
+            		<tr><td><b>最后更新时间：</b></td><td>${dateTimeFormat(d.createTime)}</td></tr>
+            		<tr><td><b>创建时间：</b></td><td>${dateTimeFormat(d.updateTime)}</td></tr>
                 </table>`);
         }
     });
