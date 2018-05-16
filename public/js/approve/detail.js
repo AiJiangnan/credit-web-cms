@@ -62,6 +62,7 @@ layui.use(['element', 'table', 'form'], () => {
             $.post('/approve/audit', {flag: flag, remark: remark, applyIds: JSON.stringify([applyId])}, data => {
                 if (data.code === 0) {
                     layer.msg(data.data, constants.SUCCESS);
+                    $('#setView').hide();
                 } else {
                     layer.msg(data.msg, constants.ERROR);
                 }
