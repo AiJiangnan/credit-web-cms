@@ -19,11 +19,16 @@ layui.use(['element', 'table', 'form'], () => {
         if (d.code === 0) {
             check(d.data);
             laytplrender(applyInfoTpl, 'applyInfoView', d.data);
+            let res = '';
+            d.data.historyApplyNumList.map((e, i) => {
+                res += `<a href="/approve/detail.html?applyId=${e.applyId}&userId=${e.userId}&applyNo=${e.applyNum}" style="margin-right:15px;display:inline-block;">${e.applyNum}</a>`;
+            });
+            $('#his').html(res);
         }
     });
 
     f.on('submit(submit)', d => {
-        $.get('/info/phonelog/' + userId + '?' + $('.layui-form').serialize(), d => {
+        $.get('/info/phonelog/' + userId + '?' + $('#phonelog').serialize(), d => {
             if (d.code === 0) {
                 $('#rate').html(d.data.proportion + '%');
                 laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
