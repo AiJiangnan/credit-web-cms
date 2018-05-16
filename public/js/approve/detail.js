@@ -1,8 +1,10 @@
 layui.use(['element', 'table', 'form'], () => {
     const [$, e, f, t] = [layui.jquery, layui.element, layui.form, layui.table];
-    const [applyId, applyNo, userId] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId')];
+    const [applyId, applyNo, userId, from] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
 
     let channel = JSON.parse(sessionStorage.getItem('channel'));
+    laytplrender(setTpl, 'setView', from);
+    f.render();
 
     const getChannel = c => {
         let name = '0';
@@ -51,6 +53,21 @@ layui.use(['element', 'table', 'form'], () => {
     f.on('submit(c-submit)', d => {
         d.field.page = 1;
         t.reload('contacts', {where: d.field});
+        return false;
+    });
+    f.on('submit(approve)', d => {
+        const flag = !!d.field.flag;
+        const remark = d.field.remark;
+        layer.confirm('确认' + (flag ? r`批贷` : r`拒贷`) + '该订单？', i => {
+            $.post('/approve/audit', {flag: flag, remark: remark, applyIds: JSON.stringify([applyId])}, data => {
+                if (data.code === 0) {
+                    layer.msg(data.data, constants.SUCCESS);
+                } else {
+                    layer.msg(data.msg, constants.ERROR);
+                }
+            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+            layer.close(i);
+        });
         return false;
     });
 

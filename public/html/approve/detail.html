@@ -51,6 +51,10 @@
             padding: 5px 15px;
         }
 
+        .layui-form-switch {
+            margin-top: 0;
+        }
+
         img {
             width: 400px;
             padding: 15px;
@@ -101,6 +105,27 @@
     <p class="layui-bg-green" style="padding:5px 15px;">重复进件申请编号</p>
     <p style="padding:5px;" id="his"></p>
 </div>
+<div id="setView"></div>
+<script id="setTpl" type="text/html">
+    {{# if(d == 1){ }}
+    <p class="layui-bg-green" style="padding:5px 15px;">操作</p>
+    <form class="layui-form" lay-filter="approve">
+        <table>
+            <tr>
+                <td><label class="layui-form-label">批贷：</label></td>
+                <td><input type="checkbox" lay-skin="switch" lay-text="批贷|拒贷" name="flag"></td>
+                <td><label class="layui-form-label">备注：</label></td>
+                <td><input type="text" placeholder="请输入备注" class="layui-input" name="remark"></td>
+                <td style="padding-left:10px;">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="approve" title="提交">
+                        <i class="layui-icon">提交</i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    {{# } }}
+</script>
 <div class="layui-tab layui-tab-card" lay-filter="tab">
     <ul class="layui-tab-title">
         <li class="layui-this">运营商报告</li>
