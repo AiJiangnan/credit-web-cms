@@ -6,21 +6,35 @@ layui.use(['table', 'laydate'], () => {
         elem: '#appUser',
         height: 'full-120',
         page: true,
-        url: '/app/user/list',
+        url: '/customerCare/appUser/list',
         cols: [[
              {type: 'numbers', title: '序号'},
             {field: 'username', title: '账号', align: 'center', width: 160},
             {field: 'realName', title: '真实姓名', align: 'center', width: 110},
             {field: 'idcard', title: '身份证号', align: 'center', width: 230},
-            {field: 'inviteCode', title: '推荐码', align: 'center', width: 110},
-            {field: 'sourceType', title: '注册来源', align: 'center', width: 230},
+            {field: 'enabled', title: '状态', align: 'center', width: 230, templet: '#enabled'},
             {field: 'createDate', title: '注册时间', align: 'center',width: 230,templet: d => dateTimeFormat(d.createDate)},
+            {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
 
     t.on('tool(appUser)', o => {
         let [e, d] = [o.event, o.data];
-        check(d);
+        if (e === 'onoff') {
+            let s = d.enabled;
+            const m = '<span style="color:red;">' + (s ? '禁用' : '启用') + '</span>';
+            layer.confirm(`你确定要${m}该用户员！`, constants.WARM, i => {
+                $.post('/customerCare/appUser/disable/'+d.id, {userId: d.id, enabled: !s}, data => {
+                    if (data.code === 0) {
+                        layer.msg(`管理员${m}成功！`, constants.SUCCESS);
+                        o.update({enabled: !s});
+                        return;
+                    }
+                    layer.msg(`管理员${m}失败！`, constants.ERROR);
+                }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+                layer.close(i);
+            });
+        }
     });
     
     
