@@ -2,6 +2,17 @@ layui.use(['element', 'table', 'form'], () => {
     const [$, e, f, t] = [layui.jquery, layui.element, layui.form, layui.table];
     const [applyId, applyNo, userId] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId')];
 
+    let channel = JSON.parse(sessionStorage.getItem('channel'));
+
+    const getChannel = c => {
+        let name = '0';
+        channel.map((e, i) => {
+            if (e.code === c) {
+                name = e.name;
+            }
+        });
+        return name;
+    };
 
     $.get('/info/operator/' + userId, d => {
         if (d.code === 0) {
@@ -65,11 +76,9 @@ layui.use(['element', 'table', 'form'], () => {
             t.render({
                 id: 'contacts',
                 elem: '#contacts',
-                // height: 'full-180',
                 page: true,
                 url: '/info/contacts/' + userId,
                 cols: [[
-                    {type: 'checkbox'},
                     {type: 'numbers', title: '序号'},
                     {field: 'name', title: '姓名', align: 'center', width: 180},
                     {field: 'phone', title: '手机号码', align: 'center', width: 160, templet: d => d.phone.replace(',', '')},
@@ -77,7 +86,20 @@ layui.use(['element', 'table', 'form'], () => {
             });
         }
         if (i === 3) {
-
+            t.render({
+                id: 'history',
+                elem: '#history',
+                page: true,
+                url: '/info/history/' + userId,
+                cols: [[
+                    {type: 'numbers', title: '序号'},
+                    {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
+                    {field: 'applyNum', title: '申请编号', align: 'center', width: 200},
+                    {field: 'incomeTime', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.incomeTime)},
+                    {field: 'status', title: '流程状态', align: 'center', width: 120, templet: d => getStatus(d.status)},
+                    {field: 'refuseNote', title: '拒货原因', align: 'center', width: 160},
+                ]]
+            });
         }
         if (i === 4) {
             $.get('/info/idcard/' + userId, d => {

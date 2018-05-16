@@ -73,7 +73,7 @@
             <td class="label" style="width:5em;">手机号码：</td>
             <td>{{ d.phone }}</td>
             <td class="label" style="width:5em;">注册渠道：</td>
-            <td>{{ d.channel }}</td>
+            <td>{{ getStatus(d.channel) }}</td>
         </tr>
         <tr>
             <td class="label">机器拒贷原因：</td>
@@ -355,7 +355,9 @@
             </form>
             <table id="contacts" lay-filter="contacts"></table>
         </div>
-        <div class="layui-tab-item">内容4</div>
+        <div class="layui-tab-item">
+            <table id="history" lay-filter="history"></table>
+        </div>
         <div class="layui-tab-item">
             <img id="idcard" alt="没有获取到身份证正面信息">
             <img id="idcardback" alt="没有获取到身份证反面信息">
