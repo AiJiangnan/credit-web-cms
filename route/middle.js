@@ -21,7 +21,7 @@ app.route('/*')
                 request({url: config.API_BASE_URL + req.originalUrl, headers: {Cookie: req.session.sid}}).pipe(res);
             } catch (e) {
                 logger.error(e);
-                res.send(500, '服务器错误！');
+                res.status(500).send('服务器错误！');
             }
             return;
         }
@@ -30,21 +30,21 @@ app.route('/*')
     .get((req, res) => {
         request.get({url: config.API_BASE_URL + req.originalUrl, headers: {Cookie: req.session.sid}}, (err, resp, body) => {
             if (err) {
-                res.send(500);
+                res.sendStatus(500);
                 return;
             }
             try {
                 if (body) {
                     const json = JSON.parse(body);
                     logger.info("响应结果：", json.msg);
-                    res.send(resp.statusCode, json);
+                    res.status(resp.statusCode).send(json);
                 } else {
                     logger.error('响应结果为空！', req.path);
-                    res.send(resp.statusCode);
+                    res.sendStatus(resp.statusCode);
                 }
             } catch (e) {
                 logger.error(e);
-                res.send(500, '服务器错误！');
+                res.status(500).send('服务器错误！');
             }
         });
     })
@@ -52,21 +52,21 @@ app.route('/*')
         logger.info("请求参数：", JSON.stringify(req.body));
         request.post({url: config.API_BASE_URL + req.path, form: req.body, headers: {Cookie: req.session.sid}}, (err, resp, body) => {
             if (err) {
-                res.send(500);
+                res.sendStatus(500);
                 return;
             }
             try {
                 if (body) {
                     const json = JSON.parse(body);
                     logger.info("响应结果：", json.msg);
-                    res.send(resp.statusCode, json);
+                    res.status(resp.statusCode).send(json);
                 } else {
                     logger.error('响应结果为空！', req.path);
-                    res.send(resp.statusCode);
+                    res.sendStatus(resp.statusCode);
                 }
             } catch (e) {
                 logger.error(e);
-                res.send(500, '服务器错误！');
+                res.status(500).send('服务器错误！');
             }
         });
     });
