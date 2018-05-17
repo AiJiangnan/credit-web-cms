@@ -51,6 +51,10 @@
             padding: 5px 15px;
         }
 
+        .layui-form-switch {
+            margin-top: 0;
+        }
+
         img {
             width: 400px;
             padding: 15px;
@@ -58,10 +62,7 @@
     </style>
 </head>
 <body>
-<ul class="layui-nav" lay-filter="detail">
-    <li id="n1" class="layui-nav-item layui-this"><a href="javascript:void(0);">申请信息</a></li>
-    <li class="layui-nav-item"><a href="javascript:history.go(-1);">返回</a></li>
-</ul>
+<p class="layui-bg-green" style="padding:5px 15px;">申请信息</p>
 <table class="layui-table">
     <tbody id="applyInfoView"></tbody>
     <script id="applyInfoTpl" type="text/html">
@@ -73,7 +74,7 @@
             <td class="label" style="width:5em;">手机号码：</td>
             <td>{{ d.phone }}</td>
             <td class="label" style="width:5em;">注册渠道：</td>
-            <td>{{ d.channel }}</td>
+            <td>{{ getStatus(d.channel) }}</td>
         </tr>
         <tr>
             <td class="label">机器拒贷原因：</td>
@@ -101,6 +102,27 @@
     <p class="layui-bg-green" style="padding:5px 15px;">重复进件申请编号</p>
     <p style="padding:5px;" id="his"></p>
 </div>
+<div id="setView"></div>
+<script id="setTpl" type="text/html">
+    {{# if(d == 1){ }}
+    <p class="layui-bg-green" style="padding:5px 15px;">操作</p>
+    <form class="layui-form" lay-filter="approve">
+        <table>
+            <tr>
+                <td><label class="layui-form-label">批贷：</label></td>
+                <td><input type="checkbox" lay-skin="switch" lay-text="批贷|拒贷" name="flag"></td>
+                <td><label class="layui-form-label">备注：</label></td>
+                <td><input type="text" placeholder="请输入备注" class="layui-input" name="remark"></td>
+                <td style="padding-left:10px;">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="approve" title="提交">
+                        <i class="layui-icon">提交</i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    {{# } }}
+</script>
 <div class="layui-tab layui-tab-card" lay-filter="tab">
     <ul class="layui-tab-title">
         <li class="layui-this">运营商报告</li>
@@ -145,7 +167,7 @@
                     <th>被叫次数</th>
                     <th>被叫时间</th>
                     <th>短信数量</th>
-                    <th>话费数量</th>
+                    <th>话费消费</th>
                 </tr>
                 </thead>
                 <tbody id="monthView"></tbody>
@@ -190,7 +212,7 @@
                         <td class="label">法院黑名单检查</td>
                         <td>{{ d.courtBlackCheck?'是':'否' }}</td>
                         <td class="label">直接联系人中引起间接黑名单占比</td>
-                        <td>{{ rmbFormat(d.contactsRouterRatio)+'%' }}</td>
+                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
                     </tr>
                     <tr>
                         <td class="label">金融服务类机构黑名单检查</td>
@@ -355,7 +377,9 @@
             </form>
             <table id="contacts" lay-filter="contacts"></table>
         </div>
-        <div class="layui-tab-item">内容4</div>
+        <div class="layui-tab-item">
+            <table id="history" lay-filter="history"></table>
+        </div>
         <div class="layui-tab-item">
             <img id="idcard" alt="没有获取到身份证正面信息">
             <img id="idcardback" alt="没有获取到身份证反面信息">
