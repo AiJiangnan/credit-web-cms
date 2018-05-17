@@ -167,7 +167,7 @@
                     <th>被叫次数</th>
                     <th>被叫时间</th>
                     <th>短信数量</th>
-                    <th>话费数量</th>
+                    <th>话费消费</th>
                 </tr>
                 </thead>
                 <tbody id="monthView"></tbody>
@@ -212,7 +212,7 @@
                         <td class="label">法院黑名单检查</td>
                         <td>{{ d.courtBlackCheck?'是':'否' }}</td>
                         <td class="label">直接联系人中引起间接黑名单占比</td>
-                        <td>{{ rmbFormat(d.contactsRouterRatio)+'%' }}</td>
+                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
                     </tr>
                     <tr>
                         <td class="label">金融服务类机构黑名单检查</td>
