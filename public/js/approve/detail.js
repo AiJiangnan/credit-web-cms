@@ -85,7 +85,7 @@ layui.use(['element', 'table', 'form'], () => {
         if (i === 1) {
             $.get('/info/phonelog/' + userId, d => {
                 if (d.code === 0) {
-                    $('#rate').html(d.data.proportion + '%');
+                    $('#rate').html((d.data.proportion *100)+ '%');
                     laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
                 }
             });
@@ -115,7 +115,7 @@ layui.use(['element', 'table', 'form'], () => {
                     {field: 'applyNum', title: '申请编号', align: 'center', width: 200},
                     {field: 'incomeTime', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.incomeTime)},
                     {field: 'status', title: '流程状态', align: 'center', width: 120, templet: d => getStatus(d.status)},
-                    {field: 'refuseNote', title: '拒货原因', align: 'center', width: 160},
+                    {field: 'refuseNote', title: '拒贷原因', align: 'center', width: 160},
                 ]]
             });
         }

@@ -23,7 +23,7 @@ layui.use(['table', 'laydate'], () => {
         choice: ['sourceType', 'channel', 'applyNum', 'incomeTime', 'approveTime', 'gpsAddress'],
         sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
         channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100, templet: d => getStatus(d.channel)},
-        applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}">${d.applyNum}</a>`},
+        applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a target="_blank" href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}">${d.applyNum}</a>`},
         incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.incomeTime)},
         approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.approveTime)},
         gpsAddress: {field: 'gpsAddress', title: '定位位置', align: 'center', width: 200},
@@ -40,6 +40,9 @@ layui.use(['table', 'laydate'], () => {
     };
 
     const dataRender = () => {
+        if (sessionStorage.getItem('colums')) {
+            columsData.choice = JSON.parse(sessionStorage.getItem('colums'));
+        }
         columsData.choice.map((e, i) => colums.push(columsData[e]));
         t.render({
             id: 'composite',
@@ -75,6 +78,7 @@ layui.use(['table', 'laydate'], () => {
                 find.map((i, e) => {
                     columsData.choice.push($(e).val());
                     if (i === find.length - 1) {
+                        sessionStorage.setItem('colums', JSON.stringify(columsData.choice));
                         dataRender();
                     }
                 });

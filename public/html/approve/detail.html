@@ -62,10 +62,7 @@
     </style>
 </head>
 <body>
-<ul class="layui-nav" lay-filter="detail">
-    <li id="n1" class="layui-nav-item layui-this"><a href="javascript:void(0);">申请信息</a></li>
-    <li class="layui-nav-item"><a href="javascript:history.go(-1);">返回</a></li>
-</ul>
+<p class="layui-bg-green" style="padding:5px 15px;">申请信息</p>
 <table class="layui-table">
     <tbody id="applyInfoView"></tbody>
     <script id="applyInfoTpl" type="text/html">
@@ -170,7 +167,7 @@
                     <th>被叫次数</th>
                     <th>被叫时间</th>
                     <th>短信数量</th>
-                    <th>话费数量</th>
+                    <th>话费消费</th>
                 </tr>
                 </thead>
                 <tbody id="monthView"></tbody>
@@ -215,7 +212,7 @@
                         <td class="label">法院黑名单检查</td>
                         <td>{{ d.courtBlackCheck?'是':'否' }}</td>
                         <td class="label">直接联系人中引起间接黑名单占比</td>
-                        <td>{{ rmbFormat(d.contactsRouterRatio)+'%' }}</td>
+                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
                     </tr>
                     <tr>
                         <td class="label">金融服务类机构黑名单检查</td>
