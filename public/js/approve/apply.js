@@ -32,7 +32,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'registerTime', title: '入网时间', align: 'center', width: 120, templet: d => dateFormat(d.registerTime)},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
-            {field: 'applyNum', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}&from=1">${d.applyNum}</a>`},
+            {field: 'applyNum', title: '申请编号', align: 'center', width: 120, templet: d => `<a target="_blank" href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}&from=1">${d.applyNum}</a>`},
             {field: 'gpsAddress', title: '定位位置', align: 'center', width: 120},
             {field: 'loanCount', title: '放款次数', align: 'center', width: 100, sort: true},
             {field: 'refuseNote', title: '机器拒绝原因', align: 'center', width: 120},
