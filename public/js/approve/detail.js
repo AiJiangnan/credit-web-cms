@@ -16,6 +16,20 @@ layui.use(['element', 'table', 'form'], () => {
         return name;
     };
 
+    const getLateDays = id => {
+        let res;
+        $.ajax({
+            url: '/repayment/' + id,
+            async: false,
+            success: p => {
+                if (p.code === 0) {
+                    res = p.data.overdueDays;
+                }
+            }
+        });
+        return res ? res : '-';
+    };
+
     $.get('/info/operator/' + userId, d => {
         if (d.code === 0) {
             check(d.data.reportVo);
@@ -39,6 +53,7 @@ layui.use(['element', 'table', 'form'], () => {
             $('#his').html(res);
         }
     });
+
 
     f.on('submit(submit)', d => {
         $.get('/info/phonelog/' + userId + '?' + $('#phonelog').serialize(), d => {
@@ -85,7 +100,7 @@ layui.use(['element', 'table', 'form'], () => {
         if (i === 1) {
             $.get('/info/phonelog/' + userId, d => {
                 if (d.code === 0) {
-                    $('#rate').html((d.data.proportion *100)+ '%');
+                    $('#rate').html((d.data.proportion * 100) + '%');
                     laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
                 }
             });
@@ -99,7 +114,13 @@ layui.use(['element', 'table', 'form'], () => {
                 cols: [[
                     {type: 'numbers', title: '序号'},
                     {field: 'name', title: '姓名', align: 'center', width: 180},
-                    {field: 'phone', title: '手机号码', align: 'center', width: 160, templet: d => d.phone.replace(',', '')},
+                    {
+                        field: 'phone',
+                        title: '手机号码',
+                        align: 'center',
+                        width: 160,
+                        templet: d => d.phone.replace(',', '')
+                    },
                 ]]
             });
         }
@@ -111,11 +132,24 @@ layui.use(['element', 'table', 'form'], () => {
                 url: '/info/history/' + userId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
-                    {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
+                    {
+                        field: 'sourceType',
+                        title: '注册渠道',
+                        align: 'center',
+                        width: 100,
+                        templet: d => getChannel(d.sourceType)
+                    },
                     {field: 'applyNum', title: '申请编号', align: 'center', width: 200},
-                    {field: 'incomeTime', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.incomeTime)},
+                    {
+                        field: 'incomeTime',
+                        title: '申请时间',
+                        align: 'center',
+                        width: 160,
+                        templet: d => dateTimeFormat(d.incomeTime)
+                    },
                     {field: 'status', title: '流程状态', align: 'center', width: 120, templet: d => getStatus(d.status)},
                     {field: 'refuseNote', title: '拒贷原因', align: 'center', width: 160},
+                    {field: '', title: '逾期天数', align: 'center', width: 100, templet: d => getLateDays(d.id)}
                 ]]
             });
         }
@@ -127,6 +161,7 @@ layui.use(['element', 'table', 'form'], () => {
                 }
             });
         }
+
     });
 
 });
