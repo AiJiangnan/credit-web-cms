@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'banner',
         elem: '#banner',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/app/banner/list',
         cols: [[
             {type: 'numbers', title: '序号'},

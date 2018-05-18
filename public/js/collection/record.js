@@ -15,7 +15,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'record',
         elem: '#record',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect/record',
         cols: [[
             {type: 'numbers', title: '序号'},

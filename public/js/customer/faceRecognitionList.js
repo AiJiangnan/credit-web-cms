@@ -6,7 +6,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'faceRecognition',
         elem: '#faceRecognition',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/customerCare/faceRecognition/list',
         cols: [[
              {type: 'numbers', title: '序号'},

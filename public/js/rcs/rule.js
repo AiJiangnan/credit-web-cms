@@ -21,7 +21,7 @@ layui.use('table', () => {
         id: 'rule',
         elem: '#rule',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/rule',
         cols: [[
             {type: 'numbers', title: '序号'},

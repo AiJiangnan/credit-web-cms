@@ -6,7 +6,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'verificationCode',
         elem: '#verificationCode',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/customerCare/verificationCode/list',
         cols: [[
              {type: 'numbers', title: '序号'},

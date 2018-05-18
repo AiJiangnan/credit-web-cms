@@ -23,7 +23,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'version',
         elem: '#version',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/app/version/list',
         cols: [[
              {type: 'numbers', title: '序号'},

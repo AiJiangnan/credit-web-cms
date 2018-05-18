@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'company',
         elem: '#company',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect/company',
         cols: [[
             {type: 'numbers', title: '序号'},

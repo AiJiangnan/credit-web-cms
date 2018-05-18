@@ -8,7 +8,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'approve',
         elem: '#approve',
         height: 'full-110',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/repayment/reduce',
         cols: [[
             {type: 'checkbox'},

@@ -10,7 +10,7 @@ layui.use('table', () => {
         id: 'product',
         elem: '#product',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/product',
         cols: [[
             {type: 'numbers', title: '序号'},

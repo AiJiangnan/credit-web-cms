@@ -28,7 +28,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'distribute',
         elem: '#distribute',
         height: 'full-180',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect',
         cols: [[
             {type: 'checkbox'},

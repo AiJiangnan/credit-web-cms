@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'role',
         elem: '#role',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/role',
         cols: [[
             {type: 'numbers', title: '序号'},

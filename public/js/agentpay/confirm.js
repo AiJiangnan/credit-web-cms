@@ -7,7 +7,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'confirm',
         elem: '#confirm',
         height: 'full-80',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/agentpay/confirm',
         cols: [[
             {type: 'checkbox'},

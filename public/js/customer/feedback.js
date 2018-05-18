@@ -6,7 +6,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'feedback',
         elem: '#feedback',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/app/feedBack/list',
         cols: [[
              {type: 'numbers', title: '序号'},

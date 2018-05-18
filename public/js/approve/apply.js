@@ -22,7 +22,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'apply',
         elem: '#apply',
         height: 'full-180',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/approve/apply',
         cols: [[
             {type: 'checkbox'},

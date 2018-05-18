@@ -13,7 +13,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'companycollect',
         elem: '#companycollect',
         height: 'full-110',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect/companycollect',
         cols: [[
             {type: 'numbers', title: '序号'},

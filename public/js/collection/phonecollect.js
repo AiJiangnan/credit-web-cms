@@ -25,7 +25,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'phonecollect',
         elem: '#phonecollect',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect/phonecollect',
         cols: [[
             {type: 'numbers', title: '序号'},

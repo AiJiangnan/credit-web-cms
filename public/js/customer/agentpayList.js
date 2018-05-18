@@ -6,7 +6,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'agentpay',
         elem: '#agentpay',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/customerCare/agentpay/list',
         cols: [[
              {type: 'numbers', title: '序号'},

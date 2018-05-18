@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'strategyname',
         elem: '#strategyname',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/policyName',
         cols: [[
             {type: 'numbers', title: '序号'},

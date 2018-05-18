@@ -7,7 +7,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'todeal',
         elem: '#todeal',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/agentpay/todeal',
         cols: [[
             {type: 'numbers', title: '序号'},

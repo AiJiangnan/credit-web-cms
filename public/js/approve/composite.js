@@ -48,7 +48,7 @@ layui.use(['table', 'laydate'], () => {
             id: 'composite',
             elem: '#composite',
             height: 'full-180',
-            page: true,
+            page: constants.LAYUIPAGE,
             url: '/approve/integrate',
             cols: [colums]
         });

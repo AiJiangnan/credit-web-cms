@@ -5,7 +5,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'appUser',
         elem: '#appUser',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/customerCare/appUser/list',
         cols: [[
              {type: 'numbers', title: '序号'},

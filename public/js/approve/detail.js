@@ -108,7 +108,7 @@ layui.use(['element', 'table', 'form'], () => {
             t.render({
                 id: 'contacts',
                 elem: '#contacts',
-                page: true,
+                page: constants.LAYUIPAGE,
                 url: '/info/contacts/' + userId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
@@ -127,7 +127,7 @@ layui.use(['element', 'table', 'form'], () => {
             t.render({
                 id: 'history',
                 elem: '#history',
-                page: true,
+                page: constants.LAYUIPAGE,
                 url: '/info/history/' + userId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
