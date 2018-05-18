@@ -1,6 +1,7 @@
 // 颜色标签
 const r = str => `<span style="color:red;">${str}</span>`;
 const g = str => `<span style="color:green;">${str}</span>`;
+const b = str => str.replace(/([\/|\:|\;])/g,'<br>');
 const constants = {
     // 表单输入日期范围格式
     DATE_RANGE: 'yyyyMMdd',

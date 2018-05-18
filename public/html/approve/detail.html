@@ -83,8 +83,8 @@
             <td>{{ d.idcardAddress }}</td>
             <td class="label">贷款期限：</td>
             <td>{{ d.loanTerm }}</td>
-            <td class="label"></td>
-            <td></td>
+            <td class="label">年龄：</td>
+            <td>{{ d.age }}</td>
         </tr>
         <tr>
             <td class="label">亲密联系人：</td>
@@ -93,8 +93,19 @@
             <td>{{ d.emergencyContactPhone }}</td>
             <td class="label">审核结果：</td>
             <td>{{ d.approveResult }}</td>
-            <td class="label"></td>
-            <td></td>
+            <td class="label">职业：</td>
+            <td>{{ d.profession }}</td>
+        </tr>
+
+        <tr>
+            <td class="label">定位地址：</td>
+            <td>{{ d.gpsAddress }}</td>
+            <td class="label">居住地址：</td>
+            <td>{{ d.liveAddress }}</td>
+            <td class="label">薪资：</td>
+            <td>{{ d.salary }}</td>
+            <td class="label">婚姻状况：</td>
+            <td>{{ d.maritalStatus }}</td>
         </tr>
     </script>
 </table>
@@ -130,6 +141,7 @@
         <li>手机通讯录</li>
         <li>历史记录</li>
         <li>附件</li>
+        <li>小爱有信</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
@@ -153,6 +165,30 @@
                         <td>{{ d.chechIdCard }}</td>
                         <td>{{ d.regTime }}</td>
                         <td>{{ d.endUserTime }}</td>
+                    </tr>
+                </script>
+            </table>
+            <table class="layui-table">
+                <caption class="layui-bg-green">联系人数据</caption>
+                <thead>
+                <tr>
+                    <th>联系人/姓名</th>
+                    <th>联系人/关系</th>
+                    <th>联系电话/归属地</th>
+                    <th>是否小号</th>
+                    <th>最早联系时间</th>
+                    <th>联系号码检查</th>
+                </tr>
+                </thead>
+                <tbody id="linkView"></tbody>
+                <script id="linkTpl" type="text/html">
+                    <tr>
+                        <td>{{ d.name }}</td>
+                        <td>{{ d.relationship }}</td>
+                        <td>{{ d.phoneLoc }}</td>
+                        <td>{{ d.checkXiaohao }}</td>
+                        <td>{{ d.transStart }}</td>
+                        <td>{{ d.checkMobile }}</td>
                     </tr>
                 </script>
             </table>
@@ -209,16 +245,23 @@
                         <td>{{ d.contactsClass1Cnt }}</td>
                     </tr>
                     <tr>
+                        <td class="label">身份证组合过其他姓名</td>
+                        <td>{{ d.idcardWithOtherNames  }}</td>
                         <td class="label">法院黑名单检查</td>
                         <td>{{ d.courtBlackCheck?'是':'否' }}</td>
-                        <td class="label">直接联系人中引起间接黑名单占比</td>
-                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
+
                     </tr>
                     <tr>
+                        <td class="label">直接联系人中引起间接黑名单占比</td>
+                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
                         <td class="label">金融服务类机构黑名单检查</td>
                         <td>{{ d.financialServiceBlackCheck?'是':'否' }}</td>
+                    </tr>
+                    <tr>
                         <td class="label">查询过该用户的相关企业数量</td>
                         <td>{{ d.searchedOrgCnt }}</td>
+                        <td class="label"></td>
+                        <td></td>
                     </tr>
                 </script>
             </table>
@@ -246,7 +289,7 @@
                     <tr>
                         <td class="label">手机静默情况</td>
                         <td>{{ d.phoneSilentResult }}</td>
-                        <td>{{ d.phoneSilentEvidence }}</td>
+                        <td>{{ b(d.phoneSilentEvidence) }}</td>
                     </tr>
                     <tr>
                         <td class="label">互通过电话的号码数量</td>
@@ -264,6 +307,21 @@
                         <td>{{ d.contactCourtEvidence }}</td>
                     </tr>
                     <tr>
+                        <td class="label">110通话情况</td>
+                        <td>{{ d.contact110Result }}</td>
+                        <td>{{ d.contact110Evidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">120通话情况</td>
+                        <td>{{ d.contact120Result }}</td>
+                        <td>{{ d.contact120Evidence }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">律师通话情况</td>
+                        <td>{{ d.contactLawyerResult }}</td>
+                        <td>{{ d.contactLawyerEvidence }}</td>
+                    </tr>
+                    <tr>
                         <td class="label">夜间活动情况（23点-6点）</td>
                         <td>{{ d.contactNightResult }}</td>
                         <td>{{ d.contactNightEvidence }}</td>
@@ -271,42 +329,22 @@
                     <tr>
                         <td class="label">贷款类号码联系情况</td>
                         <td>{{ d.contactLoanResult }}</td>
-                        <td>{{ d.contactLoanEvidence }}</td>
+                        <td>{{ b(d.contactLoanEvidence) }}</td>
                     </tr>
                     <tr>
                         <td class="label">银行类号码联系情况</td>
                         <td>{{ d.contactBankResult }}</td>
-                        <td>{{ d.contactBankEvidence }}</td>
+                        <td>{{ b(d.contactBankEvidence) }}</td>
                     </tr>
                     <tr>
                         <td class="label">信用卡类号码联系情况</td>
                         <td>{{ d.contactCreditCardResult }}</td>
-                        <td>{{ d.contactCreditCardEvidence }}</td>
+                        <td>{{ b(d.contactCreditCardEvidence) }}</td>
                     </tr>
+
                 </script>
             </table>
-            <table class="layui-table">
-                <caption class="layui-bg-green">联系人数据</caption>
-                <thead>
-                <tr>
-                    <th>联系人/关系</th>
-                    <th>联系电话/归属地</th>
-                    <th>是否小号</th>
-                    <th>最早联系时间</th>
-                    <th>联系号码检查</th>
-                </tr>
-                </thead>
-                <tbody id="linkView"></tbody>
-                <script id="linkTpl" type="text/html">
-                    <tr>
-                        <td>{{ d.relationship }}</td>
-                        <td>{{ d.phoneLoc }}</td>
-                        <td>{{ d.checkXiaohao }}</td>
-                        <td>{{ d.transStart }}</td>
-                        <td>{{ d.checkMobile }}</td>
-                    </tr>
-                </script>
-            </table>
+
         </div>
         <div class="layui-tab-item">
             <form class="layui-form" id="phonelog">
@@ -383,6 +421,9 @@
         <div class="layui-tab-item">
             <img id="idcard" alt="没有获取到身份证正面信息">
             <img id="idcardback" alt="没有获取到身份证反面信息">
+        </div>
+        <div class="layui-tab-item">
+            1
         </div>
     </div>
 </div>
