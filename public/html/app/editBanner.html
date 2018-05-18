@@ -127,7 +127,7 @@
         //执行实例
         var uploadInst = upload.render({
           elem: '#imgLinkBtn' //绑定元素
-          ,url: '/app/uploadImg' //上传接口
+            , url: '/app/upload' //上传接口
           ,field:'file'
        	    ,done: function(res){ 
        	    	console.log(JSON.stringify(res))
@@ -148,10 +148,10 @@
         //执行实例
         var uploadInst = upload.render({
           elem: '#shareIconBtn' //绑定元素
-          ,url: '/app/uploadImg' //上传接口
+            , url: '/app/upload' //上传接口
         	  ,field:'file'
-       	    ,done: function(res){  
-       	    	console.log(JSON.stringify(res))
+       	    ,done: function(res){
+                console.log(JSON.stringify(res));
        	    	if (res.code == 0) {
           	    	 $("#shareIconShow").attr("src",res.src);
           	    	 $("input[name='shareIcon']").val(res.src);

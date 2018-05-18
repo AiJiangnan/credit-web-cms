@@ -16,7 +16,7 @@ app.post('/login', (req, res) => {
     logger.info("登录参数：", req.body, req.method);
     request.post({url: config.API_BASE_URL + '/login', form: req.body}, (err, resp, body) => {
         if (err) {
-            res.send(500);
+            res.sendStatus(500);
             return;
         }
         const respJson = JSON.parse(body);

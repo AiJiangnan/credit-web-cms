@@ -16,15 +16,6 @@ const logger = log4js.getLogger('middle');
 app.route('/*')
     .all((req, res, next) => {
         logger.info(req.originalUrl, req.method);
-        if (req.path.includes('export')) {
-            try {
-                request({url: config.API_BASE_URL + req.originalUrl, headers: {Cookie: req.session.sid}}).pipe(res);
-            } catch (e) {
-                logger.error(e);
-                res.status(500).send('服务器错误！');
-            }
-            return;
-        }
         next();
     })
     .get((req, res) => {
