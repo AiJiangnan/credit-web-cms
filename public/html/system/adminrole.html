@@ -30,9 +30,9 @@
         $.get('/role?enabled=1&limit=1000', d => {
             if (d.code === 0) {
                 laytplrender(formTpl, 'formView', d.data);
-                $.get('/role/' + userid, d => {
-                    if (d.code === 0)
-                        d.data.map(id => $('input[value=' + id + ']').attr('checked', true));
+                $.get('/role/' + userid, data => {
+                    if (data.code === 0)
+                        data.data.map(id => $('input[value=' + id + ']').attr('checked', true));
                     f.render();
                 });
             }

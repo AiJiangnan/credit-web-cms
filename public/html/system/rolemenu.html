@@ -16,53 +16,49 @@
     </style>
 </head>
 <body style="padding:10px;">
-<form class="layui-form"></form>
+<form class="layui-form" id="formView"></form>
+<script id="formTpl" type="text/html">
+    {{# layui.each(d,(i,e)=>{ }}
+    <div class="layui-form-item">
+        <input type="checkbox" name="roleIds" title="{{ e.name }}" lay-filter="parent" data-id="class-{{ i }}" value="{{ e.id }}" lay-skin="primary">
+    </div>
+    <div class="class-{{ i }}" hidden>
+        {{# layui.each(e.children,(j,c)=>{ }}
+        <div class="layui-form-item children">
+            <input type="checkbox" name="roleIds" title="{{ c.name }}" value="{{ c.id }}" data-id="class-{{ i }}" lay-skin="primary">
+        </div>
+        {{# }); }}
+    </div>
+    {{# }); }}
+</script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script>
-    layui.use('form', () => {
+    layui.use(['form', 'laytpl'], () => {
         const [$, f] = [layui.jquery, layui.form];
+        const userid = getQueryStr('id');
 
-        new Promise(resolve => {
-            $.get('/resource', d => {
-                if (d.code === 0) {
-                    let result = '';
-                    d.data.map((e, i) => {
-                        result += `<div class="layui-form-item">
-                                       <input type="checkbox" name="roleIds" title="${e.name}" lay-filter="parent" data-id="class-${i}" value="${e.id}" lay-skin="primary">
-                                   </div>`;
-                        result += `<div class="class-${i}" hidden>`;
-                        e.children.map((c, j) => {
-                            result += `<div class="layui-form-item children">
-                                           <input type="checkbox" name="roleIds" title="${c.name}" value="${c.id}" data-id="class-${i}" lay-skin="primary">
-                                       </div>`;
-                        });
-                        result += `</div>`;
-                    });
-                    $('.layui-form').html(result);
-                }
-                resolve();
-            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
-        }).then(v => {
-            const userid = $('form').attr('data-id');
-            $.get('/resource/' + userid, d => {
-                if (d.code === 0) {
-                    d.data.map(id => $('input[value=' + id + ']').attr('checked', true));
-                }
-                f.render();
-            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+        $.get('/resource', d => {
+            if (d.code === 0) {
+                laytplrender(formTpl, 'formView', d.data);
+                $.get('/resource/' + userid, data => {
+                    if (data.code === 0)
+                        data.data.map(id => $('input[value=' + id + ']').attr('checked', true));
+                    f.render();
+                });
+            }
+        });
 
-            f.on('checkbox(parent)', d => {
-                const clazz = $(d.elem).attr('data-id');
-                if (d.elem.checked) {
-                    $('.' + clazz).show('fast');
-                    $('input[data-id=' + clazz + ']').prop('checked', true);
-                } else {
-                    $('.' + clazz).hide('fast');
-                    $('input[data-id=' + clazz + ']').removeAttr('checked');
-                }
-                f.render();
-            });
+        f.on('checkbox(parent)', d => {
+            const clazz = $(d.elem).attr('data-id');
+            if (d.elem.checked) {
+                $('.' + clazz).show('fast');
+                $('input[data-id=' + clazz + ']').prop('checked', true);
+            } else {
+                $('.' + clazz).hide('fast');
+                $('input[data-id=' + clazz + ']').removeAttr('checked');
+            }
+            f.render();
         });
     });
 </script>

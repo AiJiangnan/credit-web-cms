@@ -48,18 +48,19 @@
     </table>
 </form>
 <script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script>
     layui.use('form', () => {
-        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        const [$, f, p] = [layui.jquery, layui.form, parent];
         f.on('submit(submit)', d => {
             $.post('/role', d.field, data => {
                 if (data.code === 0) {
                     p.layui.table.reload('role');
-                    p.layer.close(p.layer.getFrameIndex(w));
-                    p.layer.msg(data.data, {icon: 1});
+                    closeParent();
+                    p.layer.msg(data.data, constants.SUCCESS);
                     return;
                 }
-                p.layer.msg(data.msg, {icon: 2});
+                p.layer.msg(data.msg, constants.ERROR);
             });
             return false;
         });
