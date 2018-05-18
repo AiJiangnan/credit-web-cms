@@ -66,15 +66,15 @@ layui.use(['table', 'laydate'], () => {
             total = total + e.agreeAmount;
         });
         if (applyIds.length < 1) return;
-        layer.confirm(`当前共选择 ${applyIds.length} 条数据，共 ${total} 元，是否继续？`, i => {
+        layer.confirm(`当前共选择 ${applyIds.length} 条数据，共 ${total} 元，是否继续？`, constants.CONFIRM, i => {
             $.post('/agentpay/confirm', {agentpayType: agentpayType, applyIds: JSON.stringify(applyIds)}, data => {
                 if (data.code === 0) {
-                    layer.msg(data.data, {icon: 1});
+                    layer.msg(data.data, constants.SUCCESS);
                     t.reload('confirm');
                 } else {
-                    layer.msg(data.msg, {icon: 5});
+                    layer.msg(data.msg, constants.ERROR);
                 }
-            }).fail(() => layer.msg('服务器错误！', {icon: 5}));
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             $('#rongbao').parent().hide('fast');
             layer.close(i);
         });

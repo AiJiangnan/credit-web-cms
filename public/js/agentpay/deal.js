@@ -40,12 +40,12 @@ layui.use(['table', 'laydate'], () => {
             return;
         }
         if (e === 'pay') {
-            layer.confirm('你确定放款？', constants.WARM, i => {
+            layer.confirm('你确定放款？', constants.CONFIRM, i => {
                 submit(e, d.batchNo);
                 layer.close(i);
             });
         } else if (e === 'repay') {
-            layer.confirm('你确定再次划扣？', constants.WARM, i => {
+            layer.confirm('你确定再次划扣？', constants.CONFIRM, i => {
                 submit(e, d.batchNo);
                 layer.close(i);
             });

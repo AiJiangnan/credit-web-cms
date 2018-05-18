@@ -1,20 +1,8 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
-    let channel = JSON.parse(sessionStorage.getItem('channel'));
-
-    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    laytplrender(sourceTypeTpl, 'sourceTypeView', getSession('channel'));
     f.render('select');
-
-    const getChannel = c => {
-        let name = '0';
-        channel.map((e, i) => {
-            if (e.code === c) {
-                name = e.name;
-            }
-        });
-        return name;
-    };
 
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
@@ -40,8 +28,8 @@ layui.use(['table', 'laydate'], () => {
     };
 
     const dataRender = () => {
-        if (sessionStorage.getItem('colums')) {
-            columsData.choice = JSON.parse(sessionStorage.getItem('colums'));
+        if (getSession('colums')) {
+            columsData.choice = getSession('colums');
         }
         columsData.choice.map((e, i) => colums.push(columsData[e]));
         t.render({
@@ -64,29 +52,21 @@ layui.use(['table', 'laydate'], () => {
             content: '/approve/colums.html',
             area: ['300px', '400px'],
             btn: ['确认', '取消'],
-            success: () => {
-                sessionStorage.setItem('choose', JSON.stringify(columsData.choice));
-            },
+            success: () => setSession('choose', columsData.choice),
             yes: (i, l) => {
                 columsData.choice = [];
-                let f = layer.getChildFrame('form', i);
-                let find = f.find(':checked');
-                if (find.length < 1) {
+                const f = layer.getChildFrame('form', i);
+                const c = f.serializeArray();
+                if (c.length < 1) {
                     layer.msg('展示字段不能为空！', constants.LOCK);
                     return;
                 }
-                find.map((i, e) => {
-                    columsData.choice.push($(e).val());
-                    if (i === find.length - 1) {
-                        sessionStorage.setItem('colums', JSON.stringify(columsData.choice));
-                        dataRender();
-                    }
-                });
+                c.map((e, i) => columsData.choice.push(e.value));
+                setSession('colums', columsData.choice);
+                dataRender();
                 layer.close(i);
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
         return false;
     });

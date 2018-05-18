@@ -1,18 +1,6 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
-    let channel = JSON.parse(sessionStorage.getItem('channel'));
-
-    const getChannel = c => {
-        let name = '0';
-        channel.map((e, i) => {
-            if (e.code === c) {
-                name = e.name;
-            }
-        });
-        return name;
-    };
-
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
 

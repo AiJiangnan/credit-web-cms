@@ -1,7 +1,7 @@
 // 颜色标签
 const r = str => `<span style="color:red;">${str}</span>`;
 const g = str => `<span style="color:green;">${str}</span>`;
-const b = str => str.replace(/([\/|\:|\;])/g,'<br>');
+const b = str => str.replace(/([\/|\:|\;])/g, '<br>');
 const constants = {
     // 表单输入日期范围格式
     DATE_RANGE: 'yyyyMMdd',
@@ -142,6 +142,21 @@ const lessaddress = address => {
  * @returns {string}
  */
 const getLoanTimeFromApplyNo = str => str ? str.substr(2, 4) + '-' + str.substr(6, 2) + '-' + str.substr(8, 2) : '-';
+
+/**
+ * 获取注册渠道
+ * @param c
+ * @returns {string}
+ */
+const getChannel = c => {
+    let name = '';
+    getSession('channel').map((e, i) => {
+        if (e.code === c) {
+            name = e.name;
+        }
+    });
+    return name;
+};
 
 /**
  * 人民币金额格式化

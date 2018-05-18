@@ -2,19 +2,8 @@ layui.use(['element', 'table', 'form'], () => {
     const [$, e, f, t] = [layui.jquery, layui.element, layui.form, layui.table];
     const [applyId, applyNo, userId, from] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
 
-    let channel = JSON.parse(sessionStorage.getItem('channel'));
     laytplrender(setTpl, 'setView', from);
     f.render();
-
-    const getChannel = c => {
-        let name = '0';
-        channel.map((e, i) => {
-            if (e.code === c) {
-                name = e.name;
-            }
-        });
-        return name;
-    };
 
     const getLateDays = id => {
         let res;
