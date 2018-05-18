@@ -62,8 +62,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('companycollect', {where: d.field});
+        t.reload('companycollect', {page: {curr: 1}, where: d.field});
         return false;
     });
 

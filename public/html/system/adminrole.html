@@ -12,37 +12,32 @@
     </style>
 </head>
 <body style="padding:10px;">
-<form class="layui-form"></form>
+<form class="layui-form" id="formView"></form>
+<script id="formTpl" type="text/html">
+    {{# layui.each(d,(i,e)=>{ }}
+    <div class="layui-form-item">
+        <input type="checkbox" name="roleIds" title="{{ e.description }}" value="{{ e.id }}" lay-skin="primary">
+    </div>
+    {{# }); }}
+</script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script>
-    layui.use('form', () => {
+    layui.use(['form', 'laytpl'], () => {
         const [$, f] = [layui.jquery, layui.form];
+        const userid = getQueryStr('id');
 
-        new Promise(resolve => {
-            $.get('/role?enabled=1&limit=1000', d => {
-                if (d.code === 0) {
-                    let result = '';
-                    d.data.map((e, i) => {
-                        result += `<div class="layui-form-item">
-                                       <input type="checkbox" name="roleIds" title="${e.name}" value="${e.id}" lay-skin="primary">
-                                   </div>`;
-                    });
-                    $('.layui-form').html(result);
-                }
-                resolve();
-            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
-        }).then(v => {
-            const userid = $('form').attr('data-id');
-            $.get('/role/' + userid, d => {
-                if (d.code === 0) {
-                    d.data.map(id => $('input[value=' + id + ']').attr('checked', true));
-                }
-                f.render();
-            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+        $.get('/role?enabled=1&limit=1000', d => {
+            if (d.code === 0) {
+                laytplrender(formTpl, 'formView', d.data);
+                $.get('/role/' + userid, d => {
+                    if (d.code === 0)
+                        d.data.map(id => $('input[value=' + id + ']').attr('checked', true));
+                    f.render();
+                });
+            }
         });
     });
-
 </script>
 </body>
 </html>

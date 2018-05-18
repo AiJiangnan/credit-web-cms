@@ -26,8 +26,7 @@ layui.use(['table', 'laydate'], () => {
     
     
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('faceRecognition', {where: d.field});
+        t.reload('faceRecognition', {page: {curr: 1}, where: d.field});
         return false;
     });
 

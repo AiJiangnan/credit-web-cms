@@ -60,8 +60,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('company', {where: null}));
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('company', {where: d.field});
+        t.reload('company', {page: {curr: 1}, where: d.field});
         return false;
     });
 

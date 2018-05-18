@@ -38,8 +38,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('confirm', {where: d.field});
+        t.reload('confirm', {page: {curr: 1}, where: d.field});
         $('#rongbao').parent().hide('fast');
         return false;
     });

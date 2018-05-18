@@ -39,8 +39,7 @@ layui.use(['table', 'laydate'], () => {
     
     
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('appUser', {where: d.field});
+        t.reload('appUser', {page: {curr: 1}, where: d.field});
         return false;
     });
 

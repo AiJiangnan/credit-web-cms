@@ -77,8 +77,7 @@ layui.use('table', () => {
     });
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('channel', {where: d.field});
+        t.reload('channel', {page: {curr: 1}, where: d.field});
         return false;
     });
 

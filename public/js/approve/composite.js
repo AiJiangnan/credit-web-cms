@@ -92,8 +92,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('composite', {where: d.field});
+        t.reload('composite', {page: {curr: 1}, where: d.field});
         return false;
     });
     f.on('submit(export)', d => {
@@ -103,4 +102,16 @@ layui.use(['table', 'laydate'], () => {
 
     t.on('sort(composite)', o => t.reload('composite', {where: {sort: o.field, sortOrder: o.type}}));
 
+    $('.morebtn').click(() => {
+        if ($('.morebtn').hasClass('in')) {
+            $('#more').hide('slow');
+            $('#more').children().children(':text').map((i, e) => $(e).val(''));
+            $('.morebtn').removeClass('in');
+            $('.morebtn').children().html('&#xe61a;');
+        } else {
+            $('#more').show('slow');
+            $('.morebtn').addClass('in');
+            $('.morebtn').children().html('&#xe619;');
+        }
+    });
 });

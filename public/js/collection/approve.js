@@ -29,8 +29,7 @@ layui.use(['table', 'laydate'], () => {
 
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('approve', {where: d.field});
+        t.reload('approve', {page: {curr: 1}, where: d.field});
         $('#pass').parent().hide('fast');
         return false;
     });

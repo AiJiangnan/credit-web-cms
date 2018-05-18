@@ -51,8 +51,7 @@ layui.use(['element', 'table', 'form'], () => {
     });
 
     f.on('submit(c-submit)', d => {
-        d.field.page = 1;
-        t.reload('contacts', {where: d.field});
+        t.reload('contacts', {page: {curr: 1}, where: d.field});
         return false;
     });
     f.on('submit(approve)', d => {
@@ -85,7 +84,7 @@ layui.use(['element', 'table', 'form'], () => {
         if (i === 1) {
             $.get('/info/phonelog/' + userId, d => {
                 if (d.code === 0) {
-                    $('#rate').html((d.data.proportion *100)+ '%');
+                    $('#rate').html((d.data.proportion * 100) + '%');
                     laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
                 }
             });

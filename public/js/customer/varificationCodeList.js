@@ -24,8 +24,7 @@ layui.use(['table', 'laydate'], () => {
     
     
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('verificationCode', {where: d.field});
+        t.reload('verificationCode', {page: {curr: 1}, where: d.field});
         return false;
     });
 

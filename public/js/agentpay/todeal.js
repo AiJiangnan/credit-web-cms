@@ -55,8 +55,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('todeal', {where: d.field});
+        t.reload('todeal', {page: {curr: 1}, where: d.field});
         return false;
     });
 

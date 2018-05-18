@@ -60,7 +60,14 @@ const constants = {
     CONFIRM: {icon: 3},
     LOCK: {icon: 4},
     FAIL: {icon: 5},
-    HAPPY: {icon: 6}
+    HAPPY: {icon: 6},
+    LAYUIPAGE: {
+        layout: ['prev', 'page', 'next', 'skip', 'count', 'limit'],
+        curr: 1,
+        groups: 5,
+        first: false,
+        last: false
+    }
 };
 
 /**
@@ -111,6 +118,12 @@ const laytplrender = (tpl, viewId, data) => layui.use('laytpl', () => {
  * @param info
  */
 const alertinfo = info => parent.layer.open({type: 0, title: false, btn: false, content: info, shade: 0.1, shadeClose: true, anim: 5, isOutAnim: false, resize: false});
+
+/**
+ * 关闭父弹窗
+ * @returns {*}
+ */
+const closeParent = () => parent.layer.close(parent.layer.getFrameIndex(name));
 
 /**
  * 将详细地址缩写成省（自治区）市（区、自治州）
@@ -180,19 +193,25 @@ const getQueryStr = name => {
     return res != null ? decodeURIComponent(res[2]) : null;
 };
 
-layui.use('jquery', () => {
-    const $ = layui.jquery;
-    $('.morebtn').click(() => {
-        $('.morebtn');
-        if ($('.morebtn').hasClass('in')) {
-            $('#more').hide('slow');
-            $('#more').children().children(':text').map((i, e) => $(e).val(''));
-            $('.morebtn').removeClass('in');
-            $('.morebtn').children().html('&#xe61a;');
-        } else {
-            $('#more').show('slow');
-            $('.morebtn').addClass('in');
-            $('.morebtn').children().html('&#xe619;');
-        }
-    });
-});
+/**
+ * 从sessionStorage中取值
+ * @param key
+ * @param fn 回调不为空使用后删除
+ * @returns {any}
+ */
+const getSession = (key, fn) => {
+    const s = sessionStorage.getItem(key);
+    if (fn) {
+        fn(JSON.parse(s));
+        sessionStorage.removeItem(key);
+        return JSON.parse(s);
+    }
+    return JSON.parse(s);
+};
+
+/**
+ * 向sessionStorage中设值
+ * @param key
+ * @param value
+ */
+const setSession = (key, value) => sessionStorage.setItem(key, JSON.stringify(value));

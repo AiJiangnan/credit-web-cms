@@ -55,8 +55,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('apply', {where: d.field});
+        t.reload('apply', {page: {curr: 1}, where: d.field});
         $('#allot').parent().hide('fast');
         return false;
     });
@@ -105,5 +104,17 @@ layui.use(['table', 'laydate'], () => {
             }
         });
     });
-})
-;
+
+    $('.morebtn').click(() => {
+        if ($('.morebtn').hasClass('in')) {
+            $('#more').hide('slow');
+            $('#more').children().children(':text').map((i, e) => $(e).val(''));
+            $('.morebtn').removeClass('in');
+            $('.morebtn').children().html('&#xe61a;');
+        } else {
+            $('#more').show('slow');
+            $('.morebtn').addClass('in');
+            $('.morebtn').children().html('&#xe619;');
+        }
+    });
+});

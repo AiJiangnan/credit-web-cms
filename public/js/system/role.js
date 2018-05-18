@@ -114,8 +114,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('role', {where: null}));
 
     f.on('submit(submit)', d => {
-        d.field.page = 1;
-        t.reload('role', {where: d.field});
+        t.reload('role', {page: {curr: 1}, where: d.field});
         return false;
     });
 
