@@ -4,16 +4,7 @@ const app = express();
 const request = require('request');
 const fs = require('fs');
 const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + file.originalname);
-    }
-});
-const upload = multer({storage: storage});
+const upload = multer();
 
 const config = require('../config/global');
 const log4j = require('../config/log4j');
@@ -37,9 +28,10 @@ app.get(/export/, (req, res) => {
 
 app.post(/upload/, upload.single('file'), (req, res) => {
     logger.info(req.originalUrl, req.method);
-    let file = fs.createReadStream(__dirname + '//file.js');
-    console.log(req.file);
-    request.post({url: config.API_BASE_URL + req.originalUrl, headers: {Cookie: req.session.sid}, formData: {file: file}}, (err, resp, body) => {
+    let obj = {};
+    ({originalname: obj.fileName, mimetype: obj.mimeType, size: obj.size} = req.file);
+    obj.base64File = req.file.buffer.toString('base64');
+    request.post({url: config.API_BASE_URL + req.originalUrl, form: obj, headers: {Cookie: req.session.sid}}, (err, resp, body) => {
         if (err) {
             console.log(err);
             res.sendStatus(500);
