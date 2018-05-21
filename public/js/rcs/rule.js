@@ -21,7 +21,7 @@ layui.use('table', () => {
         id: 'rule',
         elem: '#rule',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/rule',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -72,9 +72,7 @@ layui.use('table', () => {
                         layer.close(i);
                     }).fail(() => layer.msg('服务器错误！', constants.FAIL));
                 },
-                btn2: (i, l) => {
-                    layer.close(i);
-                }
+                btn2: (i, l) => layer.close(i)
             });
         }
         if (e === 'edit') {
@@ -83,14 +81,12 @@ layui.use('table', () => {
                 type: 2,
                 content: ['/rcs/deal/rule.html', 'no'],
                 area: ['400px', '460px'],
-                success: (l, i) => {
-                    sessionStorage.setItem('rule', JSON.stringify(d));
-                }
+                success: (l, i) => setSession('rule', d)
             });
         }
         if (e === 'onoff') {
             let s = d.closed;
-            const m = '<span style="color:red;">' + (!s ? '停用' : '启用') + '</span>';
+            const m = r(!s ? '停用' : '启用');
             layer.confirm(`你确定要${m}该规则！`, constants.WARM, i => {
                 $.post('/risk/rule', {id: d.id, closed: !s}, data => {
                     if (data.code === 0) {
@@ -130,7 +126,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('rule', {where: null}));
 
     f.on('submit(submit)', d => {
-        t.reload('rule', {where: d.field});
+        t.reload('rule', {page: {curr: 1}, where: d.field});
         return false;
     });
 

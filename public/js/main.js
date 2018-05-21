@@ -20,7 +20,7 @@ layui.config({
             d.data.map((e, i) => {
                 if (e.channelNumber) channel.push({code: e.channelNumber, name: e.channelName});
             });
-            sessionStorage.setItem('channel', JSON.stringify(channel));
+            setSession('channel', channel);
         } else {
             layer.msg('没有获取到渠道信息！', constants.ERROR);
         }
@@ -60,9 +60,7 @@ layui.config({
                     }
                 }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
     });
 

@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'strategyname',
         elem: '#strategyname',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/policyName',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -49,9 +49,7 @@ layui.use('table', () => {
                         layer.close(i);
                     }).fail(() => layer.msg('服务器错误！', constants.FAIL));
                 },
-                btn2: (i, l) => {
-                    layer.close(i);
-                }
+                btn2: (i, l) => layer.close(i)
             });
         }
         if (e === 'edit') {
@@ -104,7 +102,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('strategyname', {where: null}));
 
     f.on('submit(submit)', d => {
-        t.reload('strategyname', {where: d.field});
+        t.reload('strategyname', {page: {curr: 1}, where: d.field});
         return false;
     });
 

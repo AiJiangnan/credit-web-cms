@@ -7,7 +7,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'deal',
         elem: '#deal',
         height: 'full-80',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/agentpay/deal',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -40,12 +40,12 @@ layui.use(['table', 'laydate'], () => {
             return;
         }
         if (e === 'pay') {
-            layer.confirm('你确定放款？', constants.WARM, i => {
+            layer.confirm('你确定放款？', constants.CONFIRM, i => {
                 submit(e, d.batchNo);
                 layer.close(i);
             });
         } else if (e === 'repay') {
-            layer.confirm('你确定再次划扣？', constants.WARM, i => {
+            layer.confirm('你确定再次划扣？', constants.CONFIRM, i => {
                 submit(e, d.batchNo);
                 layer.close(i);
             });
@@ -55,7 +55,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('deal', {where: d.field});
+        t.reload('deal', {page: {curr: 1}, where: d.field});
         return false;
     });
 

@@ -13,7 +13,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'companycollect',
         elem: '#companycollect',
         height: 'full-110',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect/companycollect',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -45,7 +45,7 @@ layui.use(['table', 'laydate'], () => {
                     check(repay);
                     alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                         <tr><td style="width:8em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
-                        <tr><td><b>进件渠道：</b></td><td>${d.sdChannel}</td></tr>
+                        <tr><td><b>进件渠道：</b></td><td>${getStatus(d.sdChannel)}</td></tr>
                         <tr><td><b>违约天数：</b></td><td>${repay.overdueDays}</td></tr>
                         <tr><td><b>逾期费：</b></td><td>${rmbFormat(repay.totalInterestPenalty)}</td></tr>
                         <tr><td><b>应还总额：</b></td><td>${rmbFormat(repay.planTotalAmount)}</td></tr>
@@ -55,14 +55,14 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
                     </table>`);
                 } else {
-                    parent.layer.msg('没有该合同还款计划信息！', constants.ERROR);
+                    parent.layer.msg('没有该合同还款计划信息！', constants.FAIL);
                 }
             }).fail(() => layer.msg('服务器错误！', constants.FAIL));
         }
     });
 
     f.on('submit(submit)', d => {
-        t.reload('companycollect', {where: d.field});
+        t.reload('companycollect', {page: {curr: 1}, where: d.field});
         return false;
     });
 

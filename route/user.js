@@ -16,7 +16,7 @@ app.post('/login', (req, res) => {
     logger.info("登录参数：", req.body, req.method);
     request.post({url: config.API_BASE_URL + '/login', form: req.body}, (err, resp, body) => {
         if (err) {
-            res.send(500);
+            res.sendStatus(500);
             return;
         }
         const respJson = JSON.parse(body);
@@ -24,10 +24,10 @@ app.post('/login', (req, res) => {
             req.session.user = respJson.data;
             req.session.sid = resp.headers['set-cookie'][0].split(';')[0];
             logger.info('当前登录人：', req.session.user.realname, 'sid:', req.session.sid);
-            res.send(resp.statusCode, respJson.code);
+            res.status(resp.statusCode).send({code: respJson.code});
         } else {
             req.session.destroy();
-            res.send(resp.statusCode, respJson.msg);
+            res.status(resp.statusCode).send(respJson.msg);
         }
     });
 });
@@ -37,7 +37,7 @@ app.post('/login', (req, res) => {
  */
 app.get('/show', (req, res) => {
     const user = req.session.user;
-    res.send(200, user.realname);
+    res.status(200).send(user.realname);
 });
 
 /**

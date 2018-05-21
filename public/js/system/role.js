@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'role',
         elem: '#role',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/role',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -22,17 +22,13 @@ layui.use('table', () => {
             layer.open({
                 title: '分配菜单',
                 type: 2,
-                content: '/system/rolemenu.html',
+                content: '/system/rolemenu.html?id=' + d.id,
                 area: ['300px', '400px'],
                 btn: ['确认', '取消'],
-                success: (l, i) => {
-                    let f = layer.getChildFrame('form', i);
-                    f.attr('data-id', d.id);
-                },
                 yes: (i, l) => {
                     let f = layer.getChildFrame('form', i);
                     let menuIds = [];
-                    f.find(':checked').map((i, e) => menuIds.push($(e).val()));
+                    f.serializeArray().map((e, i) => menuIds.push(e.value));
                     if (menuIds.length < 1) {
                         layer.msg('分配菜单不能为空！', constants.LOCK);
                         return;
@@ -44,9 +40,7 @@ layui.use('table', () => {
                         }
                     }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
                 },
-                btn2: (i, l) => {
-                    layer.close(i);
-                }
+                btn2: (i, l) => layer.close(i)
             });
         }
         if (e === 'edit') {
@@ -54,27 +48,19 @@ layui.use('table', () => {
                 title: '修改角色',
                 type: 2,
                 content: ['/system/editrole.html', 'no'],
-                area: ['300px', '220px'],
+                area: ['300px', '180px'],
                 success: (l, i) => {
                     let f = layer.getChildFrame('form', i);
                     for (let k in d) {
                         f.find("input[name='" + k + "']").val(d[k]);
                     }
-                    f.find("input[name='enabledbox']").attr('checked', d.enabled);
                 },
-                end: () => {
-                    if (sessionStorage.getItem('role')) {
-                        let u = JSON.parse(sessionStorage.getItem('role'));
-                        u.enabled = (u.enabled === 'true');
-                        o.update(u);
-                        sessionStorage.removeItem('role');
-                    }
-                }
+                end: () => getSession('role', d => o.update(d))
             });
         }
         if (e === 'onoff') {
             let s = d.enabled;
-            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
+            const m = r(s ? '停用' : '启用');
             layer.confirm(`你确定要${m}该角色！`, constants.WARM, i => {
                 $.post('/role', {id: d.id, enabled: !s}, data => {
                     if (data.code === 0) {
@@ -114,7 +100,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('role', {where: null}));
 
     f.on('submit(submit)', d => {
-        t.reload('role', {where: d.field});
+        t.reload('role', {page: {curr: 1}, where: d.field});
         return false;
     });
 

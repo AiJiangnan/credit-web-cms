@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'admin',
         elem: '#admin',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/user',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -24,31 +24,25 @@ layui.use('table', () => {
             layer.open({
                 title: '分配角色',
                 type: 2,
-                content: '/system/adminrole.html',
+                content: '/system/adminrole.html?id=' + d.id,
                 area: ['300px', '400px'],
                 btn: ['确认', '取消'],
-                success: (l, i) => {
-                    let f = layer.getChildFrame('form', i);
-                    f.attr('data-id', d.id);
-                },
                 yes: (i, l) => {
                     let f = layer.getChildFrame('form', i);
                     let roleIds = [];
-                    f.find(':checked').map((i, e) => roleIds.push($(e).val()));
-                    if (roleIds.length < 1) {
+                    f.serializeArray().map((e, i) => roleIds.push(e.value));
+                    if (roleIds.length > 0) {
+                        $.post('/user/role', {userId: d.id, roleIds: JSON.stringify(roleIds)}, data => {
+                            if (data.code === 0) {
+                                layer.msg(data.data, constants.SUCCESS);
+                                layer.close(i);
+                            }
+                        }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
+                    } else {
                         layer.msg('分配角色不能为空！', constants.LOCK);
-                        return;
                     }
-                    $.post('/user/role', {userId: d.id, roleIds: JSON.stringify(roleIds)}, data => {
-                        if (data.code === 0) {
-                            layer.msg(data.data, constants.SUCCESS);
-                            layer.close(i);
-                        }
-                    }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
                 },
-                btn2: (i, l) => {
-                    layer.close(i);
-                }
+                btn2: (i, l) => layer.close(i)
             });
         }
         if (e === 'edit') {
@@ -56,29 +50,23 @@ layui.use('table', () => {
                 title: '修改管理员',
                 type: 2,
                 content: ['/system/editadmin.html', 'no'],
-                area: ['300px', '300px'],
+                area: ['300px', '260px'],
                 success: (l, i) => {
                     let f = layer.getChildFrame('form', i);
                     for (let k in d) {
-                        if (k === 'gender') continue;
-                        f.find("input[name='" + k + "']").val(d[k]);
+                        if (k === 'gender') {
+                            f.find("input[name='gender'][value=" + d.gender + "]").prop('checked', true);
+                        } else {
+                            f.find("input[name='" + k + "']").val(d[k]);
+                        }
                     }
-                    f.find("input[name='gender'][value=" + d.gender + "]").prop('checked', true);
-                    f.find("input[name='statebox']").attr('checked', d.state);
                 },
-                end: () => {
-                    if (sessionStorage.getItem('user')) {
-                        let u = JSON.parse(sessionStorage.getItem('user'));
-                        u.state = (u.state === 'true');
-                        o.update(u);
-                        sessionStorage.removeItem('user');
-                    }
-                }
+                end: () => getSession('user', d => o.update(d))
             });
         }
         if (e === 'onoff') {
             let s = d.state;
-            const m = '<span style="color:red;">' + (s ? '停用' : '启用') + '</span>';
+            const m = r(s ? '停用' : '启用');
             layer.confirm(`你确定要${m}该管理员！`, constants.WARM, i => {
                 $.post('/user', {id: d.id, state: !s}, data => {
                     if (data.code === 0) {
@@ -119,7 +107,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('admin', {where: null}));
 
     f.on('submit(submit)', d => {
-        t.reload('admin', {where: d.field});
+        t.reload('admin', {page: {curr: 1}, where: d.field});
         return false;
     });
 

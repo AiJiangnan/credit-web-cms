@@ -32,12 +32,19 @@
     </table>
     <hr class="layui-bg-gray">
     <label class="layui-form-label" style="width:8em;">请选择外包公司：</label>
-    <div id="coms" style="margin-top:45px;margin-left:30px;"></div>
+    <div id="comView" style="margin-top:45px;margin-left:30px;"></div>
+    <script id="comTpl" type="text/html">
+        {{# layui.each(d,(i,e)=>{ }}
+        <div class="layui-form-item">
+            <input type="checkbox" name="companyIds" title="{{ e.name }}" value="{{ e.id }}" lay-skin="primary">
+        </div>
+        {{# }); }}
+    </script>
 </form>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script>
-    layui.use(['form', 'laydate'], () => {
+    layui.use(['form', 'laydate', 'laytpl'], () => {
         const [$, f] = [layui.jquery, layui.form];
 
         layui.laydate.render({
@@ -57,13 +64,7 @@
 
         $.get('/collect/companylist?state=1', d => {
             if (d.code === 0) {
-                let result = '';
-                d.data.map((e, i) => {
-                    result += `<div class="layui-form-item">
-                                   <input type="checkbox" name="companyIds" title="${e.name}" value="${e.id}" lay-skin="primary">
-                               </div>`;
-                });
-                $('#coms').html(result);
+                laytplrender(comTpl, 'comView', d.data);
                 f.render();
             }
         });

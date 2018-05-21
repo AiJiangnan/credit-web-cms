@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            width: 70px;
+            padding: 0 0 0 15px;
+        }
+
+        .layui-form-switch, .layui-form-radio {
+            margin: 0;
+        }
+
+        td {
+            padding: 5px 0;
+        }
+        img{
+        width: 150px;
+        height: 50px;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">名称：</label></td>
+            <td><input type="text" name="name" required lay-verify="required" placeholder="请输入轮播图名称" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">描述：</label></td>
+            <td><input type="text" name="bannerDesc" required lay-verify="required" placeholder="请输入轮播图描述" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">活动链接：</label></td>
+            <td><input type="text" name="srcLink" required lay-verify="required|url" placeholder="请输入活动访问地址" class="layui-input"></td>
+        </tr>
+        <tr>
+         <td><label class="layui-form-label">有效期：</label></td>
+            <td><input type="text" name="start" class="layui-input" id="date1" placeholder="请选择应还款日期"></td>
+         </tr>
+          <tr>
+         <td><label class="layui-form-label">有效期：</label></td>
+            <td><input type="text" name="end" class="layui-input" id="date2" placeholder="请选择应还款日期"></td>
+         </tr>
+         <tr>
+            <td><label class="layui-form-label">排序：</label></td>
+            <td><input type="number" name="orderNo" required lay-verify="required"  class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">状态：</label></td>
+            <td>
+                <input type="radio" name='status' value="0"  title="禁用" checked>
+                <input type="radio" name='status' value="1"  title="启用">
+            </td>
+        </tr>
+        <tr>
+         <td><button type="button" class="layui-btn" id="imgLinkBtn">轮播图</button></td>
+         <td> 
+      		<div class="layui-upload-list">  
+ 				<img class="layui-upload-img" id="imgLinkShow" width="150px">  
+			</div>  
+  		</td>
+        </tr>
+        
+        
+         <tr>
+         <td><button type="button" class="layui-btn" id="shareIconBtn">分享图</button></td>
+         <td> 
+      		<div class="layui-upload-list">  
+ 				<img class="layui-upload-img" id="shareIconShow" width="150px">  
+			</div>  
+  		</td>
+        </tr>
+       
+        
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+            </td>
+        </tr>
+        
+    </table>
+    <input type="hidden" name="id">
+    <input type="hidden" name="imgLink">
+    <input type="hidden" name="shareIcon">
+</form>
+
+		
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script>
+    layui.use(['form', 'laydate','upload'], () => {
+    	  const [$, f, p, w] = [layui.jquery, layui.form, parent];
+		layui.laydate.render({elem: '#date1' ,type: 'datetime'});
+		layui.laydate.render({elem: '#date2' ,type: 'datetime'});
+        f.on('submit(submit)', d => {
+        	if(!$("input[name='imgLink']").val()){
+        		 p.layer.msg("轮播图不为空", {icon: 2});
+        		 return false;
+        	}
+        	
+            $.post('/app/banner/edit', d.field, data => {
+            	
+                if (data.code === 0) {
+                    p.layer.close(p.layer.getFrameIndex(w));
+                    p.layer.msg(data.data, {icon: 1});
+                    return;
+                }
+                p.layer.msg(data.data, {icon: 2});
+            });
+            return false;
+        });
+        
+        
+        var upload = layui.upload;
+        
+        //执行实例
+        var uploadInst = upload.render({
+          elem: '#imgLinkBtn' //绑定元素
+            , url: '/app/upload' //上传接口
+          ,field:'file'
+       	    ,done: function(res){ 
+       	    	console.log(JSON.stringify(res))
+       	     if (res.code == 0) {
+       	    	 $("#imgLinkShow").attr("src",res.src);
+       	    	 $("input[name='imgLink']").val(res.src);
+       	         layer.msg("上传成功"); 
+       	     }else{
+       	    	 layer.msg("上传失败"); 
+       	     }
+       	  
+       	    } 
+          ,error: function(){
+        	  layer.msg("失败"); 
+          }
+        });
+        
+        //执行实例
+        var uploadInst = upload.render({
+          elem: '#shareIconBtn' //绑定元素
+            , url: '/app/upload' //上传接口
+        	  ,field:'file'
+       	    ,done: function(res){
+                console.log(JSON.stringify(res));
+       	    	if (res.code == 0) {
+          	    	 $("#shareIconShow").attr("src",res.src);
+          	    	 $("input[name='shareIcon']").val(res.src);
+          	         layer.msg("上传成功"); 
+          	     }else{
+          	    	 layer.msg("上传失败"); 
+          	     }
+       	    } 
+          ,error: function(){
+        	  layer.msg("上传"); 
+          }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,20 +1,8 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
-    let channel = JSON.parse(sessionStorage.getItem('channel'));
-
-    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    laytplrender(sourceTypeTpl, 'sourceTypeView', getSession('channel'));
     f.render('select');
-
-    const getChannel = c => {
-        let name = '0';
-        channel.map((e, i) => {
-            if (e.code === c) {
-                name = e.name;
-            }
-        });
-        return name;
-    };
 
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#date2', range: true, format: constants.DATE_RANGE});
@@ -28,7 +16,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'distribute',
         elem: '#distribute',
         height: 'full-180',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect',
         cols: [[
             {type: 'checkbox'},
@@ -38,7 +26,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'updateTime', title: '分配日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.updateTime)},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&from=0">${d.applyNo}</a>`},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
-            {field: 'phone', title: '手机号码', align: 'center', width: 100},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
@@ -52,7 +40,7 @@ layui.use(['table', 'laydate'], () => {
         if (e === 'userinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:6em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
-                    <tr><td><b>注册渠道：</b></td><td>${d.signChannel}</td></tr>
+                    <tr><td><b>注册渠道：</b></td><td>${getChannel(d.signChannel)}</td></tr>
                     <tr><td><b>手机号码：</b></td><td>${d.phone}</td></tr>
                     <tr><td><b>身份证号码：</b></td><td>${d.idcard}</td></tr>
                 </table>`);
@@ -64,7 +52,7 @@ layui.use(['table', 'laydate'], () => {
                     check(repay);
                     alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                         <tr><td style="width:8em;"><b>客户姓名：</b></td><td>${d.name}</td></tr>
-                        <tr><td><b>进件渠道：</b></td><td>${d.sdChannel}</td></tr>
+                        <tr><td><b>进件渠道：</b></td><td>${getStatus(d.sdChannel)}</td></tr>
                         <tr><td><b>违约天数：</b></td><td>${repay.overdueDays}</td></tr>
                         <tr><td><b>逾期费：</b></td><td>${rmbFormat(repay.totalInterestPenalty)}</td></tr>
                         <tr><td><b>应还总额：</b></td><td>${rmbFormat(repay.planTotalAmount)}</td></tr>
@@ -74,9 +62,9 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
                     </table>`);
                 } else {
-                    parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
+                    parent.layer.msg('没有该合同还款计划信息！', constants.FAIL);
                 }
-            }).fail(() => layer.msg('服务器错误！', {icon: 5}));
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
 
         }
     });
@@ -87,7 +75,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('distribute', {where: d.field});
+        t.reload('distribute', {page: {curr: 1}, where: d.field});
         $('#allot').parent().hide('fast');
         return false;
     });
@@ -115,7 +103,7 @@ layui.use(['table', 'laydate'], () => {
             title: '分配审核人员',
             type: 2,
             content: '/collection/admin.html',
-            area: ['300px', '400px'],
+            area: ['400px', '400px'],
             btn: ['确认', '取消'],
             yes: (i, l) => {
                 let f = layer.getChildFrame('form', i);
@@ -136,9 +124,7 @@ layui.use(['table', 'laydate'], () => {
                     layer.close(i);
                 }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
     });
 
@@ -176,9 +162,20 @@ layui.use(['table', 'laydate'], () => {
                     layer.close(i);
                 }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
+    });
+
+    $('.morebtn').click(() => {
+        if ($('.morebtn').hasClass('in')) {
+            $('#more').hide('slow');
+            $('#more').children().children(':text').map((i, e) => $(e).val(''));
+            $('.morebtn').removeClass('in');
+            $('.morebtn').children().html('&#xe61a;');
+        } else {
+            $('#more').show('slow');
+            $('.morebtn').addClass('in');
+            $('.morebtn').children().html('&#xe619;');
+        }
     });
 });

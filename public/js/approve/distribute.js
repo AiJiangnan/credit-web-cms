@@ -1,26 +1,14 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
-    let channel = JSON.parse(sessionStorage.getItem('channel'));
-
-    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    laytplrender(sourceTypeTpl, 'sourceTypeView', getSession('channel'));
     f.render('select');
-
-    const getChannel = c => {
-        let name = '0';
-        channel.map((e, i) => {
-            if (e.code === c) {
-                name = e.name;
-            }
-        });
-        return name;
-    };
 
     t.render({
         id: 'distribute',
         elem: '#distribute',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/approve/distribute',
         cols: [[
             {type: 'checkbox'},
@@ -53,7 +41,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('distribute', {where: d.field});
+        t.reload('distribute', {page: {curr: 1}, where: d.field});
         $('#allot').parent().hide('fast');
         return false;
     });
@@ -100,9 +88,7 @@ layui.use(['table', 'laydate'], () => {
                     layer.close(i);
                 }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
     });
 });

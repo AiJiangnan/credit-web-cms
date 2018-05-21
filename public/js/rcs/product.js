@@ -10,7 +10,7 @@ layui.use('table', () => {
         id: 'product',
         elem: '#product',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/product',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -43,7 +43,7 @@ layui.use('table', () => {
         }
         if (e === 'onoff') {
             let s = d.closed;
-            const m = '<span style="color:red;">' + (!s ? '停用' : '启用') + '</span>';
+            const m = r(!s ? '停用' : '启用');
             layer.confirm(`你确定要${m}该产品！`, constants.WARM, i => {
                 $.post('/risk/product', {id: d.id, closed: !s}, data => {
                     if (data.code === 0) {
@@ -83,7 +83,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('product', {where: null}));
 
     f.on('submit(submit)', d => {
-        t.reload('product', {where: d.field});
+        t.reload('product', {page: {curr: 1}, where: d.field});
         return false;
     });
 

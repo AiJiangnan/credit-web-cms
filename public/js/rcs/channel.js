@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'channel',
         elem: '#channel',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/channel',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -20,7 +20,7 @@ layui.use('table', () => {
         let [e, d] = [o.event, o.data];
         if (e === 'onoff') {
             let s = d.closed;
-            const m = '<span style="color:red;">' + (!s ? '停用' : '启用') + '</span>';
+            const m = r(!s ? '停用' : '启用');
             layer.confirm(`你确定要${m}该渠道！`, constants.WARM, i => {
                 $.post('/risk/channel', {id: d.id, closed: !s}, data => {
                     if (data.code === 0) {
@@ -77,7 +77,7 @@ layui.use('table', () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('channel', {where: d.field});
+        t.reload('channel', {page: {curr: 1}, where: d.field});
         return false;
     });
 

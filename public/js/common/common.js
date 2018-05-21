@@ -1,6 +1,7 @@
 // 颜色标签
 const r = str => `<span style="color:red;">${str}</span>`;
 const g = str => `<span style="color:green;">${str}</span>`;
+const b = str => str.replace(/([\/|\:|\;])/g, '<br>');
 const constants = {
     // 表单输入日期范围格式
     DATE_RANGE: 'yyyyMMdd',
@@ -46,9 +47,12 @@ const constants = {
         reapal: '融宝',
         UCF: '先锋',
         ucf: '先锋',
+        kjtpay: '快捷通',
+        offline: '对公还款',
         // 进件渠道
         Mobile: '手机APP',
-        xjbk: '现金白卡'
+        xjbk: '现金白卡',
+        rongshu: '榕树'
     },
     // 弹出图标示意
     WARM: {icon: 0},
@@ -57,7 +61,14 @@ const constants = {
     CONFIRM: {icon: 3},
     LOCK: {icon: 4},
     FAIL: {icon: 5},
-    HAPPY: {icon: 6}
+    HAPPY: {icon: 6},
+    LAYUIPAGE: {
+        layout: ['prev', 'page', 'next', 'skip', 'count', 'limit'],
+        curr: 1,
+        groups: 5,
+        first: false,
+        last: false
+    }
 };
 
 /**
@@ -72,7 +83,7 @@ const regex = {
  * 获取状态
  * @param str
  */
-const getStatus = str => str ? constants.STATUS[str] : '-';
+const getStatus = str => str && str !== '-' ? constants.STATUS[str] : '-';
 const getProductType = str => {
     if (str == '1') {
         return '7天';
@@ -110,6 +121,12 @@ const laytplrender = (tpl, viewId, data) => layui.use('laytpl', () => {
 const alertinfo = info => parent.layer.open({type: 0, title: false, btn: false, content: info, shade: 0.1, shadeClose: true, anim: 5, isOutAnim: false, resize: false});
 
 /**
+ * 关闭父弹窗
+ * @returns {*}
+ */
+const closeParent = () => parent.layer.close(parent.layer.getFrameIndex(name));
+
+/**
  * 将详细地址缩写成省（自治区）市（区、自治州）
  * @param address
  * @returns {*|string}
@@ -117,6 +134,28 @@ const alertinfo = info => parent.layer.open({type: 0, title: false, btn: false, 
 const lessaddress = address => {
     const exec = (/.*?(省|自治区)/.exec(address) ? /.*?(市|自治州)/ : /.*?区/).exec(address);
     return exec ? exec[0] : r`无有效地址`;
+};
+
+/**
+ * 从申请单号中获取借款时间
+ * @param str
+ * @returns {string}
+ */
+const getLoanTimeFromApplyNo = str => str ? str.substr(2, 4) + '-' + str.substr(6, 2) + '-' + str.substr(8, 2) : '-';
+
+/**
+ * 获取注册渠道
+ * @param c
+ * @returns {string}
+ */
+const getChannel = c => {
+    let name = '';
+    getSession('channel').map((e, i) => {
+        if (e.code === c) {
+            name = e.name;
+        }
+    });
+    return name;
 };
 
 /**
@@ -141,7 +180,9 @@ const zero = n => n < 10 ? '0' + n : n;
 const dateFormat = str => {
     if (!str) return '-';
     const date = new Date();
-    date.setTime(str);
+    if (str !== 'now') {
+        date.setTime(str);
+    }
     return `${date.getFullYear()}-${zero(date.getMonth() + 1)}-${zero(date.getDate())}`;
 };
 
@@ -168,19 +209,25 @@ const getQueryStr = name => {
     return res != null ? decodeURIComponent(res[2]) : null;
 };
 
-layui.use('jquery', () => {
-    const $ = layui.jquery;
-    $('.morebtn').click(() => {
-        $('.morebtn');
-        if ($('.morebtn').hasClass('in')) {
-            $('#more').hide('slow');
-            $('#more').children().children(':text').map((i, e) => $(e).val(''));
-            $('.morebtn').removeClass('in');
-            $('.morebtn').children().html('&#xe61a;');
-        } else {
-            $('#more').show('slow');
-            $('.morebtn').addClass('in');
-            $('.morebtn').children().html('&#xe619;');
-        }
-    });
-});
+/**
+ * 从sessionStorage中取值
+ * @param key
+ * @param fn 回调不为空使用后删除
+ * @returns {any}
+ */
+const getSession = (key, fn) => {
+    const s = sessionStorage.getItem(key);
+    if (fn) {
+        fn(JSON.parse(s));
+        sessionStorage.removeItem(key);
+        return JSON.parse(s);
+    }
+    return JSON.parse(s);
+};
+
+/**
+ * 向sessionStorage中设值
+ * @param key
+ * @param value
+ */
+const setSession = (key, value) => sessionStorage.setItem(key, JSON.stringify(value));

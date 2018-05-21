@@ -5,7 +5,7 @@ layui.use('table', () => {
         id: 'strategy',
         elem: '#strategy',
         height: 'full-70',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/risk/policy',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -51,9 +51,7 @@ layui.use('table', () => {
                             layer.close(i);
                         }).fail(() => layer.msg('服务器错误！', constants.FAIL));
                     },
-                    btn2: (i, l) => {
-                        layer.close(i);
-                    }
+                    btn2: (i, l) => layer.close(i)
                 });
             }
             if (e === 'edit') {
@@ -71,7 +69,7 @@ layui.use('table', () => {
             }
             if (e === 'onoff') {
                 let s = d.closed;
-                const m = '<span style="color:red;">' + (!s ? '停用' : '启用') + '</span>';
+                const m = r(!s ? '停用' : '启用');
                 layer.confirm(`你确定要${m}该策略！`, constants.WARM, i => {
                     $.post('/risk/policy', {id: d.id, closed: !s}, data => {
                         if (data.code === 0) {
@@ -113,7 +111,7 @@ layui.use('table', () => {
     $('#refresh').click(() => t.reload('strategy', {where: null}));
 
     f.on('submit(submit)', d => {
-        t.reload('strategy', {where: d.field});
+        t.reload('strategy', {page: {curr: 1}, where: d.field});
         return false;
     });
 

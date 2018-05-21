@@ -7,6 +7,7 @@ const app = express();
 
 const user = require('./route/user');
 const middle = require('./route/middle');
+const file = require('./route/file');
 
 app.use(cookieParser());
 app.use(session({
@@ -37,8 +38,9 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public/html')));
 
 app.use('/user', user);
+app.use('/', file);
 app.use('/', middle);
 
-app.listen(8080);
+app.listen(8090);
 
-console.log("successful! http://localhost:8080");
+console.log("successful! http://localhost:8090");

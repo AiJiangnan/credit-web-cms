@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-btn-group {
+            float: left;
+        }
+
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            padding: 0 0 0 15px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top:20px;margin-left: 20px;">
+	<div class="layui-btn-group">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="新增" id="add">
+            <i class="layui-icon">&#xe654;</i>
+        </button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" title="刷新" id="refresh">
+            <i class="layui-icon">&#x1002;</i>
+        </button>
+    </div>
+    <form class="layui-form">
+        <table>
+            <tr>
+                <td><label class="layui-form-label">系统版本：</label></td>
+                <td>
+	                <select name="type">
+	                    <option value="">全部</option>
+	                    <option value="1">安卓</option>
+	                    <option value="2">IOS</option>
+	                </select>
+                </td>
+                
+                 <td><label class="layui-form-label">状态：</label></td>
+                 <td>
+	                <select name="versionStatus">
+	                    <option value="">全部</option>
+	                    <option value="1">无更新</option>
+	                    <option value="2">可更新</option>
+	                    <option value="3">强制更新</option>
+	                </select>
+                </td>
+                <td style="padding-left:20px;">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
+                        <i class="layui-icon">&#xe615;</i>
+                    </button>
+                </td>
+                <td style="padding-left:20px;">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
+                        <i class="layui-icon">&#xe639;</i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<table id="version" lay-filter="version"></table>
+<script type="text/html" id="tool">
+  <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="del">删除</button>
+</script>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/app/version.js"></script>
+</body>
+</html>

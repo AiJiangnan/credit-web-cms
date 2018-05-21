@@ -8,10 +8,10 @@ layui.use(['tree', 'form', 'laytpl'], () => {
             if (data.code === 0) {
                 reload();
                 $('#setting').hide('fast');
-                p.layer.msg(data.data, {icon: 1});
+                p.layer.msg(data.data, constants.SUCCESS);
                 return;
             }
-            p.layer.msg(data.msg, {icon: 2});
+            p.layer.msg(data.msg, constants.ERROR);
         });
         return false;
     });
@@ -27,28 +27,24 @@ layui.use(['tree', 'form', 'laytpl'], () => {
     $('#delete').click(() => {
         let id = $('#delete').attr('data-id');
         if (id) {
-            layer.confirm('你确定要' + r`删除` + '该菜单吗？', {icon: 5}, i => {
+            layer.confirm('你确定要' + r`删除` + '该菜单吗？', constants.WARM, i => {
                 $.post('/resource/' + id, data => {
                     if (data.code === 0) {
                         reload();
                         $('#setting').hide('fast');
-                        layer.msg(data.data, {icon: 1});
+                        layer.msg(data.data, constants.SUCCESS);
                         return;
                     }
-                    layer.msg('菜单删除失败！', {icon: 2});
+                    layer.msg('菜单删除失败！', constants.ERROR);
                 });
                 layer.close(i);
             });
         }
     });
 
-    $('#refresh').click(() => {
-        reload();
-    });
+    $('#refresh').click(() => reload());
 
-    $('#cancel').click(() => {
-        $('#setting').hide('fast');
-    });
+    $('#cancel').click(() => $('#setting').hide('fast'));
 
     const load = data => {
         $('#menu').html('');

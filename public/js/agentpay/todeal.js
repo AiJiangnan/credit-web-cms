@@ -7,7 +7,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'todeal',
         elem: '#todeal',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/agentpay/todeal',
         cols: [[
             {type: 'numbers', title: '序号'},
@@ -22,8 +22,8 @@ layui.use(['table', 'laydate'], () => {
             {field: 'residualAmount', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.residualAmount)},
             {field: 'reduceAmount', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
             {field: 'actualAmount', title: '实际还额金额', align: 'center', width: 140, templet: d => rmbFormat(d.actualAmount)},
-            {field: 'planState', title: '是否逾期', align: 'center', width: 100},
-            {field: 'isPartRepayment', title: '是否部分还款', align: 'center', width: 140},
+            {field: 'planState', title: '状态', align: 'center', width: 100, templet: d => getStatus(d.planState)},
+            {field: 'isPartRepayment', title: '是否部分还款', align: 'center', width: 140, templet: d => d.isPartRepayment ? '是' : '否'},
             {title: '对公还款操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -55,7 +55,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('todeal', {where: d.field});
+        t.reload('todeal', {page: {curr: 1}, where: d.field});
         return false;
     });
 

@@ -1,20 +1,8 @@
 layui.use(['table', 'laydate'], () => {
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
-    let channel = JSON.parse(sessionStorage.getItem('channel'));
-
-    laytplrender(sourceTypeTpl, 'sourceTypeView', channel);
+    laytplrender(sourceTypeTpl, 'sourceTypeView', getSession('channel'));
     f.render('select');
-
-    const getChannel = c => {
-        let name = '0';
-        channel.map((e, i) => {
-            if (e.code === c) {
-                name = e.name;
-            }
-        });
-        return name;
-    };
 
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
 
@@ -22,7 +10,7 @@ layui.use(['table', 'laydate'], () => {
         id: 'apply',
         elem: '#apply',
         height: 'full-180',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/approve/apply',
         cols: [[
             {type: 'checkbox'},
@@ -32,7 +20,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'incomeTime', title: '申请时间', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.incomeTime)},
             {field: 'registerTime', title: '入网时间', align: 'center', width: 120, templet: d => dateFormat(d.registerTime)},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
-            {field: 'applyNum', title: '申请编号', align: 'center', width: 120},
+            {field: 'applyNum', title: '申请编号', align: 'center', width: 120, templet: d => `<a target="_blank" href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}&from=1">${d.applyNum}</a>`},
             {field: 'gpsAddress', title: '定位位置', align: 'center', width: 120},
             {field: 'loanCount', title: '放款次数', align: 'center', width: 100, sort: true},
             {field: 'refuseNote', title: '机器拒绝原因', align: 'center', width: 120},
@@ -55,7 +43,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('apply', {where: d.field});
+        t.reload('apply', {page: {curr: 1}, where: d.field});
         $('#allot').parent().hide('fast');
         return false;
     });
@@ -99,10 +87,20 @@ layui.use(['table', 'laydate'], () => {
                     layer.close(i);
                 }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
     });
-})
-;
+
+    $('.morebtn').click(() => {
+        if ($('.morebtn').hasClass('in')) {
+            $('#more').hide('slow');
+            $('#more').children().children(':text').map((i, e) => $(e).val(''));
+            $('.morebtn').removeClass('in');
+            $('.morebtn').children().html('&#xe61a;');
+        } else {
+            $('#more').show('slow');
+            $('.morebtn').addClass('in');
+            $('.morebtn').children().html('&#xe619;');
+        }
+    });
+});

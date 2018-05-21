@@ -65,7 +65,7 @@
 <script src="../../../js/common/common.js"></script>
 <script>
     layui.use(['form', 'laytpl'], () => {
-        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        const [$, f, p] = [layui.jquery, layui.form, parent];
         const name = getQueryStr('name');
 
         $.get('/risk/policyName?limit=10000', d => {
@@ -77,13 +77,13 @@
         f.on('submit(submit)', d => {
             $.post('/risk/policy', d.field, data => {
                 if (data.code === 0) {
-                    p.layer.msg(data.data, {icon: 1});
+                    p.layer.msg(data.data, constants.SUCCESS);
                     p.layui.table.reload('strategy');
                 } else {
-                    p.layer.msg(data.msg, {icon: 2});
+                    p.layer.msg(data.msg, constants.ERROR);
                 }
-                p.layer.close(p.layer.getFrameIndex(w));
-            }).fail(() => layer.msg('服务器错误！'), {icon: 5});
+                closeParent();
+            }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
             return false;
         });
     });

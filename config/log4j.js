@@ -8,7 +8,7 @@ const log4jconfig = {
             alwaysIncludePattern: true
         }
     },
-    categories: {default: {appenders: ['console', 'file'], level: 'debug'}}
+    categories: {default: {appenders: ['file'], level: 'debug'}}
 };
 
 module.exports = log4jconfig;

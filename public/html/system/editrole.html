@@ -36,10 +36,6 @@
             <td><input type="text" name="description" required lay-verify="required" placeholder="请输入角色描述" class="layui-input"></td>
         </tr>
         <tr>
-            <td><label class="layui-form-label">是否可用：</label></td>
-            <td><input type="checkbox" name="enabledbox" lay-filter="enabled" lay-skin="switch" lay-text="ON|OFF"></td>
-        </tr>
-        <tr>
             <td colspan="2" style="text-align:center;">
                 <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
                 <button type="reset" class="layui-btn layui-btn-sm">重置</button>
@@ -47,25 +43,24 @@
         </tr>
     </table>
     <input type="hidden" name="id">
-    <input type="hidden" name="enabled">
 </form>
 <script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script>
     layui.use('form', () => {
-        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        const [$, f, p] = [layui.jquery, layui.form, parent.layer];
         f.on('submit(submit)', d => {
             $.post('/role', d.field, data => {
                 if (data.code === 0) {
-                    sessionStorage.setItem('role', JSON.stringify(d.field));
-                    p.layer.close(p.layer.getFrameIndex(w));
-                    p.layer.msg(data.data, {icon: 1});
+                    setSession('role', d.field);
+                    closeParent();
+                    p.msg(data.data, constants.SUCCESS);
                     return;
                 }
-                p.layer.msg(data.data, {icon: 2});
+                p.msg(data.data, constants.ERROR);
             });
             return false;
         });
-        f.on('switch(enabled)', d => $("input[name='enabled']").val(d.elem.checked));
     });
 </script>
 </body>

@@ -19,6 +19,7 @@
 <body style="padding:10px;">
 <form class="layui-form"></form>
 <script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script>
     layui.use('form', () => {
         const [$, f] = [layui.jquery, layui.form];
@@ -41,23 +42,14 @@
             actualAmount: '批贷金额'
         };
         let result = '';
-        new Promise(resolve => {
-            for (let k in cols) {
-                result += `<div class="layui-form-item">
-                        <input type="checkbox" title="${cols[k]}" value="${k}" lay-skin="primary">
+        for (let k in cols) {
+            result += `<div class="layui-form-item">
+                        <input type="checkbox" title="${cols[k]}" value="${k}" lay-skin="primary" name="choice">
                     </div>`
-            }
-            $('.layui-form').html(result);
-            resolve();
-        }).then(v => {
-            if (sessionStorage.getItem('choose')) {
-                let choice = JSON.parse(sessionStorage.getItem('choose'));
-                choice.map((e, i) => $('[value="' + e + '"]').prop('checked', true));
-                sessionStorage.removeItem('choose');
-            }
-        }).then(v => {
-            f.render();
-        });
+        }
+        $('.layui-form').html(result);
+        getSession('choose', d => d.map((e, i) => $('[value="' + e + '"]').prop('checked', true)));
+        f.render();
     });
 </script>
 </body>

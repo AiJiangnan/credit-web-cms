@@ -1,14 +1,27 @@
-layui.use(['element', 'table'], () => {
-    const [$, e, t] = [layui.jquery, layui.element, layui.table];
-
-    const applyId = getQueryStr('applyId');
-    const applyNo = getQueryStr('applyNo');
-    const userId = getQueryStr('userId');
-    const from = getQueryStr('from');
+layui.use(['element', 'table', 'form'], () => {
+    const [$, e, t, f] = [layui.jquery, layui.element, layui.table, layui.form];
+    const [applyId, applyNo, userId, form] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
 
     let partId;
 
     laytplrender(setTpl, 'setView', from);
+
+    $.get('/info/phonelog/' + userId, d => {
+        if (d.code === 0) {
+            $('#rate').html(d.data.proportion + '%');
+            laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
+        }
+    });
+
+    f.on('submit(submit)', d => {
+        $.get('/info/phonelog/' + userId + '?' + $('.layui-form').serialize(), d => {
+            if (d.code === 0) {
+                $('#rate').html(rmbFormat(d.data.proportion * 100) + '%');
+                laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
+            }
+        });
+        return false;
+    });
 
     t.render({
         id: 'partlog',
@@ -29,6 +42,7 @@ layui.use(['element', 'table'], () => {
             r.data.map((e, i) => {
                 if (e.status === 'init') {
                     partId = e.id;
+                    $('#logo').attr('class', 'layui-badge-dot');
                     return;
                 }
             });
@@ -130,23 +144,23 @@ layui.use(['element', 'table'], () => {
         if (!d.show) return;
         const id = d.title.attr('id');
         if (id === 'c1') {
-
+            $.get('/info/user/' + userId, d => {
+                if (d.code === 0) {
+                    check(d.data);
+                    laytplrender(userInfoTpl, 'userInfoView', d.data);
+                }
+            });
         }
         if (id === 'c2') {
             t.render({
                 id: 'reducelog',
                 elem: '#reducelog',
-                // url: '/repayment/part/' + applyId,
+                url: '/info/reduce/' + applyId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
-                    {field: '', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
-                    {field: '', title: '应还款总金额', align: 'center', width: 120, templet: d => rmbFormat(d.currentPlanTotalAmount)},
-                    {field: '', title: '已还款金额', align: 'center', width: 110, templet: d => rmbFormat(d.currentActualTotalAmount)},
-                    {field: '', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
-                    {field: '', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.currentPlanTotalAmount - d.currentActualTotalAmount - d.reduceAmount)},
-                    {field: '', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
-                    {field: '', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
-                    {field: '', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
+                    {field: 'reduceOverdueFee', title: '减免逾期费', align: 'center', width: 120, templet: d => rmbFormat(d.reduceOverdueFee)},
+                    {field: 'applyTime', title: '申请时间', align: 'center', width: 120, templet: d => dateFormat(d.applyTime)},
+                    {field: 'state', title: '审批结果', align: 'center', width: 120, templet: d => getStatus(d.state)}
                 ]]
             });
         }
@@ -157,17 +171,18 @@ layui.use(['element', 'table'], () => {
             t.render({
                 id: 'loanlog',
                 elem: '#loanlog',
-                // url: '/repayment/part/' + applyId,
+                url: '/info/loan/' + userId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
-                    {field: '', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
-                    {field: '', title: '应还款总金额', align: 'center', width: 120, templet: d => rmbFormat(d.currentPlanTotalAmount)},
-                    {field: '', title: '已还款金额', align: 'center', width: 110, templet: d => rmbFormat(d.currentActualTotalAmount)},
-                    {field: '', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
-                    {field: '', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.currentPlanTotalAmount - d.currentActualTotalAmount - d.reduceAmount)},
-                    {field: '', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
-                    {field: '', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
-                    {field: '', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
+                    {field: 'applyNo', title: '申请编号', align: 'center', width: 120},
+                    {field: '', title: '借款日期', align: 'center', width: 120, templet: d => getLoanTimeFromApplyNo(d.applyNo)},
+                    {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 110, templet: d => dateFormat(d.repaymentPlanDate)},
+                    {field: 'updateTime', title: '实还时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.updateTime)},
+                    {field: 'overdueDays', title: '逾期天数', align: 'center', width: 100},
+                    {field: 'planTotalAmount', title: '应还金额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)},
+                    {field: 'reduceAmount', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
+                    {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 100, templet: d => rmbFormat(d.actualTotalAmount)},
+                    {field: 'payOrgType', title: '还款类型', align: 'center', width: 100, templet: d => getStatus(d.payOrgType)}
                 ]]
             });
         }
@@ -175,17 +190,19 @@ layui.use(['element', 'table'], () => {
             t.render({
                 id: 'repayfaillog',
                 elem: '#repayfaillog',
-                // url: '/repayment/part/' + applyId,
+                url: '/info/repayfail/' + applyId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
-                    {field: '', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
-                    {field: '', title: '应还款总金额', align: 'center', width: 120, templet: d => rmbFormat(d.currentPlanTotalAmount)},
-                    {field: '', title: '已还款金额', align: 'center', width: 110, templet: d => rmbFormat(d.currentActualTotalAmount)},
-                    {field: '', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
-                    {field: '', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.currentPlanTotalAmount - d.currentActualTotalAmount - d.reduceAmount)},
-                    {field: '', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
-                    {field: '', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
-                    {field: '', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
+                    {field: 'createTime', title: '还款时间', align: 'center', width: 120, templet: d => dateTimeFormat(d.createTime)},
+                    {field: 'accountNum', title: '还款卡号', align: 'center', width: 120},
+                    {field: 'collectUser', title: '催收人员', align: 'center', width: 110},
+                    {field: 'capital', title: '实还本金', align: 'center', width: 120, templet: d => rmbFormat(d.capital)},
+                    {field: 'interest', title: '实还利息', align: 'center', width: 120, templet: d => rmbFormat(d.interest)},
+                    {field: 'totalInterestPenalty', title: '实还逾期费', align: 'center', width: 120, templet: d => rmbFormat(d.totalInterestPenalty)},
+                    {field: 'reduceAmount', title: '减免金额', align: 'center', width: 120, templet: d => rmbFormat(d.reduceAmount)},
+                    {field: 'actualTotalAmount', title: '实还总额', align: 'center', width: 120, templet: d => rmbFormat(d.actualTotalAmount)},
+                    {field: 'payOrgType', title: '还款类型', align: 'center', width: 120, templet: d => getStatus(d.payOrgType)},
+                    {field: 'remark', title: '失败原因', align: 'center', width: 100}
                 ]]
             });
         }
@@ -193,17 +210,16 @@ layui.use(['element', 'table'], () => {
             t.render({
                 id: 'overduelog',
                 elem: '#overduelog',
-                // url: '/repayment/part/' + applyId,
+                url: '/info/overdue/' + userId,
                 cols: [[
                     {type: 'numbers', title: '序号'},
-                    {field: '', title: '本次还款金额', align: 'center', width: 120, templet: d => rmbFormat(d.partAmount)},
-                    {field: '', title: '应还款总金额', align: 'center', width: 120, templet: d => rmbFormat(d.currentPlanTotalAmount)},
-                    {field: '', title: '已还款金额', align: 'center', width: 110, templet: d => rmbFormat(d.currentActualTotalAmount)},
-                    {field: '', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceAmount)},
-                    {field: '', title: '剩余应还款金额', align: 'center', width: 140, templet: d => rmbFormat(d.currentPlanTotalAmount - d.currentActualTotalAmount - d.reduceAmount)},
-                    {field: '', title: '申请时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.createTime)},
-                    {field: '', title: '还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.repaymentTime)},
-                    {field: '', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.status)}
+                    {field: '', title: '当前时间', align: 'center', width: 120, templet: d => dateFormat('now')},
+                    {field: 'repaymentPlanDate', title: '最后还款日', align: 'center', width: 120, templet: d => dateFormat(d.repaymentPlanDate)},
+                    {field: 'overdueDays', title: '违约天数', align: 'center', width: 100},
+                    {field: 'interest', title: '应还利息', align: 'center', width: 100, templet: d => rmbFormat(d.interest)},
+                    {field: 'totalInterestPenalty', title: '逾期费', align: 'center', width: 100, templet: d => rmbFormat(d.totalInterestPenalty)},
+                    {field: 'planTotalAmount', title: '应还总额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)},
+                    {field: 'accountNum', title: '银行卡号', align: 'center', width: 160}
                 ]]
             });
         }

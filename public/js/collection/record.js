@@ -15,12 +15,13 @@ layui.use(['table', 'laydate'], () => {
         id: 'record',
         elem: '#record',
         height: 'full-120',
-        page: true,
+        page: constants.LAYUIPAGE,
         url: '/collect/record',
         cols: [[
             {type: 'numbers', title: '序号'},
             {field: 'updateTime', title: '实际还款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.updateTime)},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
+            {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'applyNo', title: '申请编号', align: 'center', width: 100},
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100},
             {field: 'payTime', title: '放款时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.payTime)},
@@ -45,7 +46,7 @@ layui.use(['table', 'laydate'], () => {
         if (e === 'collectinfo') {
             alertinfo(`<table class="layui-table" lay-skin="nob" style="margin:0;">
                     <tr><td style="width:5em;"><b>合同金额：</b></td><td>${d.contractAmount}</td></tr>
-                    <tr><td><b>期数：</b></td><td>${getProductType(d.totalPeriod)}</td></tr>
+                    <tr><td><b>期数：</b></td><td>${getProductType(d.productType)}</td></tr>
                     <tr><td><b>订单号：</b></td><td>${d.orderNo}</td></tr>
                     <tr><td><b>逾期费：</b></td><td>${rmbFormat(d.totalInterestPenalty)}</td></tr>
                     <tr><td><b>是否减免：</b></td><td>${d.reduceAmount > 0 ? '是' : '否'}</td></tr>
@@ -56,7 +57,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     f.on('submit(submit)', d => {
-        t.reload('record', {where: d.field});
+        t.reload('record', {page: {curr: 1}, where: d.field});
         return false;
     });
 
