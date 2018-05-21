@@ -31,6 +31,7 @@ app.post(/upload/, upload.single('file'), (req, res) => {
     let obj = {};
     ({originalname: obj.fileName, mimetype: obj.mimeType, size: obj.size} = req.file);
     obj.base64File = req.file.buffer.toString('base64');
+    obj.suffix = obj.fileName.substring(obj.fileName.lastIndexOf('.'));
     request.post({url: config.API_BASE_URL + req.originalUrl, form: obj, headers: {Cookie: req.session.sid}}, (err, resp, body) => {
         if (err) {
             console.log(err);
