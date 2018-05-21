@@ -16,7 +16,7 @@ layui.use(['element', 'table', 'form'], () => {
     f.on('submit(submit)', d => {
         $.get('/info/phonelog/' + userId + '?' + $('.layui-form').serialize(), d => {
             if (d.code === 0) {
-                $('#rate').html(d.data.proportion + '%');
+                $('#rate').html(rmbFormat(d.data.proportion * 100) + '%');
                 laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
             }
         });
