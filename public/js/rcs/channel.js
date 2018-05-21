@@ -20,7 +20,7 @@ layui.use('table', () => {
         let [e, d] = [o.event, o.data];
         if (e === 'onoff') {
             let s = d.closed;
-            const m = '<span style="color:red;">' + (!s ? '停用' : '启用') + '</span>';
+            const m = r(!s ? '停用' : '启用');
             layer.confirm(`你确定要${m}该渠道！`, constants.WARM, i => {
                 $.post('/risk/channel', {id: d.id, closed: !s}, data => {
                     if (data.code === 0) {

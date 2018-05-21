@@ -88,9 +88,7 @@ layui.use(['table', 'laydate'], () => {
                     layer.close(i);
                 }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             },
-            btn2: (i, l) => {
-                layer.close(i);
-            }
+            btn2: (i, l) => layer.close(i)
         });
     });
 });

@@ -49,9 +49,7 @@ layui.use('table', () => {
                         layer.close(i);
                     }).fail(() => layer.msg('服务器错误！', constants.FAIL));
                 },
-                btn2: (i, l) => {
-                    layer.close(i);
-                }
+                btn2: (i, l) => layer.close(i)
             });
         }
         if (e === 'edit') {

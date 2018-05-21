@@ -58,9 +58,9 @@ layui.use(['table', 'laydate'], () => {
                         <tr><td><b>还款状态：</b></td><td>${getStatus(repay.state)}</td></tr>
                     </table>`);
                 } else {
-                    parent.layer.msg('没有该合同还款计划信息！', {icon: 5});
+                    parent.layer.msg('没有该合同还款计划信息！', constants.FAIL);
                 }
-            }).fail(() => layer.msg('服务器错误！', {icon: 5}));
+            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
 
         }
     });

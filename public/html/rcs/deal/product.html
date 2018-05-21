@@ -75,7 +75,7 @@
                 } else {
                     p.layer.msg(data.msg, constants.ERROR);
                 }
-                p.layer.close(p.layer.getFrameIndex(w));
+                closeParent();
             }).fail(() => layer.msg('服务器错误！'), constants.FAIL);
             return false;
         });
