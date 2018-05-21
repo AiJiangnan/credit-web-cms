@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            width: 70px;
+            padding: 0 0 0 15px;
+        }
+
+        .layui-form-switch, .layui-form-radio {
+            margin: 0;
+        }
+
+        td {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">使用节点：</label></td>
+            <td>
+                <select name="useUodePoints" lay-filter="point">
+                    <option value=1>放款时</option>
+                    <option value=2>还款时</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">类型：</label></td>
+            <td>
+                <select name="type">
+                    <option value="-">减免券</option>
+                    <option value="*">折扣券</option>
+                    <option value="0">免息券</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">优惠券名称：</label></td>
+            <td><input type="text" name="name" required lay-verify="required" placeholder="请输入优惠券名称" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">优惠券金额：</label></td>
+            <td><input type="text" name="price" required lay-verify="requiredre" placeholder="请输入优惠券金额" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">有效时长（天）：</label></td>
+            <td><input type="text" name="validity" required lay-verify="required" placeholder="请输入有效时长" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">状态：</label></td>
+            <td>
+                <select name="status">
+                    <option value="on">开启</option>
+                    <option value="off">关闭</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">作用位置：</label></td>
+            <td>
+                <select name="interactionSite">
+                    <option value="service_fee">服务费</option>
+                    <option value="letter_fee">信审费</option>
+                    <option value="interest">利息</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="id">
+</form>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script>
+    layui.use('form', () => {
+        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        f.on('submit(submit)', d => {
+            $.post('/coupon', d.field, data => {
+                if (data.code === 0) {
+                    sessionStorage.setItem('coupon', JSON.stringify(d.field));
+                    p.layui.table.reload('info');
+                    p.layer.close(p.layer.getFrameIndex(w));
+                    p.layer.msg(data.data, {icon: 1});
+                    return;
+                }
+                p.layer.msg(data.data, {icon: 2});
+            });
+            return false;
+        });
+
+        f.on('select(point)', d => {
+            if (d.value === '1') {
+                $('select[name="type"]').html('<option value="-">减免券</option>\n' +
+                    '                    <option value="*">折扣券</option>');
+                $('select[name="interactionSite"]').html('<option value="service_fee" selected>服务费</option>\n' +
+                    '                    <option value="letter_fee">信审费</option>');
+            }else if (d.value === '2'||upoint==='2'){
+                $('select[name="type"]').html('<option value="-">减免券</option>\n' +
+                    '                    <option value="*">折扣券</option>\n' +
+                    '                    <option value="0">免息券</option>');
+                $('select[name="interactionSite"]').html('<option value="interest">利息</option>');
+            }
+            f.render('select');
+        });
+    });
+</script>
+</body>
+</html>

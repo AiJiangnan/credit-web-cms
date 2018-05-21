@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+        }
+
+        .layui-form-label {
+            width: 70px;
+            padding: 0 0 0 15px;
+        }
+
+        .layui-form-switch, .layui-form-radio {
+            margin: 0;
+        }
+
+        td {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<form class="layui-form">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">信用等级：</label></td>
+            <td>
+                <select name="applyCreditScoreRank">
+                    <option value="">请选择信用等级</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">申请次数：</label></td>
+            <td>
+                <input type="text" name="applyCountS" class="layui-input" style="width: 50px;float: left"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <div style="float: left;padding-left: 10px;padding-right: 10px;font-size: large">~</div>
+                <input type="text" name="applyCountB" class="layui-input" style="width: 50px"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">拒贷次数：</label></td>
+            <td>
+                <input type="text" name="rejectLoanCountS" class="layui-input" style="width: 50px;float: left"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <div style="float: left;padding-left: 10px;padding-right: 10px;font-size: large">~</div>
+                <input type="text" name="rejectLoanCountB" class="layui-input" style="width: 50px"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">借款次数：</label></td>
+            <td>
+                <input type="text" name="loanCountS" class="layui-input" style="width: 50px;float: left"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <div style="float: left;padding-left: 10px;padding-right: 10px;font-size: large">~</div>
+                <input type="text" name="loanCountB" class="layui-input" style="width: 50px"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">任务名称：</label></td>
+            <td><input type="text" name="name" placeholder="请输入定时任务名称" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">任务时间：</label></td>
+            <td><input type="text" name="taskTime" required lay-verify="required" class="layui-input" id="date1"
+                       placeholder="请选择任务时间"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">年：</label></td>
+            <td><input type="text" name="year" placeholder="请输入定时任务名称" class="layui-input"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">月：</label></td>
+            <td><input type="text" name="month" placeholder="请输入定时任务名称" class="layui-input"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">周：</label></td>
+            <td><input type="text" name="week" placeholder="请输入定时任务名称" class="layui-input"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">日：</label></td>
+            <td><input type="text" name="day" placeholder="请输入定时任务名称" class="layui-input"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">时间：</label></td>
+            <td><input type="text" name="hour" required lay-verify="required" placeholder="请输入定时任务名称"
+                       class="layui-input" onkeypress="return event.keyCode>=48&&event.keyCode<=57"
+                       ng-pattern="/[^a-zA-Z]/"></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">优惠券：</label></td>
+            <td id="view"></td>
+            <script type="text/html" id="tpl">
+                <select name="couponId">
+                    <option value="">请选择优惠券</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.id }}">{{ s.name }}</option>
+                    {{# }); }}
+                </select>
+            </script>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">状态：</label></td>
+            <td>
+                <select name="status">
+                    <option value="">请选择状态</option>
+                    <option value="on">开启</option>
+                    <option value="off">关闭</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">发送</button>
+                <button type="reset" class="layui-btn layui-btn-sm">重置</button>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="id">
+</form>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/activity/task.js"></script>
+<script>
+    layui.use(['form', 'laytpl'], () => {
+        const [$, f, p, w] = [layui.jquery, layui.form, parent, window.name];
+        const id = getQueryStr('id');
+        const couponid = getQueryStr('couponid');
+
+        $.get('/activity/info?limit=10000', d => {
+            laytplrender(tpl, 'view', d.data);
+            $('option[value="' + couponid + '"]').prop('selected', 'selected');
+            f.render('select');
+        });
+
+        f.on('submit(submit)', d => {
+            $.post('/coupon', d.field, data => {
+                if (data.code === 0) {
+                    sessionStorage.setItem('coupon', JSON.stringify(d.field));
+                    p.layui.table.reload('info');
+                    p.layer.close(p.layer.getFrameIndex(w));
+                    p.layer.msg(data.data, {icon: 1});
+                    return;
+                }
+                p.layer.msg(data.data, {icon: 2});
+            });
+            return false;
+        });
+
+        $.get('/activity/' + id, d => {
+            $('[name="taskTime"]').val(d.taskTime);
+            $('[name="applyCountS"]').val(d.applyCountS);
+            $('[name="applyCountB"]').val(d.applyCountB);
+            $('[name="rejectLoanCountS"]').val(d.rejectLoanCountS);
+            $('[name="rejectLoanCountB"]').val(d.rejectLoanCountB);
+            $('[name="loanCountS"]').val(d.loanCountS);
+            $('[name="loanCountB"]').val(d.loanCountB);
+            $('option[value="' + d.applyCreditScoreRank + '"]').prop('selected', 'selected');
+            f.render();
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发送记录</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+            margin: 5px 0;
+        }
+
+        .layui-input-inline {
+            margin: 0;
+            padding: 0;
+        }
+
+        .layui-form-label {
+            padding: 0 0 0 15px;
+        }
+    </style>
+</head>
+<body style="padding-top:10px;">
+<form class="layui-form" style="padding-top:10px;">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">批次号：</label></td>
+            <td><input type="text" name="batchId" placeholder="请输入批次号" class="layui-input"></td>
+            <td><label class="layui-form-label">操作人：</label></td>
+            <td><input type="text" name="operatorName" placeholder="请输入操作人" class="layui-input"></td>
+            <td><label class="layui-form-label">发送时间：</label></td>
+            <td><input type="text" name="createTime" class="layui-input" id="date1" placeholder="请选择发送时间"></td>
+            <td></td>
+            <td colspan="2" style="padding-left:20px;">
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
+                    <i class="layui-icon">&#xe639;</i>
+                </button>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+<table id="send" lay-filter="send"></table>
+<script type="text/html" id="tool">
+    <button class="layui-btn layui-btn-sm" lay-event="revocation">撤回该批次</button>
+</script>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/activity/sendrecord.js"></script>
+</body>
+</html>
