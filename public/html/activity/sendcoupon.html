@@ -117,15 +117,20 @@
         });
 
         f.on('submit(submit)', d => {
-            $.post('/activity', d.field, data => {
-                if (data.code === 0) {
-                    sessionStorage.setItem('activity', JSON.stringify(d.field));
-                    p.layui.table.reload('task');
-                    p.layer.close(p.layer.getFrameIndex(w));
-                    p.layer.msg(data.data, {icon: 1});
-                    return;
+            $.get('/activity/select',d.field,da =>{
+                if (confirm("当前符合条件人数："+da.data+"人")){
+                    $.post('/activity', d.field, data => {
+                        if (data.code === 0) {
+                            sessionStorage.setItem('activity', JSON.stringify(d.field));
+                            p.layui.table.reload('task');
+                            p.layer.close(p.layer.getFrameIndex(w));
+                            p.layer.msg(data.data, {icon: 1});
+                            return;
+                        }
+                        p.layer.msg(data.data, {icon: 2});
+                    });
+                    return false;
                 }
-                p.layer.msg(data.data, {icon: 2});
             });
             return false;
         });
