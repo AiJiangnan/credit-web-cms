@@ -45,11 +45,11 @@
         </tr>
         <tr>
          <td><label class="layui-form-label">有效期：</label></td>
-            <td><input type="text" name="start" class="layui-input" id="date1" placeholder="请选择应还款日期"></td>
+            <td><input type="text" name="start" class="layui-input" id="date1" required lay-verify="required" placeholder="请选择应还款日期"></td>
          </tr>
           <tr>
          <td><label class="layui-form-label">有效期：</label></td>
-            <td><input type="text" name="end" class="layui-input" id="date2" placeholder="请选择应还款日期"></td>
+            <td><input type="text" name="end" class="layui-input" id="date2"  required lay-verify="required" placeholder="请选择应还款日期"></td>
          </tr>
          <tr>
             <td><label class="layui-form-label">排序：</label></td>
@@ -100,23 +100,23 @@
 <script src="../../js/common/common.js"></script>
 <script>
     layui.use(['form', 'laydate','upload'], () => {
-    	  const [$, f, p, w] = [layui.jquery, layui.form, parent];
+    	  const [$, f, p] = [layui.jquery, layui.form,parent.layer];
 		layui.laydate.render({elem: '#date1' ,type: 'datetime'});
 		layui.laydate.render({elem: '#date2' ,type: 'datetime'});
         f.on('submit(submit)', d => {
         	if(!$("input[name='imgLink']").val()){
-        		 p.layer.msg("轮播图不为空", {icon: 2});
+        		 p.msg("轮播图不为空", {icon: 2});
         		 return false;
         	}
         	
             $.post('/app/banner/edit', d.field, data => {
             	
                 if (data.code === 0) {
-                    p.layer.close(p.layer.getFrameIndex(w));
-                    p.layer.msg(data.data, {icon: 1});
+                	  setSession('banner', d.field);
+                      closeParent();
+                      p.msg(data.data, constants.SUCCESS);
                     return;
                 }
-                p.layer.msg(data.data, {icon: 2});
             });
             return false;
         });
@@ -129,12 +129,16 @@
           elem: '#imgLinkBtn' //绑定元素
             , url: '/app/upload' //上传接口
           ,field:'file'
+        	  ,before: function(obj){
+     		     obj.preview(function(index, file, result){
+     		    	 $("#imgLinkShow").attr("src",result);
+     		      
+           })}
        	    ,done: function(res){ 
        	    	console.log(JSON.stringify(res))
        	     if (res.code == 0) {
-       	    	 $("#imgLinkShow").attr("src",res.src);
-       	    	 $("input[name='imgLink']").val(res.src);
-       	         layer.msg("上传成功"); 
+       	    	/*  $("#imgLinkShow").attr("src",res.data); */
+       	    	 $("input[name='imgLink']").val(res.data);
        	     }else{
        	    	 layer.msg("上传失败"); 
        	     }
@@ -150,12 +154,16 @@
           elem: '#shareIconBtn' //绑定元素
             , url: '/app/upload' //上传接口
         	  ,field:'file'
+        		  ,before: function(obj){
+         		     obj.preview(function(index, file, result){
+         		    	 $("#shareIconShow").attr("src",result);
+         		      
+               })}
        	    ,done: function(res){
                 console.log(JSON.stringify(res));
        	    	if (res.code == 0) {
-          	    	 $("#shareIconShow").attr("src",res.src);
-          	    	 $("input[name='shareIcon']").val(res.src);
-          	         layer.msg("上传成功"); 
+          	    	/*  $("#shareIconShow").attr("src",res.data); */
+          	    	 $("input[name='shareIcon']").val(res.data);
           	     }else{
           	    	 layer.msg("上传失败"); 
           	     }
