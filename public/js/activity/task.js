@@ -132,6 +132,7 @@ layui.use(['table', 'laydate'], () => {
                         f.find("input[name='" + k + "']").val(d[k]);
                     }
                     f.find("option[value='" + d.status + "']").prop('selected', true);
+                    f.render();
                 },
                 end: () => {
                     if (sessionStorage.getItem('coupon')) {
