@@ -54,6 +54,21 @@ layui.use(['table', 'laydate'], () => {
         }
     };
 
+    /**
+     * 获取定时任务状态
+     * @param str
+     * @returns {string}
+     */
+    const getTaskStatus = str => {
+        if (str == 'on') {
+            return '开启';
+        } else if (str == 'off') {
+            return '关闭';
+        } else {
+            return r`数据错误`;
+        }
+    };
+
     t.render({
         id: 'task',
         elem: '#task',
@@ -68,7 +83,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'startTime', title: '开始时间', align: 'center', width: 110, sort: true,templet: d => dateFormat(d.startTime)},
             {field: 'endTime', title: '结束时间', align: 'center', width: 110, sort: true,templet: d => dateFormat(d.endTime)},
             {field: 'taskTime', title: '发送时间', align: 'center', width: 260,templet: d => getTaskTime(d.year,d.month,d.week,d.day,d.hour)},
-            {field: 'status', title: '状态', align: 'center', width: 80, sort: true},
+            {field: 'status', title: '状态', align: 'center', width: 80, sort: true,templet: d => getTaskStatus(d.status)},
             {field: 'createTime', title: '创建时间', align: 'center', width: 110, sort: true,templet: d => dateFormat(d.createTime)},
             {field: 'updateTime', title: '修改时间', align: 'center', width: 110, sort: true,templet: d => dateFormat(d.updateTime)},
             {title: '操作', width: 200, align: 'center', toolbar: '#tool'}
