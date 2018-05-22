@@ -1,6 +1,6 @@
 layui.use(['element', 'table', 'form'], () => {
     const [$, e, t, f] = [layui.jquery, layui.element, layui.table, layui.form];
-    const [applyId, applyNo, userId, form] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
+    const [applyId, applyNo, userId, from] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
 
     let partId;
 
