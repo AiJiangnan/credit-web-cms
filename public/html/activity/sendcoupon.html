@@ -121,8 +121,8 @@
                 if (confirm("当前符合条件人数："+da.data+"人")){
                     $.post('/activity', d.field, data => {
                         if (data.code === 0) {
-                            sessionStorage.setItem('activity', JSON.stringify(d.field));
-                            p.layui.table.reload('task');
+                            sessionStorage.setItem('sendcoupon', JSON.stringify(d.field));
+                            p.layui.table.reload('info');
                             p.layer.close(p.layer.getFrameIndex(w));
                             p.layer.msg(data.data, {icon: 1});
                             return;
