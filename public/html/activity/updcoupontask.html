@@ -82,37 +82,38 @@
                        placeholder="请选择任务时间"></td>
         </tr>
         <tr>
+            <td colspan="3" style="padding-left: 16px">定时任务定时器配置<span style="color: red">（时间必填）</span></td>
+        </tr>
+        <tr>
             <td><label class="layui-form-label">年：</label></td>
-            <td><input type="text" name="year" placeholder="请输入定时任务名称" class="layui-input"
-                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><input type="text" name="year" placeholder="请输入年" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><div style="color: red;float: left">（填入年份，例：2018）</div></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">月：</label></td>
-            <td><input type="text" name="month" placeholder="请输入定时任务名称" class="layui-input"
-                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><input type="text" name="month" placeholder="请输入月" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><div style="color: red;float: left">（填入月份，例：7）</div></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">周：</label></td>
-            <td><input type="text" name="week" placeholder="请输入定时任务名称" class="layui-input"
-                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><input type="text" name="week" id="week" placeholder="请输入周" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><div style="color: red;float: left">（填入周几，例：1即周一。周和日二选一）</div></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">日：</label></td>
-            <td><input type="text" name="day" placeholder="请输入定时任务名称" class="layui-input"
-                       onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            <td><input type="text" name="day" id="day" placeholder="请输入日" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td></td>
+            <td><div style="color: red;float: left">（填入日期，例：15。周和日二选一）</div></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">时间：</label></td>
-            <td><input type="text" name="hour" required lay-verify="required" placeholder="请输入定时任务名称"
-                       class="layui-input" onkeypress="return event.keyCode>=48&&event.keyCode<=57"
-                       ng-pattern="/[^a-zA-Z]/"></td>
+            <td><input type="text" name="hour" required lay-verify="required" placeholder="请输入时间" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></td>
+            </td><td><div style="color: red;float: left">（填入小时，例：18即18:00。24小时制）</div></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">优惠券：</label></td>
             <td id="view"></td>
             <script type="text/html" id="tpl">
                 <select name="couponId">
-                    <option value="">请选择优惠券</option>
                     {{# layui.each(d,(i,s)=>{ }}
                     <option value="{{ s.id }}">{{ s.name }}</option>
                     {{# }); }}
@@ -130,8 +131,8 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align:center;">
-                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">发送</button>
+            <td colspan="3" style="text-align:center;">
+                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">修改</button>
                 <button type="reset" class="layui-btn layui-btn-sm">重置</button>
             </td>
         </tr>
@@ -154,10 +155,10 @@
         });
 
         f.on('submit(submit)', d => {
-            $.post('/coupon', d.field, data => {
+            $.post('/task', d.field, data => {
                 if (data.code === 0) {
-                    sessionStorage.setItem('coupon', JSON.stringify(d.field));
-                    p.layui.table.reload('info');
+                    sessionStorage.setItem('task', JSON.stringify(d.field));
+                    p.layui.table.reload('task');
                     p.layer.close(p.layer.getFrameIndex(w));
                     p.layer.msg(data.data, {icon: 1});
                     return;
