@@ -15,6 +15,7 @@ layui.use('table', () => {
             {field: 'startTime', title: '起始时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.startTime)},
             {field: 'endTime', title: '终止时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.endTime)},
             {field: 'status', title: '状态', align: 'center', width: 130, templet: '#status'},
+            {field: 'applyCreditScore', title: '状d态', align: 'center', width: 130},
             {title: '操作', width: 160, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -27,11 +28,13 @@ layui.use('table', () => {
                 title: '修改轮播图',
                 type: 2,
                 content: ['../app/editBanner.html', 'no'],
-                area: ['520px', '620px'],
+                area: ['520px', '640px'],
                 success: (l, i) => {
                     let f = layer.getChildFrame('form', i);
                     for (let k in d) {
-                        if (k === 'status') continue;
+                    	console.log(k+"："+d[k])
+                    	if (k === 'status') continue;
+                    	if (k === 'applyCreditScore'&&d[k] == '0') continue;
                         if (k === 'startTime' || k === 'endTime') {
                             continue;
                         }
@@ -39,12 +42,13 @@ layui.use('table', () => {
 
                     }
                     f.find("input[name='status'][value=" + d.status + "]").prop('checked', true);
+                    f.find("option[value='" + d.applyCreditScoreRank + "']").prop('selected', true);
                     f.find("#imgLinkShow").attr("src", d.imgLink);
                     f.find("#shareIconShow").attr("src", d.shareIcon);
                     f.find("input[name='start']").val(dateTimeFormat(d.startTime));
                     f.find("input[name='end']").val(dateTimeFormat(d.endTime));
                 },
-                end: () => getSession('banner', d => o.update(d))
+                end: () => getSession('editBanner', d => o.update(d))
             });
         }
 
@@ -57,6 +61,7 @@ layui.use('table', () => {
             type: 2,
             content: ['../app/editBanner.html', 'no'],
             area: ['520px', '620px'],
+            end: () => t.reload('banner', {where: null})
         });
     });
 
