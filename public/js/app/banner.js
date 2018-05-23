@@ -15,7 +15,6 @@ layui.use('table', () => {
             {field: 'startTime', title: '起始时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.startTime)},
             {field: 'endTime', title: '终止时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.endTime)},
             {field: 'status', title: '状态', align: 'center', width: 130, templet: '#status'},
-            {field: 'applyCreditScore', title: '状d态', align: 'center', width: 130},
             {title: '操作', width: 160, align: 'center', toolbar: '#tool'}
         ]]
     });
