@@ -2,6 +2,10 @@
 const r = str => `<span style="color:red;">${str}</span>`;
 const g = str => `<span style="color:green;">${str}</span>`;
 const b = str => str.replace(/([\/|\:|\;])/g, '<br>');
+const b1 = str => str.replace(/([\;])/g, '<br>');
+const b2 = str => str.replace(/\(\$\.\*\)/g, '<br>');
+
+
 const constants = {
     // 表单输入日期范围格式
     DATE_RANGE: 'yyyyMMdd',
@@ -71,6 +75,11 @@ const constants = {
     }
 };
 
+const checkStr = str => {
+    return str ? str : '-';
+};
+
+
 /**
  * 正则
  * @type {{AMOUNT: RegExp}}
@@ -118,7 +127,17 @@ const laytplrender = (tpl, viewId, data) => layui.use('laytpl', () => {
  * 父级页面弹窗，用于显示详情
  * @param info
  */
-const alertinfo = info => parent.layer.open({type: 0, title: false, btn: false, content: info, shade: 0.1, shadeClose: true, anim: 5, isOutAnim: false, resize: false});
+const alertinfo = info => parent.layer.open({
+    type: 0,
+    title: false,
+    btn: false,
+    content: info,
+    shade: 0.1,
+    shadeClose: true,
+    anim: 5,
+    isOutAnim: false,
+    resize: false
+});
 
 /**
  * 关闭父弹窗
