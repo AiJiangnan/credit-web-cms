@@ -45,11 +45,11 @@
         </tr>
         <tr>
          <td><label class="layui-form-label">有效期：</label></td>
-            <td><input type="text" name="start" class="layui-input" id="date1" placeholder="请选择应还款日期"></td>
+            <td><input type="text" name="start" class="layui-input" id="date1" required lay-verify="required" placeholder="请选择应还款日期"></td>
          </tr>
           <tr>
          <td><label class="layui-form-label">有效期：</label></td>
-            <td><input type="text" name="end" class="layui-input" id="date2" placeholder="请选择应还款日期"></td>
+            <td><input type="text" name="end" class="layui-input" id="date2"  required lay-verify="required" placeholder="请选择应还款日期"></td>
          </tr>
          <tr>
             <td><label class="layui-form-label">排序：</label></td>
@@ -62,6 +62,35 @@
                 <input type="radio" name='status' value="1"  title="启用">
             </td>
         </tr>
+        
+        
+         <tr>
+            <td><label class="layui-form-label"><h4>限制条件<h4></label></td>
+           <td><div style="color: red;float: left">（以下两项录入后只有符合条件的用户才展示）</div></td>
+        </tr>
+        
+         <tr>
+            <td><label class="layui-form-label">信用等级：</label></td>
+            <td>
+                <select name="applyCreditScoreRank">
+                    <option value="">请选择信用等级</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">评分>=：</label></td>
+            <td>
+                <input type="text" name="applyCreditScore" class="layui-input" style="width: 50px;float: left" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ><div style="float: left;padding-left: 10px;padding-right: 10px;font-size: large">
+            </td>
+        </tr>
+        
+        
         <tr>
          <td><button type="button" class="layui-btn" id="imgLinkBtn">轮播图</button></td>
          <td> 
@@ -100,23 +129,26 @@
 <script src="../../js/common/common.js"></script>
 <script>
     layui.use(['form', 'laydate','upload'], () => {
-    	  const [$, f, p, w] = [layui.jquery, layui.form, parent];
+    	  const [$, f, p] = [layui.jquery, layui.form,parent.layer];
 		layui.laydate.render({elem: '#date1' ,type: 'datetime'});
 		layui.laydate.render({elem: '#date2' ,type: 'datetime'});
         f.on('submit(submit)', d => {
         	if(!$("input[name='imgLink']").val()){
-        		 p.layer.msg("轮播图不为空", {icon: 2});
+        		 p.msg("轮播图不能为空", {icon: 2});
         		 return false;
         	}
         	
             $.post('/app/banner/edit', d.field, data => {
-            	
                 if (data.code === 0) {
-                    p.layer.close(p.layer.getFrameIndex(w));
-                    p.layer.msg(data.data, {icon: 1});
+                	 d.field.imgLink=data.data.imgLink;
+                	 d.field.shareIcon=data.data.shareIcon;
+                	  setSession('editBanner',d.field);
+                	  debugger;
+                	  closeParent();
+                	  p.msg("轮播图修改成功", constants.SUCCESS);
                     return;
                 }
-                p.layer.msg(data.data, {icon: 2});
+           	 p.msg(data.data, constants.ERROR);
             });
             return false;
         });
@@ -129,12 +161,16 @@
           elem: '#imgLinkBtn' //绑定元素
             , url: '/app/upload' //上传接口
           ,field:'file'
+        	  ,before: function(obj){
+     		     obj.preview(function(index, file, result){
+     		    	 $("#imgLinkShow").attr("src",result);
+     		      
+           })}
        	    ,done: function(res){ 
        	    	console.log(JSON.stringify(res))
        	     if (res.code == 0) {
-       	    	 $("#imgLinkShow").attr("src",res.src);
-       	    	 $("input[name='imgLink']").val(res.src);
-       	         layer.msg("上传成功"); 
+       	    	/*  $("#imgLinkShow").attr("src",res.data); */
+       	    	 $("input[name='imgLink']").val(res.data);
        	     }else{
        	    	 layer.msg("上传失败"); 
        	     }
@@ -146,16 +182,20 @@
         });
         
         //执行实例
-        var uploadInst = upload.render({
+        var uploadInst2 = upload.render({
           elem: '#shareIconBtn' //绑定元素
             , url: '/app/upload' //上传接口
         	  ,field:'file'
+        		  ,before: function(obj){
+         		     obj.preview(function(index, file, result){
+         		    	 $("#shareIconShow").attr("src",result);
+         		      
+               })}
        	    ,done: function(res){
                 console.log(JSON.stringify(res));
        	    	if (res.code == 0) {
-          	    	 $("#shareIconShow").attr("src",res.src);
-          	    	 $("input[name='shareIcon']").val(res.src);
-          	         layer.msg("上传成功"); 
+          	    	/*  $("#shareIconShow").attr("src",res.data); */
+          	    	 $("input[name='shareIcon']").val(res.data);
           	     }else{
           	    	 layer.msg("上传失败"); 
           	     }
