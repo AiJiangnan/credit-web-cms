@@ -52,6 +52,13 @@
 <script type="text/html" id="tool">
     <button class="layui-btn layui-btn-sm" lay-event="edit">编辑</button>
 </script>
+<script type="text/html" id="status">
+    {{#  if(d.status == 1){ }}
+    启用
+    {{#  } else { }}
+    禁用
+    {{#  } }}
+</script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script src="../../js/app/banner.js"></script>

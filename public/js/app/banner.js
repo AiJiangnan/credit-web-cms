@@ -14,7 +14,7 @@ layui.use('table', () => {
             {field: 'orderNo', title: '排序', align: 'center', width: 110},
             {field: 'startTime', title: '起始时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.startTime)},
             {field: 'endTime', title: '终止时间', align: 'center', width: 160, templet: d => dateTimeFormat(d.endTime)},
-            {field: 'status', title: '状态', align: 'center', width: 130, templet: d => d.status == '1' ? '启用' : '禁用'},
+            {field: 'status', title: '状态', align: 'center', width: 130, templet: '#status'},
             {title: '操作', width: 160, align: 'center', toolbar: '#tool'}
         ]]
     });
@@ -27,33 +27,27 @@ layui.use('table', () => {
                 title: '修改轮播图',
                 type: 2,
                 content: ['../app/editBanner.html', 'no'],
-                area: ['520px', '620px'],
+                area: ['520px', '640px'],
                 success: (l, i) => {
                     let f = layer.getChildFrame('form', i);
                     for (let k in d) {
-                        if (k === 'status') continue;
+                    	console.log(k+"："+d[k])
+                    	if (k === 'status') continue;
+                    	if (k === 'applyCreditScore'&&d[k] == '0') continue;
                         if (k === 'startTime' || k === 'endTime') {
                             continue;
                         }
-
                         f.find("input[name='" + k + "']").val(d[k]);
 
                     }
-                    f.find("input[name='status'][value=" + d.status + "]").next().find("i").click();
-
+                    f.find("input[name='status'][value=" + d.status + "]").prop('checked', true);
+                    f.find("option[value='" + d.applyCreditScoreRank + "']").prop('selected', true);
                     f.find("#imgLinkShow").attr("src", d.imgLink);
                     f.find("#shareIconShow").attr("src", d.shareIcon);
                     f.find("input[name='start']").val(dateTimeFormat(d.startTime));
                     f.find("input[name='end']").val(dateTimeFormat(d.endTime));
-                }
-//                end: () => {
-//                    if (sessionStorage.getItem('user')) {
-//                        let u = JSON.parse(sessionStorage.getItem('user'));
-//                        u.state = (u.state === 'true');
-//                        o.update(u);
-//                        sessionStorage.removeItem('user');
-//                    }
-//                }
+                },
+                end: () => getSession('editBanner', d => o.update(d))
             });
         }
 
@@ -62,10 +56,11 @@ layui.use('table', () => {
 
     $('#add').click(() => {
         layer.open({
-            title: '新建管理员',
+            title: '新建轮播图',
             type: 2,
             content: ['../app/editBanner.html', 'no'],
             area: ['520px', '620px'],
+            end: () => t.reload('banner', {where: null})
         });
     });
 
