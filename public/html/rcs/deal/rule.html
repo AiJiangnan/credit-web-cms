@@ -146,30 +146,32 @@
                 });
             });
         }).then(v => {
-            getSession('rule', rule => {
-                $('[name="id"]').val(rule.id);
-                $('[name="ruleName"]').val(rule.ruleName);
-                $('[name="detail"]').val(rule.detail);
-                $('option[value="' + rule.productId + '"]').prop('selected', 'selected');
-                if (rule.type === 'base') {
-                    $('[name="param"]').val(rule.param);
-                    $('option[value="' + rule.determine + '"]').prop('selected', 'selected');
-                    $('option[value="' + rule.field + '"]').prop('selected', 'selected');
-                } else if (rule.type === 'group') {
-                    $('[name="logical"]').prop('checked', true);
-                    $('[name="logical"]').prop('disabled', false);
-                    $('[name="field"]').val('');
-                    $('[name="determine"]').val('');
-                    $('[name="param"]').val('');
-                    $('[name="field"]').prop('disabled', true);
-                    $('[name="determine"]').prop('disabled', true);
-                    $('[name="param"]').prop('disabled', true);
-                }
-                $(':radio[value="' + rule.type + '"]').prop('checked', true);
-                $(':radio[value="' + rule.logical + '"]').prop('checked', true);
-                $(':radio[value="' + (rule.whetherBlacklist ? '1' : '0') + '"]').prop('checked', true);
-                f.render();
-            });
+            if (sessionStorage.getItem('rule')) {
+                getSession('rule', rule => {
+                    $('[name="id"]').val(rule.id);
+                    $('[name="ruleName"]').val(rule.ruleName);
+                    $('[name="detail"]').val(rule.detail);
+                    $('option[value="' + rule.productId + '"]').prop('selected', 'selected');
+                    if (rule.type === 'base') {
+                        $('[name="param"]').val(rule.param);
+                        $('option[value="' + rule.determine + '"]').prop('selected', 'selected');
+                        $('option[value="' + rule.field + '"]').prop('selected', 'selected');
+                    } else if (rule.type === 'group') {
+                        $('[name="logical"]').prop('checked', true);
+                        $('[name="logical"]').prop('disabled', false);
+                        $('[name="field"]').val('');
+                        $('[name="determine"]').val('');
+                        $('[name="param"]').val('');
+                        $('[name="field"]').prop('disabled', true);
+                        $('[name="determine"]').prop('disabled', true);
+                        $('[name="param"]').prop('disabled', true);
+                    }
+                    $(':radio[value="' + rule.type + '"]').prop('checked', true);
+                    $(':radio[value="' + rule.logical + '"]').prop('checked', true);
+                    $(':radio[value="' + (rule.whetherBlacklist ? '1' : '0') + '"]').prop('checked', true);
+                });
+            }
+            f.render();
         });
 
         $('#choose').click(() => {
