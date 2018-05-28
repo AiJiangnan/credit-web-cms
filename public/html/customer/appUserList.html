@@ -44,10 +44,7 @@
 <table id="appUser" lay-filter="appUser"></table>
 <script type="text/html" id="tool">
    		 <button class="layui-btn layui-btn-sm" lay-event="onoff">启|停</button>
-  		{{# if(d.enabled=='1'){ }}
-        <button class="layui-btn layui-btn-sm" id='modify{{ d.username}}' lay-event="modifyPhone">修改手机号</button>
-        {{# } }}
-    
+        <button class="layui-btn layui-btn-sm"  {{# if(d.enabled=='0'){ }} style="display: none;"  {{# } }} id='modify{{ d.username}}' lay-event="modifyPhone">修改手机号</button>
 </script>
 <script type="text/html" id="enabled">
     {{#  if(d.enabled){ }}
