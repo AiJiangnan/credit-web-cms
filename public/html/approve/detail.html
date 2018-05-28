@@ -142,6 +142,7 @@
         <li>历史记录</li>
         <li>附件</li>
         <li>小爱有信</li>
+        <li>白骑士</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
@@ -246,7 +247,7 @@
                     </tr>
                     <tr>
                         <td class="label">身份证组合过其他姓名</td>
-                        <td>{{ d.idcardWithOtherNames  }}</td>
+                        <td>{{ d.idcardWithOtherNames }}</td>
                         <td class="label">法院黑名单检查</td>
                         <td>{{ d.courtBlackCheck?'是':'否' }}</td>
 
@@ -422,8 +423,323 @@
             <img id="idcard" alt="没有获取到身份证正面信息">
             <img id="idcardback" alt="没有获取到身份证反面信息">
         </div>
-        <div class="layui-tab-item">
-            1
+        <div class="layui-tab-item" style="width:64em;">
+            <table class="layui-table">
+                <caption class="layui-bg-green">基本信息</caption>
+                <tbody id="xiaoaiBaseView"></tbody>
+                <script id="xiaoaiBaseTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">申请查询时间</td>
+                        <td style="width:20em;">{{checkStr(d.applyTime)}}</td>
+                        <td class="label" style="width:12em;">户籍</td>
+                        <td style="width:20em;">{{checkStr(d.registAddr) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">生成报告时间</td>
+                        <td>{{checkStr(d.reportTime)}}</td>
+                        <td class="label">其他手机号数量</td>
+                        <td>{{d.otherMobileNum}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">手机号</td>
+                        <td>{{checkStr(d.mobile) }}</td>
+                        <td class="label">居住地址</td>
+                        <td>{{checkStr(d.liveAddr)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">姓名</td>
+                        <td>{{checkStr(d.name)}}</td>
+                        <td class="label">居住地址有效时间</td>
+                        <td>{{checkStr(d.liveAddrReportTime)}}</td>
+
+                    </tr>
+                    <tr>
+                        <td class="label">身份证号</td>
+                        <td>{{checkStr(d.idNo)}}</td>
+                        <td class="label">工作地址</td>
+                        <td>{{checkStr(d.workAddr)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">出生日期</td>
+                        <td>{{checkStr(d.birthDay)}}</td>
+                        <td class="label">工作地址有效时间</td>
+                        <td>{{checkStr(d.workAddrReportTime)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">年龄</td>
+                        <td>{{checkStr(d.age)}}</td>
+                        <td class="label">性别</td>
+                        <td>
+                            {{# if (d.sex ==='F') { }}
+                            <span>女</span>
+                            {{# } else if(d.sex === 'M') { }}
+                            <span>男</span>
+                            else { }}
+                            <span>-</span>
+                            {{# } }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">历史查询记录</td>
+                        <td colspan="3">{{b1(checkStr(d.queryedByHisOperate))}}</td>
+                    </tr>
+                </script>
+            </table>
+            <br>
+            <table class="layui-table">
+                <caption class="layui-bg-green">最近一次合同状态</caption>
+                <tbody id="contractStatusVOView"></tbody>
+                <script id="contractStatusVOTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">放款时间</td>
+                        <td style="width:20em;">{{checkStr(d.lendedTime)}}</td>
+                        <td class="label" style="width:12em;">当前逾期</td>
+                        <td style="width:20em;">{{checkStr(d.currentDue)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">总期数</td>
+                        <td>{{checkStr(d.totalPeriod)}}</td>
+                        <td class="label">当前逾期金额</td>
+                        <td>{{checkStr(d.recentRepaymentMoney)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">已还期数</td>
+                        <td>{{checkStr(d.repayedPeriod)}}</td>
+                        <td class="label">应还款金额</td>
+                        <td>{{checkStr(d.principal)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">已还本金总额</td>
+                        <td>{{checkStr(d.repayedPricipal)}}</td>
+                        <td class="label">历史是否贷款逾期</td>
+                        <td>
+                            {{# if (d.overDue ==='1') { }}
+                            <span>有</span>
+                            {{# } else if(d.overDue === '2') { }}
+                            <span>无</span>
+                            {{# } else if(d.overDue === '3') { }}
+                            <span>未知</span>
+                            {{# } }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">最近一次还款时间</td>
+                        <td>{{checkStr(d.recentRepayedDate)}}</td>
+                        <td class="label">当前逾期期数</td>
+                        <td>{{checkStr(d.currentOverduePeriods)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">历史最长逾期时间</td>
+                        <td colspan="3">{{checkStr(d.maxOverDueDays)}}</td>
+                    </tr>
+                </script>
+            </table>
+            <br>
+            <table class="layui-table">
+                <caption class="layui-bg-green">欺诈风险</caption>
+                <tbody id="fraudRiskVOView"></tbody>
+                <script id="fraudRiskVOTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">是否有欺诈风险</td>
+                        <td style="width:20em;">
+                            {{# if (d.isCheat==='1') { }}
+                            <span>有</span>
+                            {{# } else if(d.isCheat=== '2') { }}
+                            <span>无</span>
+                            {{# } else if(d.isCheat=== '3') { }}
+                            <span>未知</span>
+                            {{# } else if(d.isCheat=== '4') { }}
+                            <span>疑似负面信息</span>
+                            {{# } }}
+                        </td>
+                        <td class="label" style="width:12em;">入黑时间</td>
+                        <td style="width:20em;">{{checkStr(d.beBlackDate)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">触碰危险名单时间</td>
+                        <td colspan="3">{{checkStr(d.touchRiskDate)}}</td>
+                    </tr>
+                    <tr>
+                        <td>危险名单类别</td>
+                        <td>危险名单一级类别</td>
+                        <td>危险名单二级类别</td>
+                        <td>危险名单类型</td>
+                    </tr>
+                    {{# layui.each(d.blackList,(i,s)=>{ }}
+                    <tr>
+                        <td>{{s.blackType}}</td>
+                        <td>{{s.blackTypeOne}}</td>
+                        <td>{{s.blackTypeTwo}}</td>
+                        <td>{{s.touchType}}</td>
+                    </tr>
+                    {{# }); }}
+                </script>
+            </table>
+            <br>
+            <table class="layui-table">
+                <caption class="layui-bg-green">借款信息</caption>
+                <tbody id="lendInfoVOView"></tbody>
+                <script id="lendInfoVOTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">是否有申请贷款</td>
+                        <td style="width:20em;">
+                            {{# if (d.haveLoanApply==='1') { }}
+                            <span>有</span>
+                            {{# } else if(d.haveLoanApply=== '2') { }}
+                            <span>无</span>
+                            {{# } else if(d.haveLoanApply=== '3') { }}
+                            <span>未知</span>
+                            {{# } }}
+                        </td>
+                        <td class="label" style="width:12em;">申请贷款时间</td>
+                        <td style="width:20em;">{{checkStr(d.lendsTime)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">审批状态</td>
+                        <td>
+                            {{# if (d.applyStatus === 1) { }}
+                            <span>批贷已放款</span>
+                            {{# } else if(d.applyStatus === 2) { }}
+                            <span>拒贷</span>
+                            {{# } else if(d.applyStatus === 3) { }}
+                            <span>借款人放弃申请</span>
+                            {{# } else if(d.applyStatus === 4) { }}
+                            <span>审核中</span>
+                            {{# } else if(d.applyStatus === 5) { }}
+                            <span>待放款</span>
+                            {{# } else if(d.applyStatus === 6) { }}
+                            <span>未知</span>
+                            {{# } else if(d.applyStatus === null) { }}
+                            <span>-</span>
+                            {{# } }}
+                        </td>
+                        <td class="label">账号注册</td>
+                        <td>
+                            {{# if (d.haveApply === 1) { }}
+                            <span>有</span>
+                            {{# } else if(d.haveApply === 2) { }}
+                            <span>无</span>
+                            {{# } else if(d.haveApply === 3) { }}
+                            <span>未知</span>
+                            {{# } else if(d.applyStatus === null) { }}
+                            <span>-</span>
+                            {{# } }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">申请城市</td>
+                        <td colspan="3">{{checkStr(d.applyCity)}}</td>
+                    </tr>
+                </script>
+            </table>
+            <br>
+            <table class="layui-table">
+                <caption class="layui-bg-green">联系人信息</caption>
+                <tbody id="linkManInfoVOView"></tbody>
+                <script id="linkManInfoVOTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">联系人</td>
+                        <td style="width:20em;">
+                            {{# if (d.linkMan === '1') { }}
+                            <span>一致</span>
+                            {{# } else if(d.linkMan === '2') { }}
+                            <span>部分一致</span>
+                            {{# } else if(d.linkMan === '3') { }}
+                            <span>未查得</span>
+                            {{# } else if(d.linkMan === null) { }}
+                            <span>-</span>
+                            {{# } }}
+                        </td>
+                        <td class="label" style="width:12em;">联系人数据有效时间</td>
+                        <td style="width:20em;">{{checkStr(d.linkManValidTime)}}</td>
+                    </tr>
+                    <tr>
+                        <td>危险名单类别</td>
+                        <td>危险名单一级类别</td>
+                        <td>危险名单二级类别</td>
+                        <td>危险名单类型</td>
+                    </tr>
+                    {{# layui.each(d.blackList,(i,s)=>{ }}
+                    <tr>
+                        <td>{{s.blackType}}</td>
+                        <td>{{s.blackTypeOne}}</td>
+                        <td>{{s.blackTypeTwo}}</td>
+                        <td>{{s.touchType}}</td>
+                    </tr>
+                    {{# }); }}
+                </script>
+            </table>
+            <br>
+            <table class="layui-table">
+                <caption class="layui-bg-green">催收平台名单</caption>
+                <tbody id="collectionListVOView"></tbody>
+                <script id="collectionListVOTpl" type="text/html">
+                    <tr>
+                        <td class="label" style="width:12em;">是否存在催收名单</td>
+                        <td style="width:20em;">
+                            {{# if (d.existCollectionList === '1') { }}
+                            <span>一致</span>
+                            {{# } else if(d.existCollectionList === '2') { }}
+                            <span>部分一致</span>
+                            {{# } else if(d.existCollectionList === null) { }}
+                            <span>-</span>
+                            {{# } }}
+                        </td>
+                        <td class="label" style="width:12em;">被催收案件逾期金额</td>
+                        <td style="width:20em;">{{checkStr(d.overdueAmountByCollectionCase)}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">被催收案件贷款时间</td>
+                        <td>{{checkStr(d.loanTimeByCollectionCase)}}</td>
+                        <td class="label">被催收案件逾期月数</td>
+                        <td>{{checkStr(d.overdueMonthByCollectionCase)}}</td>
+                    </tr>
+                </script>
+            </table>
+            <br>
+            <table class="layui-table">
+                <caption class="layui-bg-green">策略集指标</caption>
+                <tbody id="strategySetView"></tbody>
+                <script id="strategySetTpl" type="text/html">
+                    <tr>
+                        <td align="center" style="width:15em;">指标编码</td>
+                        <td align="center" style="width:15em;">指标名称</td>
+                        <td align="center" style="width:12em;">指标计算结果</td>
+                    </tr>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <tr>
+                        <td>{{s.ruleCode}}</td>
+                        <td>{{s.ruleName}}</td>
+                        <td>{{s.value}}</td>
+                    </tr>
+                    {{# }); }}
+                </script>
+            </table>
+
+        </div>
+        <div class="layui-tab-item" style="width:105em;">
+            <table class="layui-table">
+                <caption class="layui-bg-green">白骑士信息</caption>
+                <tbody id="whiteknightView"></tbody>
+                <script id="whiteknightTpl" type="text/html">
+                    <tr>
+                        <td align="center" style="width:5em;">类型</td>
+                        <td align="center" style="width:15em;">触发策略集</td>
+                        <td align="center"  style="width:5em;">审核建议 </td>
+                        <td align="center"  style="width:35em;">规则明细</td>
+                        <td align="center"  style="width:50em;">依据</td>
+                    </tr>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <tr>
+                        <td>{{s.type}}</td>
+                        <td>{{s.policyName}}</td>
+                        <td>{{s.auditRecommendations}}</td>
+                        <td>{{b2(s.rules)}}</td>
+                        <td>{{b2(s.memo)}}</td>
+                    </tr>
+                    {{# }); }}
+                </script>
+            </table>
         </div>
     </div>
 </div>
