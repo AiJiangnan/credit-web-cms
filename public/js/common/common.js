@@ -38,10 +38,11 @@ const constants = {
         confirmed: '已确认',
         canceled: '已取消',
         // 审核
-        wait_audit: '待审核',
+        wait_audit: '待机器审核',
+        applying: '待机器审核',
         pass_loan: '通过审核',
         refuse_loan: r`拒贷`,
-        person_audit: '进入人工审核',
+        person_audit: '待人工审核',
         // 审批减免
         pass: g`批准`,
         no_pass: '驳回',
@@ -56,7 +57,9 @@ const constants = {
         // 进件渠道
         Mobile: '手机APP',
         xjbk: '现金白卡',
-        rongshu: '榕树'
+        rongshu: '榕树',
+        credit: '分期',
+        mail: '商城'
     },
     // 弹出图标示意
     WARM: {icon: 0},
@@ -93,6 +96,19 @@ const regex = {
  * @param str
  */
 const getStatus = str => str && str !== '-' ? constants.STATUS[str] : '-';
+const getAuditStatus = str => {
+    console.log(str);
+    var statusStr = "";
+    if(str == null || str == ""){
+        statusStr = "-";
+    }else if("wait_audit" == str || "applying"==str){
+        statusStr = "待审核";
+    }else{
+        statusStr = "机器审核完成";
+    }
+    return statusStr;
+
+}
 const getProductType = str => {
     if (str == '1') {
         return '7天';

@@ -21,8 +21,9 @@ layui.use(['table', 'laydate'], () => {
             {field: 'phone', title: '手机号码', align: 'center', width: 100},
             {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, templet: d => d.loanCount > 0 ? '是' : '否'},
             {field: 'status', title: '审核状态', align: 'center', width: 100, templet: d => getStatus(d.status)},
+            {field: 'auditStatus', title: '机器审核状态', align: 'center', width: 130, templet: d => getAuditStatus(d.status)},
             {field: 'registerTime', title: '入网时间', align: 'center', width: 120, templet: d => dateFormat(d.registerTime)},
-            {title: '操作', width: 120, align: 'center', toolbar: '#tool'}
+            {title: '操作', width: 110, align: 'center', toolbar: '#tool'}
         ]]
     });
 

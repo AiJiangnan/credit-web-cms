@@ -5,7 +5,7 @@ const constants = {
     /**
      * 后台接口根地址
      */
-    "API_BASE_URL": "http://localhost:9011"
+    "API_BASE_URL": "http://192.168.4.230:9011"
 };
 
 module.exports = constants;
