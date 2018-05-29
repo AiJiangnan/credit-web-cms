@@ -89,8 +89,8 @@
         <tr>
             <td class="label">亲密联系人：</td>
             <td>{{ d.emergencyContact }}</td>
-            <td class="label">亲密联系人手机号：</td>
-            <td>{{ d.emergencyContactPhone }}</td>
+            <td class="label">定位地址：</td>
+            <td>{{ d.gpsAddress }}</td>
             <td class="label">审核结果：</td>
             <td>{{ d.approveResult }}</td>
             <td class="label">职业：</td>
@@ -98,8 +98,9 @@
         </tr>
 
         <tr>
-            <td class="label">定位地址：</td>
-            <td>{{ d.gpsAddress }}</td>
+            <td class="label">亲密联系人手机号：</td>
+            <td>{{ d.emergencyContactPhone }}</td>
+
             <td class="label">居住地址：</td>
             <td>{{ d.liveAddress }}</td>
             <td class="label">薪资：</td>
@@ -178,19 +179,24 @@
                     <th>联系电话/归属地</th>
                     <th>是否小号</th>
                     <th>最早联系时间</th>
+                    <th>最晚联系时间</th>
                     <th>联系号码检查</th>
                 </tr>
                 </thead>
                 <tbody id="linkView"></tbody>
                 <script id="linkTpl" type="text/html">
+                    {{# layui.each(d,(i,s)=>{ }}
                     <tr>
-                        <td>{{ d.name }}</td>
-                        <td>{{ d.relationship }}</td>
-                        <td>{{ d.phoneLoc }}</td>
-                        <td>{{ d.checkXiaohao }}</td>
-                        <td>{{ d.transStart }}</td>
-                        <td>{{ d.checkMobile }}</td>
+                        <td>{{ s.name }}</td>
+                        <td>{{ s.relationship }}</td>
+                        <td>{{ s.phoneLoc }}</td>
+                        <td>{{ s.checkXiaohao }}</td>
+                        <td>{{ s.transStart }}</td>
+                        <td>{{ s.endDate }}</td>
+                        <td>{{ s.checkMobile }}</td>
                     </tr>
+                    {{# }); }}
+
                 </script>
             </table>
             <table class="layui-table">
@@ -228,9 +234,9 @@
                 <tbody id="fraudView"></tbody>
                 <script id="fraudTpl" type="text/html">
                     <tr>
-                        <td class="label" style="width:12em;">身份证组合过其他电话</td>
+                        <td class="label" style="width:13em;">身份证组合过其他电话</td>
                         <td>{{ d.idcardWithOtherPhones }}</td>
-                        <td class="label" style="width:15em;">黑中介分数</td>
+                        <td class="label" style="width:16em;">黑中介分数</td>
                         <td>{{ d.blackScore }}</td>
                     </tr>
                     <tr>
@@ -248,19 +254,21 @@
                     <tr>
                         <td class="label">身份证组合过其他姓名</td>
                         <td>{{ d.idcardWithOtherNames }}</td>
-                        <td class="label">法院黑名单检查</td>
-                        <td>{{ d.courtBlackCheck?'是':'否' }}</td>
+                        <td class="label">直接联系人中引起间接黑名单占比</td>
+                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
+
 
                     </tr>
                     <tr>
-                        <td class="label">直接联系人中引起间接黑名单占比</td>
-                        <td>{{ rmbFormat(d.contactsRouterRatio * 100)+'%' }}</td>
-                        <td class="label">金融服务类机构黑名单检查</td>
-                        <td>{{ d.financialServiceBlackCheck?'是':'否' }}</td>
-                    </tr>
-                    <tr>
+                        <td class="label">法院黑名单检查</td>
+                        <td>{{ d.courtBlackCheck?'是':'否' }}</td>
                         <td class="label">查询过该用户的相关企业数量</td>
                         <td>{{ d.searchedOrgCnt }}</td>
+
+                    </tr>
+                    <tr>
+                        <td class="label">金融服务类机构黑名单检查</td>
+                        <td>{{ d.financialServiceBlackCheck?'是':'否' }}</td>
                         <td class="label"></td>
                         <td></td>
                     </tr>
@@ -422,6 +430,7 @@
         <div class="layui-tab-item">
             <img id="idcard" alt="没有获取到身份证正面信息">
             <img id="idcardback" alt="没有获取到身份证反面信息">
+            <img id="idcardnature" alt="没有获取到生活照信息">
         </div>
         <div class="layui-tab-item" style="width:64em;">
             <table class="layui-table">

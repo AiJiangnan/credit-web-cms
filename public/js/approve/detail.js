@@ -27,7 +27,7 @@ layui.use(['element', 'table', 'form'], () => {
             laytplrender(monthTpl, 'monthView', d.data.monthlyBillList);
             laytplrender(fraudTpl, 'fraudView', d.data.fraudDetection);
             laytplrender(behaviorTpl, 'behaviorView', d.data.behaviorDetection);
-            laytplrender(linkTpl, 'linkView', d.data.emergencyContactVo);
+            laytplrender(linkTpl, 'linkView', d.data.emergencyContactList);
         }
     });
 
@@ -54,8 +54,6 @@ layui.use(['element', 'table', 'form'], () => {
             laytplrender(collectionListVOTpl, 'collectionListVOView', jsonObj.collectionListVO);
             laytplrender(strategySetTpl, 'strategySetView', jsonObj.strategySet);
         }
-
-
     });
 
 
@@ -161,6 +159,7 @@ layui.use(['element', 'table', 'form'], () => {
                 if (d.code === 0) {
                     $('#idcard').attr('src', d.data.idcardFrontSide);
                     $('#idcardback').attr('src', d.data.idcardBackSide);
+                    $('#idcardnature').attr('src', d.data.idcardNature);
                 }
             });
         }
