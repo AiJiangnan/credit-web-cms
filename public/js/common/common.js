@@ -1,10 +1,9 @@
 // 颜色标签
 const r = str => `<span style="color:red;">${str}</span>`;
 const g = str => `<span style="color:green;">${str}</span>`;
-const b = str => str.replace(/([\/|\:|\;])/g, '<br>');
-const b1 = str => str.replace(/([\;])/g, '<br>');
+const b = str => str.replace(/([\/|:|;])/g, '<br>');
+const b1 = str => str.replace(/([;])/g, '<br>');
 const b2 = str => str.replace(/\(\$\.\*\)/g, '<br>');
-
 
 const constants = {
     // 表单输入日期范围格式
@@ -96,27 +95,14 @@ const regex = {
  * @param str
  */
 const getStatus = str => str && str !== '-' ? constants.STATUS[str] : '-';
-const getAuditStatus = str => {
-    console.log(str);
-    var statusStr = "";
-    if(str == null || str == ""){
-        statusStr = "-";
-    }else if("wait_audit" == str || "applying"==str){
-        statusStr = "待审核";
-    }else{
-        statusStr = "机器审核完成";
-    }
-    return statusStr;
-
-}
+const getAuditStatus = str => !str ? '-' : ('wait_audit' === str || 'applying' === str) ? '待审核' : '机器审核完成';
 const getProductType = str => {
     if (str == '1') {
         return '7天';
     } else if (str == '2') {
         return '14天';
-    } else {
-        return r`数据错误`;
     }
+    return r`数据错误`;
 };
 /**
  * 非空判断
