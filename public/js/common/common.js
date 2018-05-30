@@ -58,7 +58,7 @@ const constants = {
         xjbk: '现金白卡',
         rongshu: '榕树',
         credit: '分期',
-        mail: '商城'
+        mall: '商城'
     },
     // 弹出图标示意
     WARM: {icon: 0},
