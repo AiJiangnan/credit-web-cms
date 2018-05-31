@@ -27,15 +27,6 @@
             top: 40px;
         }
 
-        .layui-colla-title {
-            height: 30px;
-            line-height: 30px;
-        }
-
-        .layui-colla-content {
-            padding: 0;
-        }
-
         .layui-input {
             height: 30px;
             margin: 5px 0;
@@ -56,85 +47,90 @@
 <ul class="layui-nav" lay-filter="detail">
     <li id="n1" class="layui-nav-item layui-this"><a href="javascript:void(0);">合同催收信息</a></li>
     <li id="n2" class="layui-nav-item"><a href="javascript:void(0);">联系人详单</a></li>
-    <li class="layui-nav-item" id="setView">
-        <script type="text/html" id="setTpl">
-            {{# if(d == 1){ }}
-            <a href="javascript:void(0);">操作</a>
-            <dl class="layui-nav-child">
-                <dd id="repay"><a href="javascript:void(0);">划扣</a></dd>
-                <dd id="todeal"><a href="javascript:void(0);">对公还款</a></dd>
-                <dd id="reduce"><a href="javascript:void(0);">减免申请</a></dd>
-                <dd id="log"><a href="javascript:void(0);">添加催收记录</a></dd>
-                <dd id="part"><a href="javascript:void(0);">部分还款确认</a></dd>
-                <dd id="black"><a href="javascript:void(0);">加入黑名单</a></dd>
-            </dl>
-            {{# } }}
-        </script>
+    <li id="n3" class="layui-nav-item"><a href="javascript:void(0);">手机通讯录</a></li>
+    <li class="layui-nav-item" id="setView"></li>
+    <script type="text/html" id="setTpl">
+        {{# if(d == 1){ }}
+        <a href="javascript:void(0);">操作</a>
+        <dl class="layui-nav-child">
+            <dd id="repay"><a href="javascript:void(0);">划扣</a></dd>
+            <dd id="reduce"><a href="javascript:void(0);">减免申请</a></dd>
+            <dd id="log"><a href="javascript:void(0);">添加催收记录</a></dd>
+            <dd id="part"><a href="javascript:void(0);">部分还款确认</a></dd>
+            <dd id="black"><a href="javascript:void(0);">加入黑名单</a></dd>
+        </dl>
+        {{# } }}
+    </script>
     <li class="layui-nav-item"><a href="javascript:history.go(-1);">返回</a></li>
 </ul>
 <div id="page1">
-    <div class="layui-collapse">
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c1">申请信息</h2>
-            <div class="layui-colla-content" id="userInfoView"></div>
-            <script type="text/html" id="userInfoTpl">
-                <table class="layui-table">
-                    <tr>
-                        <td class="label">姓名：</td>
-                        <td>{{ d.realName }}</td>
-                        <td class="label">身份证号：</td>
-                        <td>{{ d.idcard }}</td>
-                        <td class="label">手机号码：</td>
-                        <td>{{ d.phone }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">家庭地址：</td>
-                        <td>{{ d.liveAddress }}</td>
-                        <td class="label">紧急联系人：</td>
-                        <td>{{ d.emergencyContact }}</td>
-                        <td class="label">紧急联系人电话：</td>
-                        <td>{{ d.emergencyContactPhone }}</td>
-                    </tr>
-                </table>
-            </script>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c2">减免记录</h2>
-            <div class="layui-colla-content">
-                <table id="reducelog" lay-filter="reducelog"></table>
-            </div>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c3">部分还款记录 <span id="logo"></span></h2>
-            <div class="layui-colla-content">
-                <table id="partlog" lay-filter="partlog"></table>
-            </div>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c4">借款记录</h2>
-            <div class="layui-colla-content">
-                <table id="loanlog" lay-filter="loanlog"></table>
-            </div>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c5">还款失败记录</h2>
-            <div class="layui-colla-content">
-                <table id="repayfaillog" lay-filter="repayfaillog"></table>
-            </div>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c6">逾期记录</h2>
-            <div class="layui-colla-content">
-                <table id="overduelog" lay-filter="overduelog"></table>
-            </div>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title" id="c7">电话催收记录</h2>
-            <div class="layui-colla-content">
-                <table id="collectlog" lay-filter="collectlog"></table>
-            </div>
-        </div>
-    </div>
+    <p class="layui-bg-green" style="padding:5px 15px;">申请信息</p>
+    <div id="userInfoView"></div>
+    <script type="text/html" id="userInfoTpl">
+        <table class="layui-table">
+            <tr>
+                <td class="label">姓名：</td>
+                <td>{{ d.realName }}</td>
+                <td class="label">身份证号：</td>
+                <td>{{ d.idcard }}</td>
+                <td class="label">手机号码：</td>
+                <td>{{ d.phone }}</td>
+            </tr>
+            <tr>
+                <td class="label">家庭地址：</td>
+                <td>{{ d.liveAddress }}</td>
+                <td class="label">紧急联系人：</td>
+                <td>{{ d.emergencyContact }}</td>
+                <td class="label">紧急联系人电话：</td>
+                <td>{{ d.emergencyContactPhone }}</td>
+            </tr>
+        </table>
+    </script>
+    <p class="layui-bg-green" style="padding:5px 15px;">减免记录</p>
+    <table id="reducelog" lay-filter="reducelog"></table>
+    <p class="layui-bg-green" style="padding:5px 15px;">部分还款记录<span id="logo"></span></p>
+    <table id="partlog" lay-filter="partlog"></table>
+    <p class="layui-bg-green" style="padding:5px 15px;">借款记录</p>
+    <table id="loanlog" lay-filter="loanlog"></table>
+    <p class="layui-bg-green" style="padding:5px 15px;">还款失败记录</p>
+    <table id="repayfaillog" lay-filter="repayfaillog"></table>
+    <p class="layui-bg-green" style="padding:5px 15px;">逾期记录</p>
+    <table id="overduelog" lay-filter="overduelog"></table>
+    <p class="layui-bg-green" style="padding:5px 15px;">划扣</p>
+    <form class="layui-form">
+        <table>
+            <tr>
+                <td><label class="layui-form-label">银行卡：</label></td>
+                <td id="bankView"></td>
+                <script type="text/html" id="bankTpl">
+                    <select lay-filter="bank" required lay-verify="required">
+                        <option value="">请选择银行卡</option>
+                        {{# layui.each(d,(i,s)=>{ }}
+                        <option value="{{ s.bankInfoId }}" title="{{ s.bankName }}">{{ s.accountNumber }}</option>
+                        {{# }); }}
+                    </select>
+                </script>
+                <td><label class="layui-form-label">应还总额：</label></td>
+                <td><input type="text" name="amount" disabled placeholder="请输入应还总额" class="layui-input"></td>
+                <td><label class="layui-form-label">划扣方式：</label></td>
+                <td>
+                    <select name="type" lay-filter="status" required lay-verify="required">
+                        <option value="">请选择划扣方式</option>
+                        <option value="kjtpay">快捷通</option>
+                        <option value="ucf">先锋</option>
+                    </select>
+                </td>
+                <td style="padding-left:20px;">
+                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="repay">提交</button>
+                </td>
+                <td style="padding-left:20px;">
+                    <a class="layui-btn layui-btn-sm" id="todeal">对公还款</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p class="layui-bg-green" style="padding:5px 15px;">电话催收记录</p>
+    <table id="collectlog" lay-filter="collectlog"></table>
 </div>
 <div id="page2" hidden>
     <form class="layui-form">
@@ -184,6 +180,7 @@
         </script>
     </table>
 </div>
+<div id="page3" hidden>123</div>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
 <script src="../../js/collection/detail.js"></script>
