@@ -55,7 +55,7 @@
         <dl class="layui-nav-child">
             <dd id="repay"><a href="javascript:void(0);">划扣</a></dd>
             <dd id="reduce"><a href="javascript:void(0);">减免申请</a></dd>
-            <dd id="log"><a href="javascript:void(0);">添加催收记录</a></dd>
+            <!--<dd id="log"><a href="javascript:void(0);">添加催收记录</a></dd>-->
             <dd id="part"><a href="javascript:void(0);">部分还款确认</a></dd>
             <dd id="black"><a href="javascript:void(0);">加入黑名单</a></dd>
         </dl>
@@ -104,9 +104,9 @@
                 <td id="bankView"></td>
                 <script type="text/html" id="bankTpl">
                     <select lay-filter="bank" required lay-verify="required">
-                        <option value="">请选择银行卡</option>
+                        <option value="">请选择</option>
                         {{# layui.each(d,(i,s)=>{ }}
-                        <option value="{{ s.bankInfoId }}" title="{{ s.bankName }}">{{ s.accountNumber }}</option>
+                        <option value="{{ s.bankInfoId }}">{{ s.accountNumber }} ({{ s.bankName }})</option>
                         {{# }); }}
                     </select>
                 </script>
@@ -115,7 +115,7 @@
                 <td><label class="layui-form-label">划扣方式：</label></td>
                 <td>
                     <select name="type" lay-filter="status" required lay-verify="required">
-                        <option value="">请选择划扣方式</option>
+                        <option value="">请选择</option>
                         <option value="kjtpay">快捷通</option>
                         <option value="ucf">先锋</option>
                     </select>
@@ -129,7 +129,7 @@
             </tr>
         </table>
     </form>
-    <p class="layui-bg-green" style="padding:5px 15px;">电话催收记录</p>
+    <p class="layui-bg-green" style="padding:5px 15px;">电话催收记录 <a class="layui-btn layui-btn-sm layui-btn-primary" id="log">添加催收记录</a></p>
     <table id="collectlog" lay-filter="collectlog"></table>
 </div>
 <div id="page2" hidden>
