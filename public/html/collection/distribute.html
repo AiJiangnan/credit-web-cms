@@ -20,14 +20,23 @@
         .layui-form-label {
             padding: 0 0 0 15px;
         }
+
+        .label {
+            width: 5em;
+        }
+
+        .input {
+            width: 150px;
+            min-width: 150px;
+        }
     </style>
 </head>
 <body style="padding-top:10px;">
-<form class="layui-form" style="padding-top:10px;">
+<form class="layui-form" style="padding-top:10px;overflow-x:auto;">
     <table>
         <tr>
-            <td><label class="layui-form-label">分配状态：</label></td>
-            <td>
+            <td class="label"><label class="layui-form-label">分配状态：</label></td>
+            <td class="input">
                 <select name="collectWay">
                     <option value="">请选择</option>
                     <option value="0">未分配</option>
@@ -35,14 +44,14 @@
                     <option value="3">外包催收</option>
                 </select>
             </td>
-            <td><label class="layui-form-label">申请编号：</label></td>
-            <td><input type="text" name="applyNo" class="layui-input"></td>
-            <td><label class="layui-form-label">客户姓名：</label></td>
-            <td><input type="text" name="name" class="layui-input"></td>
-            <td><label class="layui-form-label">手机号码：</label></td>
-            <td><input type="text" name="phone" class="layui-input"></td>
-            <td><label class="layui-form-label">身份证号：</label></td>
-            <td><input type="text" name="idcard" class="layui-input"></td>
+            <td class="label"><label class="layui-form-label">申请编号：</label></td>
+            <td class="input"><input type="text" name="applyNo" class="layui-input"></td>
+            <td class="label"><label class="layui-form-label">客户姓名：</label></td>
+            <td class="input"><input type="text" name="name" class="layui-input"></td>
+            <td class="label"><label class="layui-form-label">手机号码：</label></td>
+            <td class="input"><input type="text" name="phone" class="layui-input"></td>
+            <td class="label"><label class="layui-form-label">身份证号：</label></td>
+            <td class="input"><input type="text" name="idcard" class="layui-input"></td>
         </tr>
         <tr id="more" hidden>
             <td><label class="layui-form-label">催收人员：</label></td>

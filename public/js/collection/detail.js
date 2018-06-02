@@ -56,6 +56,24 @@ layui.use(['element', 'table', 'form'], () => {
     });
 
     t.render({
+        id: 'contacts',
+        elem: '#contacts',
+        page: constants.LAYUIPAGE,
+        url: '/info/contacts/' + userId,
+        cols: [[
+            {type: 'numbers', title: '序号'},
+            {field: 'name', title: '姓名', align: 'center', width: 180},
+            {
+                field: 'phone',
+                title: '手机号码',
+                align: 'center',
+                width: 160,
+                templet: d => d.phone.replace(',', '')
+            },
+        ]]
+    });
+
+    t.render({
         id: 'partlog',
         elem: '#partlog',
         url: '/repayment/part/' + applyId,

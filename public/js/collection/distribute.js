@@ -30,7 +30,8 @@ layui.use(['table', 'laydate'], () => {
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
-            {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
+            {field: 'state', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.state)},
+            {title: '操作', width: 180, align: 'center', toolbar: '#tool', fixed: 'right'}
         ]]
     });
 
@@ -100,7 +101,7 @@ layui.use(['table', 'laydate'], () => {
         d.data.map((e, i) => applyIds.push(e.applyId));
         if (applyIds.length < 1) return;
         layer.open({
-            title: '分配审核人员',
+            title: '分配催收人员',
             type: 2,
             content: '/collection/admin.html',
             area: ['400px', '400px'],
