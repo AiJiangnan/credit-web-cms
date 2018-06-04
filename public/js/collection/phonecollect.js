@@ -9,20 +9,6 @@ layui.use(['table', 'laydate'], () => {
         f.render('select');
     });
 
-    const getLateDay = applyId => {
-        let lateDays = 0;
-        $.ajax({
-            url: '/repayment/' + applyId,
-            async: false,
-            success: d => {
-                if (d.code === 0) {
-                    lateDays = d.data.overdueDays;
-                }
-            }
-        });
-        return lateDays
-    };
-
     t.render({
         id: 'phonecollect',
         elem: '#phonecollect',
@@ -38,9 +24,10 @@ layui.use(['table', 'laydate'], () => {
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'latedays', title: '逾期天数', align: 'center', width: 100, templet: d => getLateDay(d.applyId)},
+            {field: 'lateDays', title: '逾期天数', align: 'center', width: 100},
             {field: 'updateTime', title: '分配日期', align: 'center', width: 120, templet: d => dateFormat(d.updateTime)},
             {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 110},
+            {field: 'state', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.state)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
