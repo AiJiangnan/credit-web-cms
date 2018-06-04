@@ -19,7 +19,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'createUsername', title: '催收人员', align: 'center', width: 100},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 100, templet: d => dateFormat(d.repaymentPlanDate)},
-            {field: 'planTotalAmount', title: '应还款金额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount - d.reduceOverdueFee)},
+            {field: 'planTotalAmount', title: '应还款金额', align: 'center', width: 100},
             {field: 'reduceOverdueFee', title: '减免金额', align: 'center', width: 100, templet: d => rmbFormat(d.reduceOverdueFee)},
             {field: 'planState', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.planState)},
             {field: 'applyRemark', title: '申请详情', align: 'center', width: 130},
