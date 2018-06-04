@@ -71,6 +71,7 @@ const constants = {
     LAYUIPAGE: {
         layout: ['prev', 'page', 'next', 'skip', 'count', 'limit'],
         curr: 1,
+        limits: [10, 20, 30, 40, 50, 100, 200],
         groups: 5,
         first: false,
         last: false
