@@ -1,6 +1,6 @@
 layui.use(['element', 'table', 'form'], () => {
     const [$, e, f, t] = [layui.jquery, layui.element, layui.form, layui.table];
-    const [applyId, applyNo, userId, from] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
+    const [applyId, applyNo, userId, from, channel] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from'), getQueryStr('channel')];
 
     laytplrender(setTpl, 'setView', from);
     f.render();
@@ -58,7 +58,8 @@ layui.use(['element', 'table', 'form'], () => {
 
 
     f.on('submit(submit)', d => {
-        $.get('/info/phonelog/' + userId + '?' + $('#phonelog').serialize(), d => {
+        const phone = $('[name="phone"]').val();
+        $.get('/info/phonelog/' + userId, {phone: phone, channel: channel, applyId: applyId}, d => {
             if (d.code === 0) {
                 $('#rate').html(rmbFormat(d.data.proportion * 100) + '%');
                 laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
@@ -99,7 +100,7 @@ layui.use(['element', 'table', 'form'], () => {
             });
         }
         if (i === 1) {
-            $.get('/info/phonelog/' + userId, d => {
+            $.get('/info/phonelog/' + userId, {channel: channel, applyId: applyId}, d => {
                 if (d.code === 0) {
                     $('#rate').html((d.data.proportion * 100) + '%');
                     laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
