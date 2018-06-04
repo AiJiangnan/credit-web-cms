@@ -27,7 +27,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'lateDays', title: '逾期天数', align: 'center', width: 100},
             {field: 'updateTime', title: '分配日期', align: 'center', width: 120, templet: d => dateFormat(d.updateTime)},
             {field: 'lastCollectStateRemark', title: '催收状态', align: 'center', width: 110},
-            {field: 'state', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.state)},
+            {field: 'state', title: '逾期状态', align: 'center', width: 100, templet: d => getStatus(d.state)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });

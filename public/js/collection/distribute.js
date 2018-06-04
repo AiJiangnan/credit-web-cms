@@ -30,7 +30,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.repaymentPlanDate)},
             {field: 'lastCollectStateRemark', title: '最近催收状态', align: 'center', width: 120},
-            {field: 'state', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.state)},
+            {field: 'state', title: '逾期状态', align: 'center', width: 100, templet: d => getStatus(d.state)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
