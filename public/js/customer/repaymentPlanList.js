@@ -33,6 +33,12 @@ layui.use(['table', 'laydate'], () => {
         t.reload('repaymentPlan', {page: {curr: 1}, where: d.field});
         return false;
     });
+    
+    
+    f.on('submit(export)', d => {
+        location = '/customerCare/repaymentPlan/export?' + $('.layui-form').serialize();
+        return false;
+    });
 
 
     t.on('sort(repaymentPlan)', o => t.reload('repaymentPlan', {where: {sort: o.field, sortOrder: o.type}}));

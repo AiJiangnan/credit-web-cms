@@ -37,6 +37,18 @@
                  <td><label class="layui-form-label">应还款时间:&nbsp;</label></td>
                  <td><input type="text" name="findTime" class="layui-input" id="date1" placeholder="应还款时间"></td>
                 
+                
+                 <td><label class="layui-form-label">状态：</label></td>
+	            <td>
+	                <select name="state">
+	                    <option value="">请选择状态</option>
+	                    <option value="wait_repayment">待还款</option>
+	                    <option value="repaying">还款中</option>
+	                    <option value="already_repayment">已还款</option>
+	                    <option value="overdue_wait_repayment">逾期未还款</option>
+	                    <option value="overdue_already_repayment">逾期结清</option>
+	                </select>
+	            </td>
               	<td style="padding-left:20px;">
                     <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
                         <i class="layui-icon">&#xe615;</i>
@@ -47,6 +59,11 @@
                         <i class="layui-icon">&#xe639;</i>
                     </button>
                 </td>
+                 <td style="padding-left:20px;">
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="export" title="导出">
+                    <i class="layui-icon">&#xe61e;</i>
+                </button>
+                 </td>
             </tr>
         </table>
     </form>
