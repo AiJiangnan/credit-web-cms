@@ -13,8 +13,8 @@ layui.use(['table', 'laydate'], () => {
              {field: 'applyNo', title: '申请单号', align: 'center', width: 260},
              {field: 'name', title: '客户姓名', align: 'center', width: 130},
              {field: 'phone', title: '手机号', align: 'center', width: 180},
-            {field: 'contractAmount', title: '合同金额', align: 'center', width: 180},
-            {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 255,templet: d => dateTimeFormat(d.repaymentPlanDate)},
+            {field: 'planTotalAmount', title: '合同金额', align: 'center', width: 180},
+            {field: 'repaymentDate', title: '应还款日期', align: 'center', width: 255,templet: d => dateFormat(d.repaymentDate)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });

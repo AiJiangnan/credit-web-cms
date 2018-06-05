@@ -12,7 +12,7 @@ layui.use(['table', 'laydate'], () => {
              {field: 'name', title: '姓名', align: 'center', width: 130},
              {field: 'phone', title: '手机号', align: 'center', width: 130},
              {field: 'idcard', title: '身份证', align: 'center', width: 130},
-             {field: 'applyNo', title: '申请单号', align: 'center', width: 180},
+             {field: 'applyNo', title: '申请单号', align: 'center', width: 230},
              {field: 'state', title: '状态', align: 'center', width: 130, templet: d => getStatus(d.state)},
              {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130,templet: d => dateFormat(d.repaymentPlanDate)},
              {field: 'capital', title: '本金', align: 'center', width: 130},

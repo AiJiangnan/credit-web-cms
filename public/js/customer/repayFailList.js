@@ -11,13 +11,13 @@ layui.use(['table', 'laydate'], () => {
         cols: [[
              {type: 'numbers', title: '序号'},
              {field: 'name', title: '姓名', align: 'center', width: 130},
-             {field: 'idcard', title: '身份证号', align: 'center', width: 130},
+             {field: 'idcard', title: '身份证号', align: 'center', width: 180},
              {field: 'phone', title: '手机号', align: 'center', width: 130},
-             {field: 'applyNo', title: '申请单号', align: 'center', width: 180},
+             {field: 'applyNo', title: '申请单号', align: 'center', width: 260},
             {field: 'accountNum', title: '还款失败卡号', align: 'center', width: 180},
             {field: 'bankName', title: '银行卡名称', align: 'center', width: 130},
             {field: 'amount', title: '还款金额', align: 'center', width: 130},
-            {field: 'orderNo', title: '还款订单号', align: 'center', width: 150},
+            {field: 'orderNo', title: '还款订单号', align: 'center', width: 280},
             {field: 'remark', title: '失败原因', align: 'center', width: 130},
         ]]
     });
