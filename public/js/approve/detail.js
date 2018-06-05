@@ -61,7 +61,8 @@ layui.use(['element', 'table', 'form'], () => {
         const phone = $('[name="phone"]').val();
         $.get('/info/phonelog/' + userId, {phone: phone, channel: channel, applyId: applyId}, d => {
             if (d.code === 0) {
-                $('#rate').html(rmbFormat(d.data.proportion * 100) + '%');
+                d.data = JSON.parse(d.data);
+                $('#rate').html(d.data.proportion ? (rmbFormat(d.data.proportion * 100) + '%') : '无');
                 laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
             }
         });
@@ -102,7 +103,8 @@ layui.use(['element', 'table', 'form'], () => {
         if (i === 1) {
             $.get('/info/phonelog/' + userId, {channel: channel, applyId: applyId}, d => {
                 if (d.code === 0) {
-                    $('#rate').html((d.data.proportion * 100) + '%');
+                    d.data = JSON.parse(d.data);
+                    $('#rate').html(d.data.proportion ? (rmbFormat(d.data.proportion * 100) + '%') : '无');
                     laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
                 }
             });
