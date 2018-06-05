@@ -1,6 +1,6 @@
 layui.use(['element', 'table', 'form'], () => {
     const [$, e, t, f] = [layui.jquery, layui.element, layui.table, layui.form];
-    const [applyId, applyNo, userId, from] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from')];
+    const [applyId, applyNo, userId, from, channel] = [getQueryStr('applyId'), getQueryStr('applyNo'), getQueryStr('userId'), getQueryStr('from'), getQueryStr('channel')];
 
     let partId;
 
@@ -173,9 +173,10 @@ layui.use(['element', 'table', 'form'], () => {
         }
         if (i === 1) {
             // 联系人详单
-            $.get('/info/phonelog/' + userId, d => {
+            $.get('/info/phonelog/' + userId, {channel: channel, applyId: applyId}, d => {
                 if (d.code === 0) {
-                    $('#rate').html(d.data.proportion + '%');
+                    d.data = JSON.parse(d.data);
+                    $('#rate').html(d.data.proportion ? (rmbFormat(d.data.proportion * 100) + '%') : '无');
                     laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
                 }
             });
@@ -206,9 +207,11 @@ layui.use(['element', 'table', 'form'], () => {
     });
 
     f.on('submit(submit)', d => {
-        $.get('/info/phonelog/' + userId + '?' + $('.layui-form').serialize(), d => {
+        const phone = $('[name="phone"]').val();
+        $.get('/info/phonelog/' + userId, {phone: phone, channel: channel, applyId: applyId}, d => {
             if (d.code === 0) {
-                $('#rate').html(rmbFormat(d.data.proportion * 100) + '%');
+                d.data = JSON.parse(d.data);
+                $('#rate').html(d.data.proportion ? (rmbFormat(d.data.proportion * 100) + '%') : '无');
                 laytplrender(phonelogTpl, 'phonelogView', d.data.contactList);
             }
         });

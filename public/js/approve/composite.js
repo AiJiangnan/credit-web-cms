@@ -11,7 +11,7 @@ layui.use(['table', 'laydate'], () => {
         choice: ['sourceType', 'channel', 'applyNum', 'incomeTime', 'approveTime', 'whetherWhiteList', 'status'],
         sourceType: {field: 'sourceType', title: '注册渠道', align: 'center', width: 100, templet: d => getChannel(d.sourceType)},
         channel: {field: 'channel', title: '进件渠道', align: 'center', width: 100, templet: d => getStatus(d.channel)},
-        applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a target="_blank" href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}">${d.applyNum}</a>`},
+        applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a target="_blank" href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}&channel=${d.channel}">${d.applyNum}</a>`},
         incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.incomeTime)},
         approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.approveTime)},
         whetherWhiteList: {file: 'whetherWhiteList', title: '是否白名单', align: 'center', width: 100, templet: d => d.whetherWhiteList ? '是' : '否'},

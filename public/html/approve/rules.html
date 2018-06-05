@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>综合查询详情页面</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <style>
+        .layui-nav {
+            height: 40px;
+            margin: 10px 0;
+            background-color: #f2f2f2;
+        }
+
+        .layui-nav li, .layui-nav a {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .layui-nav .layui-nav-item a, .layui-nav .layui-nav-item a:hover {
+            color: black;
+        }
+
+        .layui-table td, .layui-table th {
+            padding: 5px 15px;
+        }
+
+        .layui-table th {
+            text-align: center;
+        }
+
+        .layui-input {
+            height: 30px;
+            margin: 5px 0;
+        }
+
+        .layui-form-label {
+            padding: 0 0 0 15px;
+        }
+
+        .label {
+            text-align: right;
+            height: 10px;
+            background-color: #f2f2f2;
+        }
+        .cen {
+            text-align: center;
+            height: 10px;
+            background-color: #f2f2f2;
+        }
+
+        caption {
+            text-align: left;
+            padding: 5px 15px;
+        }
+
+        .layui-form-switch {
+            margin-top: 0;
+        }
+
+        img {
+            width: 400px;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body style="padding-top:10px;">
+<form class="layui-form" style="padding-top:10px;">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">申请编号：</label></td>
+            <td><input type="text" name="applyNum" placeholder="请输入申请编号" class="layui-input"></td>
+            <td style="padding-left:20px;">
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
+                    <i class="layui-icon">&#xe639;</i>
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+        <table class="layui-table">
+            <tbody id="rulesView"></tbody>
+            <script id="rulesTpl" type="text/html">
+                <tr>
+                    <td class="cen" style="width:15em;">是否白名单</td>
+                    <td class="cen" style="width:15em;">是否现金白卡复贷</td>
+                    <td class="cen" style="width:15em;">是否换卡用户</td>
+
+                </tr>
+                <tr>
+                    <td>{{ d.whetherWhiteList ?'是' :'否' }}</td>
+                    <td>{{ d.whetherXjbkLoans ?'是' :'否'}}</td>
+                    <td>{{ d.whetherChangePhone ?'是' :'否'}}</td>
+                </tr>
+            </script>
+
+        </table>
+
+        <table class="layui-table">
+            <tbody id="resultsView"></tbody>
+            <script id="resultsTpl" type="text/html">
+                <tr>
+                    <td class="cen" style="width:13em;">订单号</td>
+                    <td class="cen" style="width:9em;">策略名称</td>
+                    <td class="cen" style="width:29em;">规则名称</td>
+                    <td class="cen" style="width:6em;">是否触碰</td>
+                    <td class="cen" style="width:10em;">是否为通过规则</td>
+                    <td class="cen" style="width:10em;">是否加入黑名单</td>
+                    <td class="cen" style="width:15em;">执行时间</td>
+
+                </tr>
+                {{# layui.each(d,(i,s)=>{ }}
+                <tr>
+                    <td>{{s.applyNum}}</td>
+                    <td>{{s.policyName}}</td>
+                    <td>{{s.ruleName}}</td>
+                    <td>{{s.result?'是':'否'}}</td>
+                    <td>{{s.whetherPass ?'是':'否'}}</td>
+                    <td>{{s.whetherBlackList?'是':'否'}}</td>
+                    <td>{{dateTimeFormat(s.createTime)}}</td>
+                </tr>
+                {{# }); }}
+            </script>
+
+        </table>
+
+    </div>
+</div>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/approve/rules.js"></script>
+</body>
+</html>
