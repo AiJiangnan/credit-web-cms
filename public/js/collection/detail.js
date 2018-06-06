@@ -203,9 +203,6 @@ layui.use(['element', 'table', 'form'], () => {
                 ]]
             });
         }
-        if (i === 3) {
-            history.go(-1);
-        }
     });
 
     f.on('submit(submit)', d => {
