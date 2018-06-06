@@ -11,7 +11,7 @@ layui.use(['table', 'laydate'], () => {
         cols: [[
              {type: 'numbers', title: '序号'},
             {field: 'idcardName', title: '用户名', align: 'center', width: 130},
-            {field: 'idcardNumber', title: '反馈内容', align: 'center', width: 210},
+            {field: 'idcardNumber', title: '身份证号', align: 'center', width: 210},
             {field: 'confidence', title: '置信度', align: 'center', width: 160},
             {field: 'threshold', title: '对比参照值', align: 'center', width: 130},
             {field: 'errorMessage', title: '错误原因', align: 'center', width: 330},
