@@ -82,4 +82,5 @@ layui.use(['table', 'laydate'], () => {
 
     $('#rongbao').click(() => createBatch('REAPAL'));
     $('#xianfeng').click(() => createBatch('UCF'));
+    $('#pingan').click(() => createBatch('PINGAN'));
 });
