@@ -62,7 +62,7 @@
             <script type="text/html" id="userInfoTpl">
                 <table class="layui-table">
                     <tr>
-                        <td colspan="2" rowspan="4"><img src="{{ d.appUser.idcardFrontSide }}" alt="没有身份证信息"></td>
+                        <td colspan="2" rowspan="5"><img src="{{ d.appUser.idcardFrontSide }}" alt="没有身份证信息"></td>
                         <td class="label">姓名：</td>
                         <td>{{ d.appUser.realName }}</td>
                         <td class="label">身份证号：</td>
@@ -85,6 +85,12 @@
                         <td>{{ d.appUser.emergencyContact }}</td>
                         <td class="label">紧急联系人电话：</td>
                         <td>{{ d.appUser.emergencyContactPhone }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">注册渠道：</td>
+                        <td>{{ getChannel(d.appUser.sourceType) }}</td>
+                        <td class="label">进件渠道：</td>
+                        <td>{{ getStatus(d.channel) }}</td>
                     </tr>
                 </table>
             </script>

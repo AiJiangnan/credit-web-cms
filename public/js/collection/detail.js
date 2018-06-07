@@ -29,6 +29,7 @@ layui.use(['element', 'table', 'form'], () => {
         $.get('/info/user/' + userId, {applyId: applyId}, d => {
             if (d.code === 0) {
                 check(d.data);
+                d.data.channel = channel;
                 laytplrender(userInfoTpl, 'userInfoView', d.data);
             }
         });
