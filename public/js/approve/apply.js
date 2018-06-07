@@ -9,7 +9,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'apply',
         elem: '#apply',
-        height: 'full-180',
+        height: 'full-160',
         page: constants.LAYUIPAGE,
         url: '/approve/apply',
         cols: [[
@@ -91,16 +91,4 @@ layui.use(['table', 'laydate'], () => {
         });
     });
 
-    $('.morebtn').click(() => {
-        if ($('.morebtn').hasClass('in')) {
-            $('#more').hide('slow');
-            $('#more').children().children(':text').map((i, e) => $(e).val(''));
-            $('.morebtn').removeClass('in');
-            $('.morebtn').children().html('&#xe61a;');
-        } else {
-            $('#more').show('slow');
-            $('.morebtn').addClass('in');
-            $('.morebtn').children().html('&#xe619;');
-        }
-    });
 });

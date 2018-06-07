@@ -36,7 +36,7 @@ layui.use(['table', 'laydate'], () => {
         t.render({
             id: 'composite',
             elem: '#composite',
-            height: 'full-180',
+            height: 'full-160',
             page: constants.LAYUIPAGE,
             url: '/approve/integrate',
             cols: [colums]
@@ -83,16 +83,4 @@ layui.use(['table', 'laydate'], () => {
 
     t.on('sort(composite)', o => t.reload('composite', {where: {sort: o.field, sortOrder: o.type}}));
 
-    $('.morebtn').click(() => {
-        if ($('.morebtn').hasClass('in')) {
-            $('#more').hide('slow');
-            $('#more').children().children(':text').map((i, e) => $(e).val(''));
-            $('.morebtn').removeClass('in');
-            $('.morebtn').children().html('&#xe61a;');
-        } else {
-            $('#more').show('slow');
-            $('.morebtn').addClass('in');
-            $('.morebtn').children().html('&#xe619;');
-        }
-    });
 });
