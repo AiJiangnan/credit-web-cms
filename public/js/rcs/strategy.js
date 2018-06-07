@@ -62,6 +62,7 @@ layui.use('table', () => {
                     area: ['400px', '240px'],
                     success: (l, i) => {
                         let f = layer.getChildFrame('form', i);
+                        f.find("input[name='id']").val(d.id);
                         f.find("input[name='sort']").val(d.sort);
                         f.find("input[name='whetherPass'][value=" + (d.whetherPass ? '1' : '0') + "]").prop('checked', true);
                     }
