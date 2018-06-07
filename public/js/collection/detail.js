@@ -29,6 +29,7 @@ layui.use(['element', 'table', 'form'], () => {
         $.get('/info/user/' + userId, {applyId: applyId}, d => {
             if (d.code === 0) {
                 check(d.data);
+                d.data.channel = channel;
                 laytplrender(userInfoTpl, 'userInfoView', d.data);
             }
         });
@@ -175,7 +176,7 @@ layui.use(['element', 'table', 'form'], () => {
             // 联系人详单
             $.get('/info/phonelog/' + userId, {channel: channel, applyId: applyId}, d => {
                 if (d.code === 0) {
-                    if (!d.data.proportion) {
+                    if (d.data.proportion === undefined) {
                         d.data = JSON.parse(d.data);
                     }
                     $('#rate').html(d.data.proportion ? (rmbFormat(d.data.proportion * 100) + '%') : '无');
@@ -209,7 +210,7 @@ layui.use(['element', 'table', 'form'], () => {
         const phone = $('[name="phone"]').val();
         $.get('/info/phonelog/' + userId, {phone: phone, channel: channel, applyId: applyId}, d => {
             if (d.code === 0) {
-                if (!d.data.proportion) {
+                if (d.data.proportion === undefined) {
                     d.data = JSON.parse(d.data);
                 }
                 $('#rate').html(d.data.proportion ? (rmbFormat(d.data.proportion * 100) + '%') : '无');

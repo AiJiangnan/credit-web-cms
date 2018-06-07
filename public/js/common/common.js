@@ -58,8 +58,8 @@ const constants = {
         Mobile: '手机APP',
         xjbk: '现金白卡',
         rongshu: '榕树',
-        credit: '分期',
-        mall: '商城'
+        credit: '够范分期',
+        mall: '够范商城'
     },
     // 弹出图标示意
     WARM: {icon: 0},
