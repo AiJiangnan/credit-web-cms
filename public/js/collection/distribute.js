@@ -15,7 +15,7 @@ layui.use(['table', 'laydate'], () => {
     t.render({
         id: 'distribute',
         elem: '#distribute',
-        height: 'full-180',
+        height: 'full-160',
         page: constants.LAYUIPAGE,
         url: '/collect',
         cols: [[
@@ -24,7 +24,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'collectUser', title: '催收人员', align: 'center', width: 100, templet: '#collectUser'},
             {field: 'collectWay', title: '分配状态', align: 'center', width: 100, sort: true, templet: '#collectWay'},
             {field: 'updateTime', title: '分配日期', align: 'center', width: 120, sort: true, templet: d => dateFormat(d.updateTime)},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&channel=${d.sdChannel}&from=0">${d.applyNo}</a>`},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 120, templet: d => `<a target="_blank" href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&channel=${d.sdChannel}&from=0">${d.applyNo}</a>`},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
@@ -167,16 +167,4 @@ layui.use(['table', 'laydate'], () => {
         });
     });
 
-    $('.morebtn').click(() => {
-        if ($('.morebtn').hasClass('in')) {
-            $('#more').hide('slow');
-            $('#more').children().children(':text').map((i, e) => $(e).val(''));
-            $('.morebtn').removeClass('in');
-            $('.morebtn').children().html('&#xe61a;');
-        } else {
-            $('#more').show('slow');
-            $('.morebtn').addClass('in');
-            $('.morebtn').children().html('&#xe619;');
-        }
-    });
 });

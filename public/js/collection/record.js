@@ -28,7 +28,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 120, templet: d => dateFormat(d.repaymentPlanDate)},
             {field: 'contractAmount', title: '合同金额', align: 'center', width: 100, templet: d => rmbFormat(d.contractAmount)},
             {field: 'actualTotalAmount', title: '实还金额', align: 'center', width: 100, templet: d => rmbFormat(d.actualTotalAmount)},
-            {field: 'payState', title: '部分还款', align: 'center', width: 100, templet: d => d.payState ? '是' : '否'},
+            {field: 'payState', title: '部分还款', align: 'center', width: 100, templet: d => d.payState == 'part_repay' ? '是' : '否'},
             {field: 'type', title: '还款状态', align: 'center', width: 100, templet: d => getStatus(d.type)},
             {title: '操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]

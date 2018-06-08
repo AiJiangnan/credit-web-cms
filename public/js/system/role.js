@@ -12,12 +12,27 @@ layui.use('table', () => {
             {field: 'name', title: '角色名称', align: 'center', width: 120},
             {field: 'description', title: '角色描述', align: 'center', width: 200},
             {field: 'enabled', title: '状态', align: 'center', width: 80, sort: true, templet: '#enabled'},
-            {title: '操作', width: 300, align: 'center', toolbar: '#tool'}
+            {title: '操作', width: 350, align: 'center', toolbar: '#tool'}
         ]]
     });
 
     t.on('tool(role)', o => {
         let [e, d] = [o.event, o.data];
+        if (e === 'detail') {
+            $.get('/role/users/' + d.id, data => {
+                if (data.code === 0) {
+                    let res = '<table class="layui-table" lay-skin="nob" style="margin:0;"><tr>';
+                    const users = data.data;
+                    for (let i = 0, n = users.length; i < n; i++) {
+                        res += `<td>${users[i].realname}</td>`;
+                        if ((i + 1) % 2 === 0) res += '</tr><tr>';
+                    }
+                    res += `<tr><td colspan="2">总计：${r(users.length)}</td></tr>`;
+                    res += '</table>';
+                    alertinfo(res);
+                }
+            });
+        }
         if (e === 'allot') {
             layer.open({
                 title: '分配菜单',
