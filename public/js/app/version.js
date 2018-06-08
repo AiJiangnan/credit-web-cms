@@ -17,6 +17,13 @@ layui.use(['table', 'laydate'], () => {
     	    }
     	};
     
+    const appConstants = {
+    	    STATUS: {
+    	    	  credit: '分期',
+    	    	  mall: '商城',
+    	    }
+    	};
+    
     
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
     t.render({
@@ -27,11 +34,12 @@ layui.use(['table', 'laydate'], () => {
         url: '/app/version/list',
         cols: [[
              {type: 'numbers', title: '序号'},
+            {field: 'channel', title: 'APP', align: 'center', width: 110,templet: d => appConstants.STATUS[d.channel]},
             {field: 'versionName', title: '版本名称', align: 'center', width: 110},
             {field: 'type', title: '系统版本', align: 'center', width: 110,templet: d => typeConstants.STATUS[d.type]},
             {field: 'versionNum', title: '版本号', align: 'center', width: 110},
             {field: 'versionDate', title: '创建时间', align: 'center', width: 160,templet: d => dateTimeFormat(d.versionDate)},
-            {field: 'versionStatus', title: '版本更新状态', align: 'center', width: 130,templet: d => driveConstants.STATUS[d.type]},
+            {field: 'versionStatus', title: '版本更新状态', align: 'center', width: 130,templet: d => driveConstants.STATUS[d.versionStatus]},
             {field: 'versionDesc', title: '版本说明', align: 'center', width: 180},
             {field: 'url', title: '版本地址', align: 'center', width: 200},
             {title: '操作', width: 160, align: 'center', toolbar: '#tool'}
@@ -60,9 +68,18 @@ layui.use(['table', 'laydate'], () => {
             title: '新建版本',
             type: 2,
             content: ['/app/addversion.html', 'no'],
-            area: ['400px', '380px']
+            area: ['400px', '380px'],
+            success: (l, i) => {
+               
+            },
+            end: () => {t.reload('version', {where: null});}
         });
     });
+    
+    
+    $('#refresh').click(() => t.reload('version', {where: null}));
+    
+    
     f.on('submit(submit)', d => {
         t.reload('version', {page: {curr: 1}, where: d.field});
         return false;
