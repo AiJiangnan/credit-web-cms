@@ -122,6 +122,7 @@ layui.use(['element', 'table', 'form'], () => {
                 {field: '', title: '当前时间', align: 'center', width: 120, templet: d => dateFormat('now')},
                 {field: 'repaymentPlanDate', title: '最后还款日', align: 'center', width: 120, templet: d => dateFormat(d.repaymentPlanDate)},
                 {field: 'overdueDays', title: '违约天数', align: 'center', width: 100},
+                {field: 'capital', title: '本金', align: 'center', width: 100, templet: d => rmbFormat(d.capital)},
                 {field: 'interest', title: '应还利息', align: 'center', width: 100, templet: d => rmbFormat(d.interest)},
                 {field: 'totalInterestPenalty', title: '逾期费', align: 'center', width: 100, templet: d => rmbFormat(d.totalInterestPenalty)},
                 {field: 'planTotalAmount', title: '应还总额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)},
