@@ -4,7 +4,6 @@ layui.use(['table', 'laydate'], () => {
     layui.laydate.render({elem: '#dater', range: true, format: constants.DATE_RANGE});
     layui.laydate.render({elem: '#datea', range: true, format: constants.DATE_RANGE});
 
-
     t.render({
         id: 'overdue',
         elem: '#overdue',
