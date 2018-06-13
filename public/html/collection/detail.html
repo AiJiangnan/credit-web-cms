@@ -96,7 +96,7 @@
             </script>
             <p class="layui-bg-green" style="padding:5px 15px;">减免记录 <a class="layui-btn layui-btn-sm layui-btn-primary layui-hide" id="reduce">减免申请</a></p>
             <table id="reducelog" lay-filter="reducelog"></table>
-            <p class="layui-bg-green" style="padding:5px 15px;">部分还款记录<span id="logo"></span></p>
+            <p class="layui-bg-green" style="padding:5px 15px;">部分还款记录 <span id="logo"></span></p>
             <table id="partlog" lay-filter="partlog"></table>
             <p class="layui-bg-green" style="padding:5px 15px;">借款记录</p>
             <table id="loanlog" lay-filter="loanlog"></table>
@@ -215,7 +215,7 @@
 </div>
 <script type="text/html" id="tool">
     {{# if(d.status === 'init'){ }}
-    <button class="layui-btn layui-btn-sm" id="part">确认</button>
+    <button class="layui-btn layui-btn-sm" lay-event="confirm">确认</button>
     {{# } }}
 </script>
 <script src="../../js/layui/layui.js"></script>

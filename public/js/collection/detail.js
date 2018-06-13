@@ -122,6 +122,7 @@ layui.use(['element', 'table', 'form'], () => {
                 {field: '', title: '当前时间', align: 'center', width: 120, templet: d => dateFormat('now')},
                 {field: 'repaymentPlanDate', title: '最后还款日', align: 'center', width: 120, templet: d => dateFormat(d.repaymentPlanDate)},
                 {field: 'overdueDays', title: '违约天数', align: 'center', width: 100},
+                {field: 'capital', title: '本金', align: 'center', width: 100, templet: d => rmbFormat(d.capital)},
                 {field: 'interest', title: '应还利息', align: 'center', width: 100, templet: d => rmbFormat(d.interest)},
                 {field: 'totalInterestPenalty', title: '逾期费', align: 'center', width: 100, templet: d => rmbFormat(d.totalInterestPenalty)},
                 {field: 'planTotalAmount', title: '应还总额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)},
@@ -281,26 +282,29 @@ layui.use(['element', 'table', 'form'], () => {
         });
     });
 
-    $('#part').click(() => {
-        if (!partId) {
-            layer.msg('没有获取到有效部分还款！', constants.LOCK);
-            return;
-        }
-        layer.prompt({title: '部分还款金额'}, (v, i, e) => {
-            if (!regex.AMOUNT.test(v)) {
-                layer.msg('输入金额有误！', constants.LOCK);
+    t.on('tool(partlog)', o => {
+        let [e, d] = [o.event, o.data];
+        if (e === 'confirm') {
+            if (!partId) {
+                layer.msg('没有获取到有效部分还款！', constants.LOCK);
                 return;
             }
-            $.post('/repayment/part', {id: partId, applyId: applyId, partAmount: v}, d => {
-                if (d.code === 0) {
-                    t.reload('partlog');
-                    layer.msg(d.data, constants.SUCCESS);
-                } else {
-                    layer.msg(d.msg, constants.ERROR);
+            layer.prompt({title: '部分还款金额'}, (v, i, e) => {
+                if (!regex.AMOUNT.test(v)) {
+                    layer.msg('输入金额有误！', constants.LOCK);
+                    return;
                 }
-            }).fail(() => layer.msg('服务器错误！', constants.FAIL));
-            layer.close(i);
-        });
+                $.post('/repayment/part', {id: partId, applyId: applyId, partAmount: v}, d => {
+                    if (d.code === 0) {
+                        t.reload('partlog');
+                        layer.msg(d.data, constants.SUCCESS);
+                    } else {
+                        layer.msg(d.msg, constants.ERROR);
+                    }
+                }).fail(() => layer.msg('服务器错误！', constants.FAIL));
+                layer.close(i);
+            });
+        }
     });
 
     $('#black').click(() => {
