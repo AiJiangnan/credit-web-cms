@@ -1,4 +1,11 @@
 layui.use('table', () => {
+	
+	 const appConstants = {
+	    	    STATUS: {
+	    	    	  credit: '分期',
+	    	    	  mall: '商城',
+	    	    }
+	    	};
     const [$, t, f] = [layui.jquery, layui.table, layui.form];
 
     t.render({
@@ -9,6 +16,7 @@ layui.use('table', () => {
         url: '/app/banner/list',
         cols: [[
             {type: 'numbers', title: '序号'},
+            {field: 'channel', title: 'APP', align: 'center', width: 160,templet: d => appConstants.STATUS[d.channel]},
             {field: 'name', title: '名称', align: 'center', width: 160},
             {field: 'bannerDesc', title: '描述', align: 'center', width: 280},
             {field: 'orderNo', title: '排序', align: 'center', width: 110},
@@ -33,6 +41,7 @@ layui.use('table', () => {
                     for (let k in d) {
                     	console.log(k+"："+d[k])
                     	if (k === 'status') continue;
+                    	if (k === 'channel') continue;
                     	if (k === 'applyCreditScore'&&d[k] == '0') continue;
                         if (k === 'startTime' || k === 'endTime') {
                             continue;
@@ -41,9 +50,15 @@ layui.use('table', () => {
 
                     }
                     f.find("input[name='status'][value=" + d.status + "]").prop('checked', true);
+                    f.find("input[name='channel'][value=" + d.channel + "]").prop('checked', true);
                     f.find("option[value='" + d.applyCreditScoreRank + "']").prop('selected', true);
                     f.find("#imgLinkShow").attr("src", d.imgLink);
-                    f.find("#shareIconShow").attr("src", d.shareIcon);
+                    if(d.shareIcon){
+                    	console.log("ddd")
+                    	f.find("#shareIconShow").attr("src", d.shareIcon);
+                    	f.find("#shareIconShow").removeClass("layui-hide");
+                    }
+                    
                     f.find("input[name='start']").val(dateTimeFormat(d.startTime));
                     f.find("input[name='end']").val(dateTimeFormat(d.endTime));
                 },

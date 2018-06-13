@@ -44,11 +44,11 @@
             <td><input type="text" name="srcLink" required lay-verify="required|url" placeholder="请输入活动访问地址" class="layui-input"></td>
         </tr>
         <tr>
-         <td><label class="layui-form-label">有效期：</label></td>
+         <td><label class="layui-form-label">开始时间：</label></td>
             <td><input type="text" name="start" class="layui-input" id="date1" required lay-verify="required" placeholder="请选择应还款日期"></td>
          </tr>
           <tr>
-         <td><label class="layui-form-label">有效期：</label></td>
+         <td><label class="layui-form-label">结束时间：</label></td>
             <td><input type="text" name="end" class="layui-input" id="date2"  required lay-verify="required" placeholder="请选择应还款日期"></td>
          </tr>
          <tr>
@@ -63,8 +63,16 @@
             </td>
         </tr>
         
-        
          <tr>
+            <td><label class="layui-form-label">APP：</label></td>
+            <td>
+                <input type="radio" name='channel' value="credit"  title="分期" checked>
+                <input type="radio" name='channel' value="mall"  title="商城">
+            </td>
+        </tr>
+        
+        
+       <!--   <tr>
             <td><label class="layui-form-label"><h4>限制条件<h4></label></td>
            <td><div style="color: red;float: left">（以下两项录入后只有符合条件的用户才展示）</div></td>
         </tr>
@@ -88,7 +96,7 @@
             <td>
                 <input type="text" name="applyCreditScore" class="layui-input" style="width: 50px;float: left" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ><div style="float: left;padding-left: 10px;padding-right: 10px;font-size: large">
             </td>
-        </tr>
+        </tr> -->
         
         
         <tr>
@@ -105,7 +113,7 @@
          <td><button type="button" class="layui-btn" id="shareIconBtn">分享图</button></td>
          <td> 
       		<div class="layui-upload-list">  
- 				<img class="layui-upload-img" id="shareIconShow" width="150px">  
+ 				<img class="layui-upload-img layui-hide"    id="shareIconShow" width="150px">  
 			</div>  
   		</td>
         </tr>
@@ -130,20 +138,28 @@
 <script>
     layui.use(['form', 'laydate','upload'], () => {
     	  const [$, f, p] = [layui.jquery, layui.form,parent.layer];
+    	  var flag=true;
 		layui.laydate.render({elem: '#date1' ,type: 'datetime'});
 		layui.laydate.render({elem: '#date2' ,type: 'datetime'});
         f.on('submit(submit)', d => {
-        	if(!$("input[name='imgLink']").val()){
-        		 p.msg("轮播图不能为空", {icon: 2});
-        		 return false;
+        	
+        	if($("input[name='id']").val()){
+        		if(!$("input[name='imgLink']").val()){
+           		 p.msg("轮播图不能为空", {icon: 2});
+           		 return false;
+           		}
         	}
         	
+        	
+        	if(!flag){
+        		 p.msg("请等待图片处理完成后再提交", {icon: 2});
+        		 return false;
+        	}
             $.post('/app/banner/edit', d.field, data => {
                 if (data.code === 0) {
                 	 d.field.imgLink=data.data.imgLink;
                 	 d.field.shareIcon=data.data.shareIcon;
                 	  setSession('editBanner',d.field);
-                	  debugger;
                 	  closeParent();
                 	  p.msg("轮播图修改成功", constants.SUCCESS);
                     return;
@@ -161,7 +177,10 @@
           elem: '#imgLinkBtn' //绑定元素
             , url: '/app/upload' //上传接口
           ,field:'file'
+       	  ,exts:'jpg|png||jpeg'
+             	,size:600
         	  ,before: function(obj){
+        		  flag=false;
      		     obj.preview(function(index, file, result){
      		    	 $("#imgLinkShow").attr("src",result);
      		      
@@ -171,6 +190,9 @@
        	     if (res.code == 0) {
        	    	/*  $("#imgLinkShow").attr("src",res.data); */
        	    	 $("input[name='imgLink']").val(res.data);
+       	     	 flag=true;
+       	     	$("#shareIconShow").removeClass("layui-hide");
+       	      p.msg("轮播图上传成功", constants.SUCCESS);
        	     }else{
        	    	 layer.msg("上传失败"); 
        	     }
@@ -186,7 +208,10 @@
           elem: '#shareIconBtn' //绑定元素
             , url: '/app/upload' //上传接口
         	  ,field:'file'
+        	,exts:'jpg|png||jpeg'
+        	,size:600
         		  ,before: function(obj){
+        			  flag=false;
          		     obj.preview(function(index, file, result){
          		    	 $("#shareIconShow").attr("src",result);
          		      
@@ -196,6 +221,9 @@
        	    	if (res.code == 0) {
           	    	/*  $("#shareIconShow").attr("src",res.data); */
           	    	 $("input[name='shareIcon']").val(res.data);
+          	    	 flag=true;
+          	    	$("#shareIconShow").removeClass("layui-hide");
+          	    	 p.msg("分享图上传成功", constants.SUCCESS);
           	     }else{
           	    	 layer.msg("上传失败"); 
           	     }
