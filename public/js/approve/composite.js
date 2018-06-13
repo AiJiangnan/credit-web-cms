@@ -14,6 +14,8 @@ layui.use(['table', 'laydate'], () => {
         applyNum: {field: 'applyNum', title: '申请编号', align: 'center', width: 240, templet: d => `<a target="_blank" href="/approve/detail.html?applyId=${d.id}&userId=${d.userId}&applyNo=${d.applyNum}&channel=${d.channel}">${d.applyNum}</a>`},
         incomeTime: {field: 'incomeTime', title: '申请时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.incomeTime)},
         approveTime: {field: 'approveTime', title: '审批时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.approveTime)},
+        payTime: {field: 'payTime', title: '放款时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.payTime)},
+        repayTime: {field: 'repayTime', title: '还款时间', align: 'center', width: 160, sort: true, templet: d => dateTimeFormat(d.repayTime)},
         whetherWhiteList: {file: 'whetherWhiteList', title: '是否白名单', align: 'center', width: 100, templet: d => d.whetherWhiteList ? '是' : '否'},
         gpsAddress: {field: 'gpsAddress', title: '定位位置', align: 'center', width: 200},
         name: {field: 'name', title: '姓名', align: 'center', width: 100},
