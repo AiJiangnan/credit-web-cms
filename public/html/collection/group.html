@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>逾期合同分配</title>
+    <title>组逾期跟进情况</title>
     <link rel="stylesheet" href="../../js/layui/css/layui.css">
     <style>
         .layui-input {
@@ -35,27 +35,12 @@
 <form class="layui-form" style="padding-top:10px;">
     <table>
         <tr>
-            <td class="label"><label class="layui-form-label">分配状态：</label></td>
-            <td class="input">
-                <select name="collectWay">
-                    <option value="">请选择</option>
-                    <option value="0">未分配</option>
-                    <option value="1">电话催收</option>
-                    <option value="3">外包催收</option>
-                </select>
-            </td>
-            <td class="label"><label class="layui-form-label">申请编号：</label></td>
-            <td class="input"><input type="text" name="applyNo" class="layui-input"></td>
             <td class="label"><label class="layui-form-label">客户姓名：</label></td>
             <td class="input"><input type="text" name="name" class="layui-input"></td>
             <td class="label"><label class="layui-form-label">手机号码：</label></td>
             <td class="input"><input type="text" name="phone" class="layui-input"></td>
             <td class="label"><label class="layui-form-label">身份证号：</label></td>
             <td class="input"><input type="text" name="idcard" class="layui-input"></td>
-        </tr>
-        <tr>
-            <td><label class="layui-form-label">催收人员：</label></td>
-            <td><input type="text" name="collectUser" class="layui-input"></td>
             <td><label class="layui-form-label">催收状态：</label></td>
             <td id="stateView"></td>
             <script type="text/html" id="stateTpl">
@@ -75,59 +60,19 @@
                     <option value="part_repay">部分还款</option>
                 </select>
             </td>
-            <td><label class="layui-form-label">注册渠道：</label></td>
-            <td id="sourceTypeView"></td>
-            <script type="text/html" id="sourceTypeTpl">
-                <select name="signChannel">
-                    <option value="">请选择</option>
-                    {{# layui.each(d,(i,s)=>{ }}
-                    <option value="{{ s.code }}">{{ s.name }}</option>
-                    {{# }) }}
-                </select>
-            </script>
-            <td><label class="layui-form-label">进件渠道：</label></td>
-            <td>
-                <select name="sdChannel">
-                    <option value="">请选择</option>
-                    <option value="Mobile">手机APP</option>
-                    <option value="xjbk">现金白卡</option>
-                    <option value="credit">够范分期</option>
-                    <option value="mall">够范商城</option>
-                </select>
-            </td>
         </tr>
         <tr>
+            <td><label class="layui-form-label">催收人员：</label></td>
+            <td><input type="text" name="collectUser" class="layui-input"></td>
             <td><label class="layui-form-label">应还日期：</label></td>
             <td><input type="text" name="repaymentPlanDateStr" class="layui-input" id="date1"></td>
-            <td><label class="layui-form-label">分配日期：</label></td>
-            <td><input type="text" name="updateTimeStr" class="layui-input" id="date2"></td>
-            <td><label class="layui-form-label">是否首贷：</label></td>
-            <td>
-                <select name="loanCount">
-                    <option value="">请选择</option>
-                    <option value="0">首贷</option>
-                    <option value="1">复贷</option>
-                </select>
-            </td>
-            <td colspan="2" style="padding-left:20px;">
+            <td></td>
+            <td style="padding-left:20px;">
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
                     <i class="layui-icon">&#xe615;</i>
                 </button>
                 <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
                     <i class="layui-icon">&#xe639;</i>
-                </button>
-                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="export" title="导出">
-                    <i class="layui-icon">&#xe61e;</i>
-                </button>
-            </td>
-            <td colspan="2">
-                <div hidden style="float:left;margin-right:10px;">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" id="allot" title="分配">
-                        <i class="layui-icon">&#xe642;</i> 分配
-                    </button>
-                </div>
-                <button class="layui-btn layui-btn-primary layui-btn-sm" type="button" id="company" title="外包">
-                    <i class="layui-icon">&#xe609;</i> 外包
                 </button>
             </td>
         </tr>
@@ -137,15 +82,6 @@
 <script type="text/html" id="tool">
     <button class="layui-btn layui-btn-sm" lay-event="userinfo">个人信息</button>
     <button class="layui-btn layui-btn-sm" lay-event="repayinfo">还款信息</button>
-</script>
-<script type="text/html" id="collectWay">
-    {{# if (d.collectWay === 0) { }}
-    {{ r`未分配` }}
-    {{# } else if (d.collectWay === 1) { }}
-    电话催收
-    {{# } else if (d.collectWay === 3) { }}
-    外包催收
-    {{# } }}
 </script>
 <script type="text/html" id="collectUser">
     {{# if (d.collectWay === 0) { }}
@@ -157,6 +93,6 @@
 </script>
 <script src="../../js/layui/layui.js"></script>
 <script src="../../js/common/common.js"></script>
-<script src="../../js/collection/distribute.js"></script>
+<script src="../../js/collection/group.js"></script>
 </body>
 </html>
