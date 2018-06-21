@@ -101,7 +101,14 @@
             <td><input type="text" name="repaymentPlanDateStr" class="layui-input" id="date1"></td>
             <td><label class="layui-form-label">分配日期：</label></td>
             <td><input type="text" name="updateTimeStr" class="layui-input" id="date2"></td>
-            <td></td>
+            <td><label class="layui-form-label">是否首贷：</label></td>
+            <td>
+                <select name="loanCount">
+                    <option value="">请选择</option>
+                    <option value="0">首贷</option>
+                    <option value="1">复贷</option>
+                </select>
+            </td>
             <td colspan="2" style="padding-left:20px;">
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
                     <i class="layui-icon">&#xe615;</i>
@@ -123,8 +130,6 @@
                     <i class="layui-icon">&#xe609;</i> 外包
                 </button>
             </td>
-            <td></td>
-            <td></td>
         </tr>
     </table>
 </form>
