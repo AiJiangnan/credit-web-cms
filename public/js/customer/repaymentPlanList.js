@@ -9,16 +9,18 @@ layui.use(['table', 'laydate'], () => {
         page: constants.LAYUIPAGE,
         url: '/customerCare/repaymentPlan/list',
         cols: [[
-             {field: 'name', title: '姓名', align: 'center', width: 130},
+             {field: 'name', title: '姓名', align: 'center', width: 110},
              {field: 'phone', title: '手机号', align: 'center', width: 130},
              {field: 'idcard', title: '身份证', align: 'center', width: 130},
-             {field: 'applyNo', title: '申请单号', align: 'center', width: 230},
-             {field: 'state', title: '状态', align: 'center', width: 130, templet: d => getStatus(d.state)},
-             {field: 'repaymentPlanDate', title: '应还款日期', align: 'center', width: 130,templet: d => dateFormat(d.repaymentPlanDate)},
-             {field: 'capital', title: '本金', align: 'center', width: 130},
-             {field: 'interest', title: '利息', align: 'center', width: 130},
-             {field: 'totalInterestPenalty', title: '逾期费', align: 'center', width: 130},
+             {field: 'applyNum', title: '申请单号', align: 'center', width: 230},
+             {field: 'status', title: '状态', align: 'center', width: 110, templet: d => getStatus(d.status)},
+             {field: 'planDate', title: '应还款日期', align: 'center', width: 130,templet: d => dateFormat(d.planDate)},
+             {field: 'applyAmount', title: '本金', align: 'center', width: 110},
+             {field: 'interestFee', title: '利息', align: 'center', width: 110},
+             {field: 'lateFee', title: '逾期费', align: 'center', width: 110},
              {field: 'productType', title: '贷款期数', align: 'center', width: 130, templet: d => getProductType(d.productType)},
+             {field: 'channel', title: '进件渠道', align: 'center', width: 130, templet: d => getStatus(d.channel)},
+             {field: 'loanCount', title: '首贷', align: 'center', width: 130, templet: d => d.loanCount>0?'复贷':"首贷"},
            
         ]]
     });
