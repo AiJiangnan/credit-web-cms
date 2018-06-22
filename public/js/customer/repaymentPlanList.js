@@ -20,7 +20,7 @@ layui.use(['table', 'laydate'], () => {
              {field: 'lateFee', title: '逾期费', align: 'center', width: 110},
              {field: 'productType', title: '贷款期数', align: 'center', width: 130, templet: d => getProductType(d.productType)},
              {field: 'channel', title: '进件渠道', align: 'center', width: 130, templet: d => getStatus(d.channel)},
-             {field: 'loanCount', title: '首贷', align: 'center', width: 130, templet: d => d.loanCount>0?'复贷':"首贷"},
+             {field: 'loanCount', title: '首贷', align: 'center', width: 130, templet: d => d.loanCount>1?'复贷':"首贷"},
            
         ]]
     });
