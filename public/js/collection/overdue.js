@@ -9,7 +9,7 @@ layui.use(['table', 'laydate'], () => {
     $.get('/collect/overdue?total=total', data => {
         let d = data.data[0];
         total = d.recordTotalRate;
-        $('#total').append(`<td style="width:80px;">${d.total}</td>
+        $('#total').html(`<td style="width:100px;">总数</td><td style="width:80px;">${d.total}</td>
                             <td style="width:80px;">${rmbFormat(d.contractAmount)}</td>
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount)}</td>
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount / d.contractAmount * 100) + '%'}</td>
@@ -43,7 +43,7 @@ layui.use(['table', 'laydate'], () => {
         $.get('/collect/overdue?total=total', d.field, data => {
             let d = data.data[0];
             total = d.recordTotalRate;
-            $('#total').append(`<td style="width:80px;">${d.total}</td>
+            $('#total').html(`<td style="width:100px;">总数</td><td style="width:80px;">${d.total}</td>
                             <td style="width:80px;">${rmbFormat(d.contractAmount)}</td>
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount)}</td>
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount / d.contractAmount * 100) + '%'}</td>
