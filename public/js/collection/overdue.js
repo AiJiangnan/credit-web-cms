@@ -14,7 +14,7 @@ layui.use(['table', 'laydate'], () => {
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount)}</td>
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount / d.contractAmount * 100) + '%'}</td>
                             <td style="width:80px;">${rmbFormat(d.recordTotalAmount)}</td>
-                            <td style="width:80px;">${rmbFormat(d.recordTotalRate) + '%'}</td>
+                            <td style="width:80px;">${rmbFormat(d.recordTotalRate * 100) + '%'}</td>
                             <td style="width:80px;">${d.todayTotal}</td>
                             <td style="width:80px;">${d.todayRecordTotal}</td>`);
     });
@@ -48,7 +48,7 @@ layui.use(['table', 'laydate'], () => {
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount)}</td>
                             <td style="width:80px;">${rmbFormat(d.recordContractAmount / d.contractAmount * 100) + '%'}</td>
                             <td style="width:80px;">${rmbFormat(d.recordTotalAmount)}</td>
-                            <td style="width:80px;">${rmbFormat(d.recordTotalRate) + '%'}</td>
+                            <td style="width:80px;">${rmbFormat(d.recordTotalRate * 100) + '%'}</td>
                             <td style="width:80px;">${d.todayTotal}</td>
                             <td style="width:80px;">${d.todayRecordTotal}</td>`);
             t.reload('overdue', {where: form.field});

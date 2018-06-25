@@ -21,8 +21,8 @@
     <table class="layui-table">
         <thead>
         <th>员工姓名</th>
-        <th>总数</th>
-        <th>分案金额</th>
+        <th>今日分户</th>
+        <th>地区</th>
         </thead>
         <tbody id="userView"></tbody>
     </table>
@@ -32,7 +32,7 @@
     <tr>
         <td style="padding-left:10px;"><input type="radio" name="applyIds" title="{{ s.name }}" value="{{ s.id }}" lay-skin="primary"></td>
         <td style="text-align:center;">{{ s.distributeNum }}</td>
-        <td style="text-align:center;">{{ s.distributeAmount }}</td>
+        <td style="text-align:center;">{{ s.address }}</td>
     </tr>
     {{# }); }}
 </script>
