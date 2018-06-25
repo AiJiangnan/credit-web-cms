@@ -39,8 +39,8 @@ layui.use(['table', 'laydate'], () => {
         ]]
     });
 
-    f.on('submit(submit)', d => {
-        $.get('/collect/overdue?total=total', d.field, data => {
+    f.on('submit(submit)', form => {
+        $.get('/collect/overdue?total=total', form.field, data => {
             let d = data.data[0];
             total = d.recordTotalRate;
             $('#total').html(`<td style="width:100px;">总数</td><td style="width:80px;">${d.total}</td>
@@ -51,7 +51,7 @@ layui.use(['table', 'laydate'], () => {
                             <td style="width:80px;">${rmbFormat(d.recordTotalRate) + '%'}</td>
                             <td style="width:80px;">${d.todayTotal}</td>
                             <td style="width:80px;">${d.todayRecordTotal}</td>`);
-            t.reload('overdue', {where: d.field});
+            t.reload('overdue', {where: form.field});
         });
         return false;
     });
