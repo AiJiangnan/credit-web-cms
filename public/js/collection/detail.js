@@ -11,7 +11,7 @@ layui.use(['element', 'table', 'form'], () => {
             async: false,
             url: '/info/bankname/' + bankNum,
             success: d => {
-                bankName = d.data;
+                bankName = d.data ? d.data : '';
             }
         });
         return bankName;
