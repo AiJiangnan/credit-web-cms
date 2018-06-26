@@ -58,7 +58,7 @@ layui.use(['table', 'laydate'], () => {
                     layer.msg('失败原因不能为空！', constants.LOCK);
                     return;
                 }
-                todealfn(false, d.orderNo, note);
+                todealfn(false, d.orderNo, v);
                 layer.close(i);
             });
         }
