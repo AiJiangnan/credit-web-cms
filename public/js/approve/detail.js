@@ -19,7 +19,7 @@ layui.use(['element', 'table', 'form'], () => {
         return res ? res : '-';
     };
 
-    $.get('/info/operator/'+channel+'/' + userId, d => {
+    $.get('/info/operator/'+userId,{channel:channel}, d => {
         if (d.code === 0) {
             check(d.data.reportVo);
             check(d.data.behaviorDetection);
@@ -118,7 +118,7 @@ layui.use(['element', 'table', 'form'], () => {
                 id: 'contacts',
                 elem: '#contacts',
                 page: constants.LAYUIPAGE,
-                url: '/info/contacts/' + userId,
+                url: '/info/contacts/' + userId+'/'+channel,
                 cols: [[
                     {type: 'numbers', title: '序号'},
                     {field: 'name', title: '姓名', align: 'center', width: 180},
