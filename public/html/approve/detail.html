@@ -187,13 +187,13 @@
                 <script id="linkTpl" type="text/html">
                     {{# layui.each(d,(i,s)=>{ }}
                     <tr>
-                        <td>{{ s.name }}</td>
-                        <td>{{ s.relationship }}</td>
-                        <td>{{ s.phoneLoc }}</td>
-                        <td>{{ s.checkXiaohao }}</td>
-                        <td>{{ s.transStart }}</td>
-                        <td>{{ s.endDate }}</td>
-                        <td>{{ s.checkMobile }}</td>
+                        <td>{{ checkStr(s.name) }}</td>
+                        <td>{{ checkStr(s.relationship) }}</td>
+                        <td>{{ checkStr(s.phoneLoc) }}</td>
+                        <td>{{ checkStr(s.checkXiaohao) }}</td>
+                        <td>{{ checkStr(s.transStart) }}</td>
+                        <td>{{ checkStr(s.endDate) }}</td>
+                        <td>{{ checkStr(s.checkMobile) }}</td>
                     </tr>
                     {{# }); }}
 
