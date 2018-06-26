@@ -224,12 +224,14 @@ layui.use(['element', 'table', 'form'], () => {
     f.on('submit(repay)', d => {
         let repay = d.field;
         repay.applyId = applyId;
+        const i = parent.layer.load(0, {shade: 0.1});
         $.post('/repayment', repay, data => {
             if (data.code === 0) {
                 layer.msg(data.data, constants.SUCCESS);
             } else {
                 layer.msg(data.msg, constants.ERROR);
             }
+            parent.layer.close(i);
         }).fail(() => layer.msg('服务器错误！', constants.FAIL));
         return false;
     });

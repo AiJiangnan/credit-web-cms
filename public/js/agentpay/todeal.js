@@ -24,18 +24,21 @@ layui.use(['table', 'laydate'], () => {
             {field: 'actualAmount', title: '实际还额金额', align: 'center', width: 140, templet: d => rmbFormat(d.actualAmount)},
             {field: 'planState', title: '状态', align: 'center', width: 100, templet: d => getStatus(d.planState)},
             {field: 'isPartRepayment', title: '是否部分还款', align: 'center', width: 140, templet: d => d.isPartRepayment ? '是' : '否'},
+            {field: 'createUsername', title: '创建人', align: 'center', width: 100},
             {title: '对公还款操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
 
-    const todealfn = (state, orderNo) => {
-        $.post('/agentpay/todeal', {state: state, orderNo: orderNo}, d => {
+    const todealfn = (state, orderNo, note) => {
+        const i = parent.layer.load(0, {shade: 0.1});
+        $.post('/agentpay/todeal', {state: state, orderNo: orderNo, note: note}, d => {
             if (d.code === 0) {
                 layer.msg(d.data, constants.SUCCESS);
                 t.reload('todeal');
             } else {
                 layer.msg(d.msg, constants.ERROR);
             }
+            parent.layer.close(i);
         }).fail(() => layer.msg('服务器错误！', constants.FAIL));
     };
 
@@ -47,15 +50,27 @@ layui.use(['table', 'laydate'], () => {
         }
         check(d);
         if (e === 'success') {
-            todealfn(true, d.orderNo);
+            todealfn(true, d.orderNo, null);
         }
         if (e === 'failure') {
-            todealfn(false, d.orderNo);
+            layer.prompt({title: '请输入失败原因'}, (v, i, e) => {
+                if (!v) {
+                    layer.msg('失败原因不能为空！', constants.LOCK);
+                    return;
+                }
+                todealfn(false, d.orderNo, v);
+                layer.close(i);
+            });
         }
     });
 
     f.on('submit(submit)', d => {
         t.reload('todeal', {page: {curr: 1}, where: d.field});
+        return false;
+    });
+
+    f.on('submit(export)', d => {
+        location = '/agentpay/todeal/export?' + $('.layui-form').serialize();
         return false;
     });
 
