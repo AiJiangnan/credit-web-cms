@@ -28,8 +28,8 @@ layui.use(['table', 'laydate'], () => {
         ]]
     });
 
-    const todealfn = (state, orderNo) => {
-        $.post('/agentpay/todeal', {state: state, orderNo: orderNo}, d => {
+    const todealfn = (state, orderNo, note) => {
+        $.post('/agentpay/todeal', {state: state, orderNo: orderNo, note: note}, d => {
             if (d.code === 0) {
                 layer.msg(d.data, constants.SUCCESS);
                 t.reload('todeal');
@@ -47,15 +47,27 @@ layui.use(['table', 'laydate'], () => {
         }
         check(d);
         if (e === 'success') {
-            todealfn(true, d.orderNo);
+            todealfn(true, d.orderNo, null);
         }
         if (e === 'failure') {
-            todealfn(false, d.orderNo);
+            layer.prompt({title: '请输入失败原因'}, (v, i, e) => {
+                if (!v) {
+                    layer.msg('失败原因不能为空！', constants.LOCK);
+                    return;
+                }
+                todealfn(false, d.orderNo, note);
+                layer.close(i);
+            });
         }
     });
 
     f.on('submit(submit)', d => {
         t.reload('todeal', {page: {curr: 1}, where: d.field});
+        return false;
+    });
+
+    f.on('submit(export)', d => {
+        location = '/agentpay/todeal/export?' + $('.layui-form').serialize();
         return false;
     });
 
