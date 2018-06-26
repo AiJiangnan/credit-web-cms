@@ -99,7 +99,7 @@ layui.use(['element', 'table', 'form'], () => {
             url: '/info/repayfail/' + applyId,
             cols: [[
                 {type: 'numbers', title: '序号'},
-                {field: 'createTime', title: '还款时间', align: 'center', width: 120, templet: d => dateTimeFormat(d.createTime)},
+                {field: 'updateTime', title: '还款时间', align: 'center', width: 180, templet: d => dateTimeFormat(d.updateTime)},
                 {field: 'accountNum', title: '还款卡号', align: 'center', width: 120},
                 {field: 'bankName', title: '还款银行', align: 'center', width: 100, templet: d => getNankName(d.accountNum)},
                 {field: 'collectUser', title: '催收人员', align: 'center', width: 110},
