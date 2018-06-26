@@ -24,6 +24,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'actualAmount', title: '实际还额金额', align: 'center', width: 140, templet: d => rmbFormat(d.actualAmount)},
             {field: 'planState', title: '状态', align: 'center', width: 100, templet: d => getStatus(d.planState)},
             {field: 'isPartRepayment', title: '是否部分还款', align: 'center', width: 140, templet: d => d.isPartRepayment ? '是' : '否'},
+            {field: 'createUsername', title: '创建人', align: 'center', width: 100},
             {title: '对公还款操作', width: 180, align: 'center', toolbar: '#tool'}
         ]]
     });
