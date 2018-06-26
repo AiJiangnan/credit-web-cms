@@ -30,6 +30,7 @@ layui.use(['table', 'laydate'], () => {
     });
 
     const todealfn = (state, orderNo, note) => {
+        const i = parent.layer.load(0, {shade: 0.1});
         $.post('/agentpay/todeal', {state: state, orderNo: orderNo, note: note}, d => {
             if (d.code === 0) {
                 layer.msg(d.data, constants.SUCCESS);
@@ -37,6 +38,7 @@ layui.use(['table', 'laydate'], () => {
             } else {
                 layer.msg(d.msg, constants.ERROR);
             }
+            parent.layer.close(i);
         }).fail(() => layer.msg('服务器错误！', constants.FAIL));
     };
 
