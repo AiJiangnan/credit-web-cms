@@ -23,7 +23,7 @@ layui.use(['table', 'laydate'], () => {
         status: {field: 'status', title: '审核状态', align: 'center', width: 100, templet: d => getStatus(d.status)},
         refuseNote: {field: 'refuseNote', title: '机器拒贷原因', align: 'center', width: 100},
         whetherAudit: {field: 'whetherAudit', title: '是否人工决策', align: 'center', width: 100, templet: d => d.whetherAudit ? '是' : '否'},
-        loanCount: {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, templet: d => d.loanCount > 0 ? '是' : '否'},
+        isloanCount: {field: 'loanCount', title: '是否复贷', align: 'center', width: 100, templet: d => d.loanCount > 0 ? '是' : '否'},
         loanCount: {field: 'loanCount', title: '贷款次数', align: 'center', width: 100},
         auditName: {field: 'auditName', title: '审核员', align: 'center', width: 100},
         applyAmount: {field: 'applyAmount', title: '申请金额', align: 'center', width: 100, templet: d => rmbFormat(d.applyAmount)},
