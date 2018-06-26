@@ -19,7 +19,7 @@ layui.use(['element', 'table', 'form'], () => {
         return res ? res : '-';
     };
 
-    $.get('/info/operator/' + userId, d => {
+    $.get('/info/operator/'+channel+'/' + userId, d => {
         if (d.code === 0) {
             check(d.data.reportVo);
             check(d.data.behaviorDetection);
