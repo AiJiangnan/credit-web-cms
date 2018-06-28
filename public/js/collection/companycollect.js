@@ -17,7 +17,7 @@ layui.use(['table', 'laydate'], () => {
         url: '/collect/companycollect',
         cols: [[
             {type: 'numbers', title: '序号'},
-            {field: 'applyNo', title: '申请编号', align: 'center', width: 260, templet: d => `<a target="_blank" href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&channel=${d.sdChannel}&from=0">${d.applyNo}</a>`},
+            {field: 'applyNo', title: '申请编号', align: 'center', width: 260, templet: d => `<a target="_blank" href="/collection/detail.html?applyId=${d.applyId}&userId=${d.userId}&applyNo=${d.applyNo}&channel=${d.sdChannel}&from=1">${d.applyNo}</a>`},
             {field: 'collectCompany', title: '催收公司', align: 'center', width: 100},
             {field: 'name', title: '客户姓名', align: 'center', width: 100},
             {field: 'phone', title: '手机号码', align: 'center', width: 120},
