@@ -1,5 +1,5 @@
-layui.use(['table', 'laydate'], () => {
-    const [$, t, f] = [layui.jquery, layui.table, layui.form];
+layui.use(['table', 'upload', 'laydate'], () => {
+    const [$, t, f, u] = [layui.jquery, layui.table, layui.form, layui.upload];
 
     layui.laydate.render({elem: '#date1', range: true, format: constants.DATE_RANGE});
 
@@ -64,6 +64,25 @@ layui.use(['table', 'laydate'], () => {
         }
     });
 
+    u.render({
+        elem: '#alipay',
+        url: '/agentpay/todeal/upload/',
+        accept: 'file',
+        exts: 'xls',
+        before: o => {
+            layer.load();
+        },
+        done: res => {
+            if (res.code === 0) {
+                t.reload('todeal');
+                layer.closeAll('loading');
+                location = "/agentpay/alipay/export?filename=" + res.data;
+            } else {
+                layer.msg(res.msg, constants.ERROR);
+            }
+        }
+    });
+
     f.on('submit(submit)', d => {
         t.reload('todeal', {page: {curr: 1}, where: d.field});
         return false;
@@ -71,6 +90,10 @@ layui.use(['table', 'laydate'], () => {
 
     f.on('submit(export)', d => {
         location = '/agentpay/todeal/export?' + $('.layui-form').serialize();
+        return false;
+    });
+
+    $('#alipay').click(() => {
         return false;
     });
 
