@@ -79,6 +79,7 @@ layui.use(['table', 'upload', 'laydate'], () => {
                 location = "/agentpay/alipay/export?filename=" + res.data;
             } else {
                 layer.msg(res.msg, constants.ERROR);
+                layer.closeAll('loading');
             }
         }
     });
