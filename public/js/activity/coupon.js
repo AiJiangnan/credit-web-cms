@@ -82,7 +82,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'price', title: '优惠券金额', align: 'center', width: 120},
             {field: 'validity', title: '有效时长', align: 'center', width: 120,sort: true},
             {field: 'status', title: '状态', align: 'center', width: 120,sort: true,templet: d => getCouponStatus(d.status)},
-            {field: 'interactionSite', title: '作用位置', align: 'center', width: 120,templet: d => getInteractionSite(d.interactionSite)},
+            // {field: 'interactionSite', title: '作用位置', align: 'center', width: 120,templet: d => getInteractionSite(d.interactionSite)},
             {field: 'createTime', title: '创建时间', align: 'center', width: 170, sort: true,templet: d => dateFormat(d.createTime)},
             {field: 'updateTime', title: '修改时间', align: 'center', width: 170, sort: true,templet: d => dateFormat(d.updateTime)},
             {title: '操作', width: 140, align: 'center', toolbar: '#tool'}
@@ -112,7 +112,7 @@ layui.use(['table', 'laydate'], () => {
                     }
                     f.find("option[value='" + d.useUodePoints + "']").prop('selected', 'selected');
                     f.find("option[value='" + d.status + "']").prop('selected', 'selected');
-                    f.find("option[value='" + d.interactionSite + "']").prop('selected', 'selected');
+                    // f.find("option[value='" + d.interactionSite + "']").prop('selected', 'selected');
                     f.find("option[value='" + d.type + "']").prop('selected', 'selected');
                     f.render();
                 },

@@ -41,8 +41,6 @@
             <td>
                 <select name="type">
                     <option value="-">减免券</option>
-                    <option value="*">折扣券</option>
-                    <option value="0">免息券</option>
                 </select>
             </td>
         </tr>
@@ -67,16 +65,16 @@
                 </select>
             </td>
         </tr>
-        <tr>
-            <td><label class="layui-form-label">作用位置：</label></td>
-            <td>
-                <select name="interactionSite">
-                    <option value="service_fee">服务费</option>
-                    <option value="letter_fee">信审费</option>
-                    <option value="interest">利息</option>
-                </select>
-            </td>
-        </tr>
+        <!--<tr>-->
+            <!--<td><label class="layui-form-label">作用位置：</label></td>-->
+            <!--<td>-->
+                <!--<select name="interactionSite">-->
+                    <!--<option value="service_fee">服务费</option>-->
+                    <!--<option value="letter_fee">信审费</option>-->
+                    <!--<option value="interest">利息</option>-->
+                <!--</select>-->
+            <!--</td>-->
+        <!--</tr>-->
         <tr>
             <td colspan="2" style="text-align:center;">
                 <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submit">保存</button>
@@ -105,20 +103,20 @@
             return false;
         });
 
-        f.on('select(point)', d => {
-            if (d.value === '1') {
-                $('select[name="type"]').html('<option value="-">减免券</option>\n' +
-                    '                    <option value="*">折扣券</option>');
-                $('select[name="interactionSite"]').html('<option value="service_fee" selected>服务费</option>\n' +
-                    '                    <option value="letter_fee">信审费</option>');
-            }else if (d.value === '2'||upoint==='2'){
-                $('select[name="type"]').html('<option value="-">减免券</option>\n' +
-                    '                    <option value="*">折扣券</option>\n' +
-                    '                    <option value="0">免息券</option>');
-                $('select[name="interactionSite"]').html('<option value="interest">利息</option>');
-            }
-            f.render('select');
-        });
+        // f.on('select(point)', d => {
+        //     if (d.value === '1') {
+        //         $('select[name="type"]').html('<option value="-">减免券</option>\n' +
+        //             '                    <option value="*">折扣券</option>');
+        //         $('select[name="interactionSite"]').html('<option value="service_fee" selected>服务费</option>\n' +
+        //             '                    <option value="letter_fee">信审费</option>');
+        //     }else if (d.value === '2'||upoint==='2'){
+        //         $('select[name="type"]').html('<option value="-">减免券</option>\n' +
+        //             '                    <option value="*">折扣券</option>\n' +
+        //             '                    <option value="0">免息券</option>');
+        //         $('select[name="interactionSite"]').html('<option value="interest">利息</option>');
+        //     }
+        //     f.render('select');
+        // });
     });
 </script>
 </body>
