@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">还款账户：</label></td>
-            <td><input type="text" name="repaymentAccount" required lay-verify="required" placeholder="请输入还款账户" class="layui-input"></td>
+            <td><input type="text" name="repaymentAccount" required lay-verify="required|number" placeholder="请输入还款账户" class="layui-input"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">还款日期：</label></td>
@@ -64,6 +64,10 @@
                 }
             }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             return false;
+        });
+
+        f.verify({
+            number: [/\d*$/, '请输入银行卡号或支付宝交易号']
         });
     });
 </script>
