@@ -33,7 +33,7 @@ layui.use(['table', 'laydate'], () => {
             {field: 'recordContractAmount', title: '回收本息', align: 'center', width: 120, templet: d => rmbFormat(d.recordContractAmount)},
             {field: '', title: '本息回款率', align: 'center', width: 120, templet: d => rmbFormat(d.recordContractAmount / d.contractAmount * 100) + '%'},
             {field: 'recordTotalAmount', title: '回收总金额', align: 'center', width: 120, templet: d => rmbFormat(d.recordTotalAmount)},
-            {field: 'recordTotalRate', title: '总回款率', align: 'center', width: 100, templet: d => rmbFormat(d.recordTotalRate) + '%'},
+            {field: 'recordTotalRate', title: '总回款率', align: 'center', width: 100, templet: d => rmbFormat(d.recordTotalRate * 100) + '%'},
             {field: 'todayTotal', title: '今日分案户', align: 'center', width: 120},
             {field: 'todayRecordTotal', title: '今日回收户', align: 'center', width: 120},
         ]]
