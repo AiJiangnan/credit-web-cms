@@ -74,7 +74,7 @@ layui.use(['table', 'upload', 'laydate'], () => {
         },
         done: res => {
             if (res.code === 0) {
-                t.reload('todeal', {page: {curr: 1}, where: d.field});
+                t.reload('todeal', {page: {curr: 1}});
                 layer.closeAll('loading');
                 location = "/agentpay/alipay/export?filename=" + res.data;
             } else {
