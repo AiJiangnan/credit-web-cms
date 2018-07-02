@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">还款账户：</label></td>
-            <td><input type="text" name="repaymentAccount" required lay-verify="required" placeholder="请输入还款账户" class="layui-input"></td>
+            <td><input type="text" name="repaymentAccount" required lay-verify="required|number" placeholder="请输入还款账户" class="layui-input"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">还款日期：</label></td>
@@ -44,8 +44,8 @@
     </table>
     <input type="hidden" name="applyId">
 </form>
-<script src="../../../js/layui/layui.js"></script>
-<script src="../../../js/common/common.js"></script>
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
 <script>
     layui.use(['form', 'laytpl', 'laydate'], () => {
         const [$, f, p] = [layui.jquery, layui.form, parent];
@@ -54,7 +54,6 @@
 
         f.on('submit(submit)', d => {
             let reduce = d.field;
-            console.log(JSON.stringify(reduce))
             $.post('/repayment/todeal', reduce, data => {
                 if (data.code === 0) {
                     p.layer.msg(data.data, constants.SUCCESS);
@@ -64,6 +63,10 @@
                 }
             }).fail(() => layer.msg('服务器错误！', constants.FAIL));
             return false;
+        });
+
+        f.verify({
+            number: [/\d*$/, '请输入银行卡号或支付宝交易号']
         });
     });
 </script>
