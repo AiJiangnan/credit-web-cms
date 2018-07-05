@@ -16,18 +16,13 @@ layui.use(['table', 'laydate'], () => {
                 {field: 'registerCount', title: '注册数', align: 'center', width: 80},
                 {field: 'applyCount', title: '进件数', align: 'center', width: 100},
                 {field: 'confirmNum', title: '批贷数', align: 'center', width: 100},
-                {
-                    field: 'confirmAmount',
-                    title: '批货额（单位：万）',
-                    align: 'center',
-                    width: 180,
-                    templet: d => rmbFormat(d.confirmAmount)
-                },
+                {field: 'confirmAmount', title: '批货额（单位：万）', align: 'center', width: 180},
                 {field: 'sourceType', title: '渠道号', align: 'center', width: 100, templet: d => getChannel(d.sourceType)}
             ]]
         });
 
         f.on('submit(submit)', d => {
+            console.log(d);
             t.reload('bfm', {page: {curr: 1}, where: d.field});
             return false;
         });
