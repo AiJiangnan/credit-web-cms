@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>综合查询</title>
+    <link rel="stylesheet" href="../../js/layui/css/layui.css">
+    <style>
+        .layui-input {
+            height: 30px;
+            margin: 5px 0;
+        }
+
+        .layui-input-inline {
+            margin: 0;
+            padding: 0;
+        }
+
+        .layui-form-label {
+            padding: 0 0 0 15px;
+        }
+    </style>
+</head>
+<body style="padding-top:10px;">
+<form class="layui-form" style="padding-top:10px;">
+    <table>
+        <tr>
+            <td><label class="layui-form-label">申请编号：</label></td>
+            <td><input type="text" name="applyNum" placeholder="请输入申请编号" class="layui-input"></td>
+            <td><label class="layui-form-label">客户姓名：</label></td>
+            <td><input type="text" name="name" placeholder="请输入客户姓名" class="layui-input"></td>
+            <td><label class="layui-form-label">身份证号：</label></td>
+            <td><input type="text" name="idcard" placeholder="请输入身份证号" class="layui-input"></td>
+            <td><label class="layui-form-label">手机号码：</label></td>
+            <td><input type="text" name="phone" placeholder="请输入手机号码" class="layui-input"></td>
+            <td><label class="layui-form-label">审核状态：</label></td>
+            <td>
+                <select name="status">
+                    <option value="">请选择状态</option>
+                    <option value="wait_audit">待审核</option>
+                    <option value="pass_loan">通过审核</option>
+                    <option value="person_audit">进入人工审核</option>
+                    <option value="successed">放款成功</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">注册渠道：</label></td>
+            <td id="sourceTypeView"></td>
+            <script type="text/html" id="sourceTypeTpl">
+                <select name="sourceType">
+                    <option value="">请选择注册渠道</option>
+                    {{# layui.each(d,(i,s)=>{ }}
+                    <option value="{{ s.code }}">{{ s.name }}</option>
+                    {{# }) }}
+                </select>
+            </script>
+            <td><label class="layui-form-label">进件渠道：</label></td>
+            <td>
+                <select name="channel">
+                    <option value="">请选择进件渠道</option>
+                    <option value="Mobile">手机APP</option>
+                    <option value="xjbk">现金白卡</option>
+                    <option value="credit">够范分期</option>
+                    <option value="mall">够范商城</option>
+                </select>
+            </td>
+            <td><label class="layui-form-label">人工决策：</label></td>
+            <td>
+                <select name="whetherAudit">
+                    <option value="">是否人工决策</option>
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </td>
+            <td><label class="layui-form-label">拒贷码：</label></td>
+            <td><input type="text" name="" placeholder="请输入人工拒贷码" class="layui-input layui-disabled"></td>
+            <td><label class="layui-form-label">白名单：</label></td>
+            <td>
+                <select name="whetherWhiteList">
+                    <option value="">是否为白名单</option>
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">申请时间：</label></td>
+            <td><input type="text" name="incomeTime" class="layui-input" id="date1" placeholder="请选择申请时间"></td>
+            <td><label class="layui-form-label">审批时间：</label></td>
+            <td><input type="text" name="approveTime" class="layui-input" id="date2" placeholder="请选择审批时间"></td>
+            <td></td>
+            <td></td>
+            <td colspan="4" style="padding-left:20px;">
+
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="submit" title="搜索">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" type="reset" title="重置">
+                    <i class="layui-icon">&#xe639;</i>
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-submit lay-filter="export" title="导出">
+                    <i class="layui-icon">&#xe61e;</i>
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" id="choose" title="选择展示字段">
+                    <i class="layui-icon">&#xe627;</i>
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
+<table id="cancelUserLoan" lay-filter="cancelUserLoan"></table>
+<script type="text/html" id="tool">
+    <button class="layui-btn layui-btn-sm layui-bg-red" lay-event="del">取消借款</button>
+</script>
+
+<script src="../../js/layui/layui.js"></script>
+<script src="../../js/common/common.js"></script>
+<script src="../../js/customer/cancelUserLoan.js?v=11"></script>
+</body>
+</html>
