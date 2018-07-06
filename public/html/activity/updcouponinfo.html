@@ -46,7 +46,8 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">优惠券名称：</label></td>
-            <td><input type="text" name="name" required lay-verify="required" placeholder="请输入优惠券名称" class="layui-input"></td>
+            <td><input type="text" name="name" required lay-verify="required" placeholder="请输入优惠券名称" class="layui-input"
+                       maxlength="8"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">优惠券金额：</label></td>
@@ -55,6 +56,11 @@
         <tr>
             <td><label class="layui-form-label">有效时长（天）：</label></td>
             <td><input type="text" name="validity" required lay-verify="required" placeholder="请输入有效时长" class="layui-input" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></td>
+        </tr>
+        <tr>
+            <td><label class="layui-form-label">优惠券说明：</label></td>
+            <td><input type="text" name="remark" required lay-verify="required" placeholder="请输入优惠券说明" maxlength="8"
+                       class="layui-input"></td>
         </tr>
         <tr>
             <td><label class="layui-form-label">状态：</label></td>

@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <td><label class="layui-form-label">优惠券名称：</label></td>
-            <td><input type="text" name="name" required lay-verify="required" placeholder="请输入优惠券名称"
+            <td><input type="text" name="name" required lay-verify="required" placeholder="请输入优惠券名称" maxlength="8"
                        class="layui-input"></td>
         </tr>
         <tr>
@@ -63,6 +63,11 @@
                        ng-pattern="/[^a-zA-Z]/"></td>
         </tr>
         <tr>
+            <td><label class="layui-form-label">优惠券说明：</label></td>
+            <td><input type="text" name="remark" required lay-verify="required" placeholder="请输入优惠券说明" maxlength="8"
+                       class="layui-input"></td>
+        </tr>
+        <tr>
             <td><label class="layui-form-label">状态：</label></td>
             <td>
                 <select name="status">
@@ -71,6 +76,7 @@
                 </select>
             </td>
         </tr>
+
         <!--<tr>-->
             <!--<td><label class="layui-form-label">作用位置：</label></td>-->
             <!--<td>-->
