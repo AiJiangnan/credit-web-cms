@@ -25,14 +25,14 @@ layui.use(['table', 'laydate'], () => {
                     title: '进件数',
                     align: 'center',
                     width: 100,
-                    templet: d => d.registerCount ? d.registerCount : '0'
+                    templet: d => d.applyCount ? d.applyCount : '0'
                 },
                 {
                     field: 'confirmNum',
                     title: '批贷数',
                     align: 'center',
                     width: 100,
-                    templet: d => d.registerCount ? d.registerCount : '0'
+                    templet: d => d.confirmNum ? d.confirmNum : '0'
                 },
                 {field: 'confirmAmount', title: '批货额（单位：万）', align: 'center', width: 180},
                 {field: 'sourceType', title: '渠道号', align: 'center', width: 100, templet: d => getChannel(d.sourceType)}
