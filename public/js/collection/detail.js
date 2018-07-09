@@ -116,7 +116,7 @@ layui.use(['element', 'table', 'form'], () => {
         t.render({
             id: 'overduelog',
             elem: '#overduelog',
-            url: '/info/overdue/' + userId,
+            url: '/info/overdue/' + applyId,
             cols: [[
                 {type: 'numbers', title: '序号'},
                 {field: '', title: '当前时间', align: 'center', width: 120, templet: d => dateFormat('now')},
@@ -125,8 +125,7 @@ layui.use(['element', 'table', 'form'], () => {
                 {field: 'capital', title: '本金', align: 'center', width: 100, templet: d => rmbFormat(d.capital)},
                 {field: 'interest', title: '应还利息', align: 'center', width: 100, templet: d => rmbFormat(d.interest)},
                 {field: 'totalInterestPenalty', title: '逾期费', align: 'center', width: 100, templet: d => rmbFormat(d.totalInterestPenalty)},
-                {field: 'planTotalAmount', title: '应还总额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)},
-                {field: 'accountNum', title: '银行卡号', align: 'center', width: 160}
+                {field: 'planTotalAmount', title: '应还总额', align: 'center', width: 100, templet: d => rmbFormat(d.planTotalAmount)}
             ]]
         });
         // 电话催收
